@@ -1,0 +1,85 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+enum AssetCategory {
+  LUXURY_FLAT
+  LANDED_VILLA
+  COMMERCIAL_OFFICE
+}
+
+enum CorridorZone {
+  PATIA_INFOCITY
+  PAHALA_NH16
+  SAHEED_NAGAR_CORE
+  KALINGA_NAGAR_AIIMS
+  TRISULIA_METRO_BELT
+  SUNDARPADA_JATNI
+}
+
+model Property {
+  id                    String        @id @default(cuid())
+  slug                  String        @unique
+  title                 String
+  category              AssetCategory
+  corridor              CorridorZone
+  microLocation         String
+  
+  basePriceInr          BigInt
+  pricePerSqFt          Int
+  superBuiltUpSqFt      Int
+  reraCarpetSqFt        Int
+  loadingPercentage     Float
+  udsLandSqFt           Int?
+  estimatedRentalYield  Float?
+
+  oreraNumber           String        @unique
+  oreraVerifiedUrl      String?
+  bdaSanctionNumber     String?
+  kissamStatus          String        @default("Gharabari Verified")
+  ecYearsVerified       Int           @default(30)
+  approvedBanks         String[]
+  
+  assetScoreTotal       Int
+  scoreLegalPurity      Int
+  scoreMaterialGrade    Int
+  scoreCorridorGrowth   Int
+  scoreCarpetEfficiency Int
+  scoreVastuLight       Int
+
+  curatorStrengths      String[]
+  curatorTradeOffNote   String
+  idealBuyerPersona     String
+
+  dayHeroImageUrl       String
+  duskHeroImageUrl      String
+  rawSiteVideoUrl       String?
+  instagramReelUrl      String?
+  isOffMarketVault      Boolean       @default(false)
+  
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  leads                 AdvisoryLead[]
+}
+
+model AdvisoryLead {
+  id                    String        @id @default(cuid())
+  fullName              String
+  whatsappNumber        String
+  encryptedNotes        String?
+  buyerPersona          String
+  coDecisionMakers      String[]
+  preferredTourSlot     String?
+  interestedPropertyId  String?
+  property              Property?     @relation(fields: [interestedPropertyId], references: [id])
+  utmSource             String?
+  status                String        @default("NEW_VIP")
+  createdAt             DateTime      @default(now())
+}
