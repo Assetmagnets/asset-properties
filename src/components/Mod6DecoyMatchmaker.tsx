@@ -4,9 +4,7 @@ import React from "react";
 import { CuratedProperty } from "@/types/property";
 
 interface Mod6DecoyMatchmakerProps {
-  properties: CuratedProperty[];
   selectedProperty: CuratedProperty;
-  onSelectProperty: (property: CuratedProperty) => void;
   onRequestDossier: (property: CuratedProperty) => void;
 }
 
@@ -19,69 +17,118 @@ export default function Mod6DecoyMatchmaker({
   return (
     <section
       id="mod-matchmaker"
-      className="relative border-t border-[#D4AF37]/10 py-40 sm:py-52"
+      className="relative py-16 sm:py-24"
     >
       <div className="mx-auto max-w-5xl px-6 sm:px-12">
         <div className="text-center">
-          <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#D4AF37]">
-            ASYMMETRIC BENCHMARK
+          <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
+            ASYMMETRIC BENCHMARK • RADICAL TRANSPARENCY
           </div>
-          <h2 className="mt-6 font-serif text-4xl font-light text-[#F4F1EA] sm:text-6xl">
-            Illusion vs. <span className="italic text-[#D4AF37]">True Carpet</span>.
+          <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+            Market Illusion vs. <span className="italic font-normal text-[#D4AF37]">True Carpet Value</span>.
           </h2>
+          <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
+            Traditional real estate portals market low &ldquo;super built-up&rdquo; base rates while concealing 35%+ loading. See the true mathematical difference for {selectedProperty.title}.
+          </p>
         </div>
 
-        {/* Clean 2-Column Stark Contrast */}
-        <div className="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2">
-          {/* Market Decoy */}
-          <div className="rounded-2xl border border-red-500/20 bg-[#0B101B]/40 p-10 text-center">
-            <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-red-400">
-              PORTAL AVERAGE (REJECTED)
+        {/* 2-Column Stark Comparison Matrix */}
+        <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2">
+          {/* Market Decoy (Portal Average) */}
+          <div className="rounded-2xl border border-red-500/30 bg-[#0B101B]/80 p-8 sm:p-10 shadow-lg">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-red-500/35 bg-red-500/10 px-3.5 py-1 font-mono text-xs font-semibold text-red-400">
+              ✕ REJECTED PORTAL AVERAGE
             </div>
-            <div className="mt-3 font-serif text-2xl text-[#949BA6]">
+            <h3 className="mt-4 font-serif text-2xl font-medium text-[#F8F9FA]">
               {decoy.marketAnchorName}
+            </h3>
+            <p className="text-xs text-[#A6B0BF] font-sans mt-1">
+              Location: {decoy.marketAnchorLocation}
+            </p>
+
+            <div className="mt-8 border-t border-red-500/20 pt-6">
+              <div className="font-sans text-xs uppercase tracking-wider text-[#A6B0BF]">
+                Advertised Super Built-Up Loading
+              </div>
+              <div className="mt-1 font-serif text-5xl font-semibold text-red-400">
+                {decoy.marketAnchorLoadingPct}%
+              </div>
+              <p className="text-xs text-red-400/90 font-sans mt-1">
+                Inflated by shafts, clubhouse, and lift corridor bloat
+              </p>
             </div>
 
-            <div className="mt-10 font-serif text-5xl font-light text-red-400">
-              {decoy.marketAnchorLoadingPct}%
-            </div>
-            <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.28em] text-[#949BA6]">
-              Super Built-Up Loading
+            <div className="mt-6 space-y-3 border-t border-white/5 pt-6 font-sans text-xs sm:text-sm">
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-[#A6B0BF]">Advertised Rate:</span>
+                <span className="text-[#F8F9FA] font-medium font-mono">₹{decoy.marketAnchorPricePerSqFt.toLocaleString()} / sq.ft.</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-[#A6B0BF]">Effective Carpet Rate:</span>
+                <span className="text-red-400 font-bold font-mono">₹{decoy.marketAnchorEffectiveCarpetRate.toLocaleString()} / sq.ft.</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-[#A6B0BF]">Title / Kissam Status:</span>
+                <span className="text-red-400 font-medium">{decoy.marketAnchorKissamStatus}</span>
+              </div>
             </div>
 
-            <div className="mt-8 border-t border-[#D4AF37]/10 pt-6 font-mono text-xs text-[#949BA6]">
-              Effective Carpet: ₹
-              {decoy.marketAnchorEffectiveCarpetRate.toLocaleString()} / sf
+            <div className="mt-6 rounded-xl border border-red-500/20 bg-red-500/5 p-4 text-xs text-red-300 font-sans leading-relaxed">
+              <span className="font-semibold text-red-400">Critical Risk: </span>
+              {decoy.marketAnchorWeakness}
             </div>
           </div>
 
-          {/* Approved Sanctuary */}
-          <div className="rounded-2xl border border-[#D4AF37] bg-[#0B101B] p-10 text-center shadow-gold-glow">
-            <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#D4AF37]">
-              APPROVED SANCTUARY
+          {/* Approved Sanctuary (Asset Properties Gold Pick) */}
+          <div className="rounded-2xl border-2 border-[#D4AF37] bg-[#0B101B] p-8 sm:p-10 shadow-[0_0_35px_rgba(212,175,55,0.15)] relative">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/40 bg-[#10B981]/10 px-3.5 py-1 font-mono text-xs font-semibold text-[#10B981]">
+              ✓ ASSET PROPERTIES APPROVED
             </div>
-            <div className="mt-3 font-serif text-2xl text-[#F4F1EA]">
+            <h3 className="mt-4 font-serif text-2xl font-medium text-[#F8F9FA]">
               {selectedProperty.title}
+            </h3>
+            <p className="text-xs text-[#D4AF37] font-sans mt-1">
+              Corridor: {selectedProperty.corridorDisplayName}
+            </p>
+
+            <div className="mt-8 border-t border-[#D4AF37]/25 pt-6">
+              <div className="font-sans text-xs uppercase tracking-wider text-[#A6B0BF]">
+                True RERA Carpet Loading
+              </div>
+              <div className="mt-1 font-serif text-5xl font-semibold text-[#10B981]">
+                {selectedProperty.loadingPercentage}%
+              </div>
+              <p className="text-xs text-[#10B981] font-sans mt-1">
+                Leica laser-audited usable interior carpet space
+              </p>
             </div>
 
-            <div className="mt-10 font-serif text-5xl font-light text-[#2E9B68]">
-              {selectedProperty.loadingPercentage}%
-            </div>
-            <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.28em] text-[#949BA6]">
-              True RERA Loading
+            <div className="mt-6 space-y-3 border-t border-white/10 pt-6 font-sans text-xs sm:text-sm">
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-[#A6B0BF]">Base Sq.Ft. Rate:</span>
+                <span className="text-[#F8F9FA] font-medium font-mono">₹{selectedProperty.pricePerSqFt.toLocaleString()} / sq.ft.</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-[#A6B0BF]">Effective Carpet Rate:</span>
+                <span className="text-[#10B981] font-bold font-mono">₹{selectedProperty.effectiveCarpetPricePerSqFt.toLocaleString()} / sq.ft.</span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-white/5">
+                <span className="text-[#A6B0BF]">Title / Kissam Status:</span>
+                <span className="text-[#10B981] font-medium">{selectedProperty.kissamStatus}</span>
+              </div>
             </div>
 
-            <div className="mt-8 border-t border-[#D4AF37]/15 pt-6 font-mono text-xs text-[#D4AF37]">
-              Effective Carpet: ₹
-              {selectedProperty.effectiveCarpetPricePerSqFt.toLocaleString()} / sf
+            <div className="mt-6 rounded-xl border border-[#10B981]/30 bg-[#10B981]/10 p-4 text-xs text-[#10B981] font-sans leading-relaxed">
+              <span className="font-semibold text-[#10B981]">Verified Advantage: </span>
+              {selectedProperty.curatorStrengths[0]}
             </div>
 
             <button
               type="button"
               onClick={() => onRequestDossier(selectedProperty)}
-              className="mt-8 rounded-full bg-[#D4AF37] px-7 py-2.5 font-mono text-[9px] font-semibold uppercase tracking-[0.25em] text-[#05070B] hover:bg-[#e5c349] transition"
+              className="mt-8 w-full rounded-full bg-[#D4AF37] py-3.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-gold-glow hover:bg-[#e5c349] transition"
             >
-              Request Dossier
+              Request Comparative Verification Dossier
             </button>
           </div>
         </div>

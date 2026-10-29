@@ -16,6 +16,7 @@ const config: Config = {
         "gold-muted-bronze": "var(--gold-muted-bronze)",
         alabaster: "var(--text-alabaster)",
         "stone-muted": "var(--text-stone-muted)",
+        steel: "var(--text-steel)",
         "trust-emerald": "var(--trust-emerald)",
       },
       fontFamily: {

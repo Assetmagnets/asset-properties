@@ -94,7 +94,13 @@ export interface RejectedProjectAudit {
   corridor: string;
   claimedType: string;
   advertisedRate: string;
-  rejectionCategory: "KISSAM_DEFECT" | "LOADING_INFLATION" | "ORERA_LAPSE" | "FLOOD_BASIN";
+  rejectionCategory:
+    | "KISSAM_DEFECT"
+    | "LOADING_INFLATION"
+    | "ORERA_LAPSE"
+    | "FLOOD_BASIN"
+    | "BDA_VIOLATION"
+    | "UDS_DILUTION";
   rejectionHeadline: string;
   forensicFinding: string;
   financialRiskAvoided: string;

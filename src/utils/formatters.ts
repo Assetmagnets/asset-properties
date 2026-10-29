@@ -9,11 +9,3 @@ export function formatInrCroreLakh(amountInr: number): string {
   }
   return `₹${amountInr.toLocaleString("en-IN")}`;
 }
-
-export function formatIndianCurrency(amountInr: number): string {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(amountInr);
-}

@@ -859,6 +859,58 @@ export const REJECTED_PROJECT_AUDITS: RejectedProjectAudit[] = [
     financialRiskAvoided: "Unsecured Capital Exposure & Indefinite Delivery Delay",
     auditDate: "Oct 2026",
   },
+  {
+    id: "rej-05",
+    anonymizedCode: "AUDIT #R-126 • KHANDAGIRI FOOTHILLS BELT",
+    corridor: "Khandagiri – Jayadev Vatika",
+    claimedType: "14-Storey Biophilic High-Rise",
+    advertisedRate: "₹6,400 / Sq.Ft.",
+    rejectionCategory: "BDA_VIOLATION",
+    rejectionHeadline: "Rejected for BDA Mandatory 6m Fire Setback Deviation on East Flank",
+    forensicFinding:
+      "Physical laser survey showed peripheral driveway narrowed to 4.2m on East boundary due to compound encroachment. Severe risk of Odisha Fire Safety recommendation refusal and withheld Occupancy Certificate (OC).",
+    financialRiskAvoided: "OC Withholding & ₹52L Developer Rectification Penalty Exposure",
+    auditDate: "Nov 2026",
+  },
+  {
+    id: "rej-06",
+    anonymizedCode: "AUDIT #R-131 • TAMANDO INDUSTRIAL CORRIDOR",
+    corridor: "Tamando – NH16 Expansion",
+    claimedType: "Gated Townhome Community",
+    advertisedRate: "₹1.45 Cr All-Inclusive",
+    rejectionCategory: "KISSAM_DEFECT",
+    rejectionHeadline: "Rejected for Defective Joint Development GPA Without Mutation Rights",
+    forensicFinding:
+      "Original land record reflected co-parcenary dispute among 5 legal heirs. The General Power of Attorney registered in 2021 lacked statutory right of alienating fractional shares under OLR Act Section 22.",
+    financialRiskAvoided: "High Court Injunction & 5+ Year Freezing of Mutation Rights",
+    auditDate: "Nov 2026",
+  },
+  {
+    id: "rej-07",
+    anonymizedCode: "AUDIT #R-138 • NAYAPALLI IRC VILLAGE",
+    corridor: "Nayapalli – Jayadev Vihar Belt",
+    claimedType: "Boutique Residential Suites",
+    advertisedRate: "₹9,200 / Sq.Ft.",
+    rejectionCategory: "UDS_DILUTION",
+    rejectionHeadline: "Rejected for Diluted 14.8% Undivided Land Share (UDS) Allocation",
+    forensicFinding:
+      "Project cramped 72 luxury units onto a mere 0.38-acre footprint, delivering only 229 sq.ft. of UDS land share per 3 BHK flat. Real asset value resided entirely in depreciating brick, not prime Nayapalli land.",
+    financialRiskAvoided: "Severe Asset Depreciation & Zero Long-Term Redevelopment Capital",
+    auditDate: "Dec 2026",
+  },
+  {
+    id: "rej-08",
+    anonymizedCode: "AUDIT #R-145 • PAHALA NH16 BYPASS",
+    corridor: "Pahala – Jagannath Temple Approach",
+    claimedType: "Semi-Detached Triplex Residences",
+    advertisedRate: "₹2.10 Cr Fixed",
+    rejectionCategory: "LOADING_INFLATION",
+    rejectionHeadline: "Rejected for 39.4% SBUA Inflation Concealed Under 'Terrace Usufruct'",
+    forensicFinding:
+      "Developer billed private open-air terrace at 100% covered super built-up rate without RERA sanction. True usable carpet measured just 1,840 sq.ft. against advertised 3,050 sq.ft.",
+    financialRiskAvoided: "₹63.2 Lakhs in Air-Space Valuation Overpayment",
+    auditDate: "Dec 2026",
+  },
 ];
 
 export const CORRIDOR_GROWTH_BENCHMARKS: Record<

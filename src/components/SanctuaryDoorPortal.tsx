@@ -14,20 +14,27 @@ export default function SanctuaryDoorPortal({
 }: SanctuaryDoorPortalProps) {
   const [unlatching, setUnlatching] = useState(false);
 
-  // Reset unlatching state whenever doors are closed again
+  // Automatically unlatch and open the sanctuary portal doors without waiting for user click
   useEffect(() => {
-    if (!isOpen) {
-      setUnlatching(false);
-    }
-  }, [isOpen]);
+    if (!isOpen && !unlatching) {
+      const autoTimer = setTimeout(() => {
+        setUnlatching(true);
+        setTimeout(() => {
+          onOpenChange(true);
+        }, 900);
+      }, 500);
 
-  const handleClickAP = (e: React.MouseEvent) => {
-    e.stopPropagation();
+      return () => clearTimeout(autoTimer);
+    }
+  }, [isOpen, unlatching, onOpenChange]);
+
+  const handleClickAP = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (unlatching) return;
     setUnlatching(true);
     setTimeout(() => {
       onOpenChange(true);
-    }, 950);
+    }, 900);
   };
 
   return (
@@ -41,7 +48,8 @@ export default function SanctuaryDoorPortal({
             transition: { duration: 0.65, delay: 0.55, ease: "easeInOut" },
           }}
           style={{ perspective: "2000px" }}
-          className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-transparent select-none"
+          onClick={() => handleClickAP()}
+          className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-transparent select-none cursor-pointer"
         >
           {/* Golden Center Light Spill Behind Doors when AP is clicked */}
           <motion.div
@@ -73,18 +81,18 @@ export default function SanctuaryDoorPortal({
             {/* Subtle Inner Brass Frame Line */}
             <div className="pointer-events-none absolute inset-6 sm:inset-12 border border-[#D4AF37]/15" />
 
-            <div className="font-mono text-[10px] tracking-[0.35em] text-[#949BA6]/60 uppercase">
+            <div className="font-mono text-xs tracking-[0.25em] text-stone-muted uppercase font-medium">
               20.2961° N
             </div>
 
             <div className="my-auto pr-12 sm:pr-20 text-right">
-              <span className="font-serif text-3xl sm:text-5xl font-light tracking-[0.25em] text-[#F4F1EA]">
+              <span className="font-serif text-4xl sm:text-6xl font-medium tracking-[0.2em] text-[#F4F1EA]">
                 ASSET
               </span>
             </div>
 
-            <div className="font-mono text-[10px] tracking-[0.35em] text-[#D4AF37]/60 uppercase">
-              PRIVATE SANCTUARY
+            <div className="font-mono text-xs tracking-[0.2em] text-[#D4AF37] uppercase font-semibold">
+              PRIVATE ADVISORY
             </div>
           </motion.div>
 
@@ -107,17 +115,17 @@ export default function SanctuaryDoorPortal({
             {/* Subtle Inner Brass Frame Line */}
             <div className="pointer-events-none absolute inset-6 sm:inset-12 border border-[#D4AF37]/15" />
 
-            <div className="font-mono text-[10px] tracking-[0.35em] text-[#949BA6]/60 uppercase">
+            <div className="font-mono text-xs tracking-[0.25em] text-stone-muted uppercase font-medium">
               85.8245° E
             </div>
 
             <div className="my-auto pl-12 sm:pl-20 text-left">
-              <span className="font-serif text-3xl sm:text-5xl font-light tracking-[0.25em] text-[#D4AF37]">
+              <span className="font-serif text-4xl sm:text-6xl font-medium tracking-[0.2em] text-[#D4AF37]">
                 PROPERTIES
               </span>
             </div>
 
-            <div className="font-mono text-[10px] tracking-[0.35em] text-[#949BA6]/60 uppercase">
+            <div className="font-mono text-xs tracking-[0.2em] text-stone-muted uppercase font-semibold">
               BHUBANESWAR
             </div>
           </motion.div>
@@ -142,11 +150,11 @@ export default function SanctuaryDoorPortal({
             {/* Pulsing Outer Halo Ring */}
             <span className="pointer-events-none absolute -inset-2 rounded-full border border-[#D4AF37]/30 animate-ping opacity-30" />
             <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full border border-[#D4AF37]/45 group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37]/10 transition">
-              <span className="font-serif text-3xl tracking-[0.2em] text-[#D4AF37]">
+              <span className="font-serif text-3xl font-medium tracking-[0.2em] text-[#D4AF37]">
                 AP
               </span>
-              <span className="mt-1 font-mono text-[8px] tracking-[0.26em] text-[#F4F1EA]">
-                CLICK TO OPEN
+              <span className="mt-1 font-mono text-[9.5px] font-semibold tracking-[0.2em] text-[#F4F1EA]">
+                {unlatching ? "OPENING..." : "OPENING ADVISORY"}
               </span>
             </div>
           </motion.button>
@@ -165,45 +173,47 @@ export function ArchitecturalDoorReveal({
   doorLabelRight = "MANDATE",
   className = "",
   autoOpenOnView = true,
+  defaultOpen = true,
 }: {
   children: React.ReactNode;
   doorLabelLeft?: string;
   doorLabelRight?: string;
   className?: string;
   autoOpenOnView?: boolean;
+  defaultOpen?: boolean;
 }) {
-  const [doorsOpen, setDoorsOpen] = useState(false);
+  const [doorsOpen, setDoorsOpen] = useState(defaultOpen);
 
   return (
     <motion.div
       onViewportEnter={() => {
         if (autoOpenOnView) setDoorsOpen(true);
       }}
-      viewport={{ once: true, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.15 }}
       style={{ perspective: "1800px" }}
       className={`relative overflow-hidden ${className}`}
     >
       {/* Revealed Content Inside */}
       <motion.div
-        initial={{ scale: 1.06, opacity: 0.35 }}
+        initial={{ scale: doorsOpen ? 1 : 1.04, opacity: doorsOpen ? 1 : 0.8 }}
         animate={{
-          scale: doorsOpen ? 1 : 1.06,
-          opacity: doorsOpen ? 1 : 0.35,
+          scale: doorsOpen ? 1 : 1.04,
+          opacity: 1,
         }}
-        transition={{ duration: 1.35, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
       </motion.div>
 
       {/* Left Architectural Door Leaf */}
       <motion.div
-        initial={{ x: "0%", rotateY: 0, opacity: 1 }}
+        initial={{ x: doorsOpen ? "-105%" : "0%", rotateY: doorsOpen ? 25 : 0, opacity: doorsOpen ? 0 : 1 }}
         animate={
           doorsOpen
             ? { x: "-105%", rotateY: 25, opacity: 0 }
             : { x: "0%", rotateY: 0, opacity: 1 }
         }
-        transition={{ duration: 1.35, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
         style={{ transformOrigin: "left center" }}
         onClick={() => setDoorsOpen(true)}
         className={`absolute inset-y-0 left-0 z-20 flex w-1/2 cursor-pointer items-center justify-end border-r border-[#D4AF37]/35 bg-[#05070B] pr-6 shadow-[15px_0_40px_rgba(0,0,0,0.9)] ${
@@ -211,21 +221,20 @@ export function ArchitecturalDoorReveal({
         }`}
       >
         <div className="pointer-events-none absolute inset-4 border border-[#D4AF37]/10" />
-        <span className="font-mono text-[10px] tracking-[0.35em] text-[#949BA6] uppercase">
+        <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#949BA6] uppercase">
           {doorLabelLeft}
         </span>
-        <div className="ml-4 h-16 w-[2px] bg-[#D4AF37]/70" />
       </motion.div>
 
       {/* Right Architectural Door Leaf */}
       <motion.div
-        initial={{ x: "0%", rotateY: 0, opacity: 1 }}
+        initial={{ x: doorsOpen ? "105%" : "0%", rotateY: doorsOpen ? -25 : 0, opacity: doorsOpen ? 0 : 1 }}
         animate={
           doorsOpen
             ? { x: "105%", rotateY: -25, opacity: 0 }
             : { x: "0%", rotateY: 0, opacity: 1 }
         }
-        transition={{ duration: 1.35, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
         style={{ transformOrigin: "right center" }}
         onClick={() => setDoorsOpen(true)}
         className={`absolute inset-y-0 right-0 z-20 flex w-1/2 cursor-pointer items-center justify-start border-l border-[#D4AF37]/35 bg-[#05070B] pl-6 shadow-[-15px_0_40px_rgba(0,0,0,0.9)] ${
@@ -233,8 +242,7 @@ export function ArchitecturalDoorReveal({
         }`}
       >
         <div className="pointer-events-none absolute inset-4 border border-[#D4AF37]/10" />
-        <div className="mr-4 h-16 w-[2px] bg-[#D4AF37]/70" />
-        <span className="font-mono text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase">
+        <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#D4AF37] uppercase">
           {doorLabelRight}
         </span>
       </motion.div>

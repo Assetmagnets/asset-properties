@@ -74,7 +74,7 @@ export default function MagneticCursor() {
         }`}
       >
         {isExpanded ? (
-          <span className="px-1 text-center font-mono text-[8px] font-medium uppercase tracking-[0.14em] text-[#D4AF37] leading-tight">
+          <span className="px-1 text-center font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#D4AF37] leading-tight">
             {cursorLabel}
           </span>
         ) : (

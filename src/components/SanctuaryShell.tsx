@@ -1,14 +1,37 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { CuratedProperty, LightingMode } from "@/types/property";
 import NavigationHeader from "@/components/NavigationHeader";
-import WhatsAppDossierModal from "@/components/WhatsAppDossierModal";
 import AdvisoryFooter from "@/components/AdvisoryFooter";
-import SmoothScrollProvider from "@/components/SmoothScrollProvider";
-import MagneticCursor from "@/components/MagneticCursor";
-import SanctuaryDoorPortal from "@/components/SanctuaryDoorPortal";
+import { Phone, MessageCircle } from "lucide-react";
+
+// Lazy-load heavy components to reduce initial JS bundle
+// SmoothScrollProvider: Lenis smooth-scroll with native requestAnimationFrame loop
+const SmoothScrollProvider = dynamic(
+  () => import("@/components/SmoothScrollProvider"),
+  { ssr: false }
+);
+
+// MagneticCursor: only used on desktop, returns null on touch devices
+const MagneticCursor = dynamic(
+  () => import("@/components/MagneticCursor"),
+  { ssr: false }
+);
+
+// WhatsAppDossierModal: only opened on user action, no need to load upfront
+const WhatsAppDossierModal = dynamic(
+  () => import("@/components/WhatsAppDossierModal"),
+  { ssr: false }
+);
+
+// SanctuaryDoorPortal: full-screen overlay, can load after initial paint
+const SanctuaryDoorPortal = dynamic(
+  () => import("@/components/SanctuaryDoorPortal"),
+  { ssr: false }
+);
 
 interface SanctuaryShellProps {
   properties: CuratedProperty[];
@@ -103,6 +126,36 @@ export default function SanctuaryShell({
         </main>
 
         <AdvisoryFooter />
+
+        {/* Floating Quick Advisory Concierge Pill */}
+        <div className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5">
+          <a
+            href="tel:+919777295707"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#D4AF37]/50 bg-[#0B101B]/95 text-[#D4AF37] shadow-[0_4px_20px_rgba(0,0,0,0.8)] hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#05070B] transition-all hover:scale-105"
+            title="Call Senior Advisory Desk: +91 9777295707"
+            aria-label="Call +91 9777295707"
+          >
+            <Phone className="h-4 w-4" />
+          </a>
+
+          <a
+            href="https://wa.me/919777295707?text=Hello%20Asset%20Magnets,%20I%20would%20like%20to%20consult%20regarding%20curated%20properties."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2 rounded-full border border-[#10B981]/50 bg-[#0B101B]/95 pl-3.5 pr-4 py-2.5 shadow-[0_4px_25px_rgba(16,185,129,0.2)] hover:border-[#10B981] hover:bg-[#10B981]/15 transition-all hover:scale-105"
+            title="WhatsApp Advisory Concierge: +91 9777295707"
+            aria-label="WhatsApp +91 9777295707"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10B981] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10B981]" />
+            </span>
+            <MessageCircle className="h-4 w-4 text-[#10B981]" />
+            <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[#F8F9FA] group-hover:text-white">
+              Concierge
+            </span>
+          </a>
+        </div>
 
         <WhatsAppDossierModal
           isOpen={dossierModalOpen}
