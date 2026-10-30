@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import XRayClient from "./XRayClient";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://assetproperties.in";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 
 export const metadata: Metadata = {
   title: "100-Point Asset Score™ X-Ray — Forensic Real Estate Underwriting",

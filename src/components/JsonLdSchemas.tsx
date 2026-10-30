@@ -1,6 +1,6 @@
 import React from "react";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://assetproperties.in";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 
 export default function JsonLdSchemas() {
   const organizationSchema = {
@@ -16,7 +16,7 @@ export default function JsonLdSchemas() {
     description:
       "Institutional-grade digital private wealth sanctuary and real estate underwriting platform in Bhubaneswar, Odisha. Auditing, rejecting, and curating ultra-luxury flats, landed duplex villas, and Grade-A commercial spaces.",
     telephone: "+91-9861000000",
-    email: "concierge@assetproperties.in",
+    email: "concierge@assetmagnets.com",
     priceRange: "₹₹₹₹",
     currenciesAccepted: "INR",
     paymentAccepted: "Bank Transfer, RTGS, Cheque, Statutory RERA Escrow",

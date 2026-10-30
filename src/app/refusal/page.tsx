@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import RefusalClient from "./RefusalClient";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://assetproperties.in";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 
 export const metadata: Metadata = {
   title: "The Philosophy of Refusal — 114 Disqualified Projects in Bhubaneswar",

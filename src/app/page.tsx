@@ -4,7 +4,7 @@ import { CURATED_PROPERTIES } from "@/data/curatedProperties";
 import { getScoreOverrides } from "@/lib/prisma";
 import SanctuaryOrchestrator from "@/components/SanctuaryOrchestrator";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://assetproperties.in";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 
 export const metadata: Metadata = {
   title: "ASSET PROPERTIES (@asset_properties17) — Private Real Estate Advisory Sanctuary | Bhubaneswar",
