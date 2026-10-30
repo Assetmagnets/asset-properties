@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, useSpring } from "framer-motion";
 
 export default function MagneticCursor() {
   const [cursorLabel, setCursorLabel] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  const labelRef = useRef<string | null>(null);
+  const isVisibleRef = useRef(false);
 
   const springConfig = { damping: 28, stiffness: 360, mass: 0.4 };
   const x = useSpring(-100, springConfig);
@@ -24,19 +27,33 @@ export default function MagneticCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       x.set(e.clientX);
       y.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true;
+        setIsVisible(true);
+      }
 
       const target = e.target as HTMLElement | null;
       const interactiveEl = target?.closest("[data-cursor]") as HTMLElement | null;
-      if (interactiveEl) {
-        setCursorLabel(interactiveEl.getAttribute("data-cursor"));
-      } else {
+      const nextLabel = interactiveEl ? interactiveEl.getAttribute("data-cursor") : null;
+      if (labelRef.current !== nextLabel) {
+        labelRef.current = nextLabel;
+        setCursorLabel(nextLabel);
+      }
+    };
+
+    const handleClearLabel = () => {
+      if (labelRef.current !== null) {
+        labelRef.current = null;
         setCursorLabel(null);
       }
     };
 
-    const handleClearLabel = () => setCursorLabel(null);
-    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseLeave = () => {
+      if (isVisibleRef.current) {
+        isVisibleRef.current = false;
+        setIsVisible(false);
+      }
+    };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("scroll", handleClearLabel, { passive: true });
@@ -49,7 +66,7 @@ export default function MagneticCursor() {
       window.removeEventListener("click", handleClearLabel, { capture: true });
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [isVisible, x, y]);
+  }, [x, y]);
 
   if (isTouchDevice) return null;
 

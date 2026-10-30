@@ -37,14 +37,14 @@ export default function Act1HeroThreshold({
             <Image
               src={
                 isDay
-                  ? "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
-                  : "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2400&q=80"
+                  ? "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=75"
+                  : "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=75"
               }
               alt="Asset Properties Curated Luxury Sanctuary Architecture"
               fill
               sizes="100vw"
               priority
-              quality={80}
+              quality={75}
               className="object-cover object-center filter contrast-[1.08] brightness-[0.92]"
             />
           </motion.div>
@@ -157,13 +157,13 @@ export default function Act1HeroThreshold({
               <Image
                 src={
                   isDay
-                    ? "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80"
-                    : "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=80"
+                    ? "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=75"
+                    : "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=75"
                 }
                 alt="Bhubaneswar Sanctuary Full-Bleed Architecture"
                 fill
                 sizes="100vw"
-                quality={80}
+                quality={75}
                 loading="lazy"
                 className="object-cover"
               />

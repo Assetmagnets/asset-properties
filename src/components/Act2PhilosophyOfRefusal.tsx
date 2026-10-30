@@ -13,11 +13,9 @@ export default function Act2PhilosophyOfRefusal({
 }: Act2PhilosophyOfRefusalProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [counters, setCounters] = useState({
-    audited: 142,
-    rejected: 114,
-    approved: 28,
-  });
+  const auditedRef = useRef<HTMLDivElement>(null);
+  const rejectedRef = useRef<HTMLDivElement>(null);
+  const approvedRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -38,11 +36,15 @@ export default function Act2PhilosophyOfRefusal({
             const progress = Math.min(elapsed / duration, 1);
             const ease = easeOutPower3(progress);
 
-            setCounters({
-              audited: Math.round(142 * ease),
-              rejected: Math.round(114 * ease),
-              approved: Math.round(28 * ease),
-            });
+            if (auditedRef.current) {
+              auditedRef.current.textContent = String(Math.round(142 * ease));
+            }
+            if (rejectedRef.current) {
+              rejectedRef.current.textContent = String(Math.round(114 * ease));
+            }
+            if (approvedRef.current) {
+              approvedRef.current.textContent = String(Math.round(28 * ease));
+            }
 
             if (progress < 1) {
               animFrameId = requestAnimationFrame(step);
@@ -90,8 +92,8 @@ export default function Act2PhilosophyOfRefusal({
         {/* 3 Monumental Numbers with Crisp Authority */}
         <div className={`${hideHeader ? "mt-4" : "mt-20"} grid grid-cols-1 gap-10 text-center sm:grid-cols-3`}>
           <div className="rounded-2xl border border-[#D4AF37]/20 bg-[#0B101B]/60 p-8 sm:p-10">
-            <div className="font-serif text-6xl sm:text-7xl font-medium text-[#F8F9FA]">
-              {counters.audited}
+            <div ref={auditedRef} className="font-serif text-6xl sm:text-7xl font-medium text-[#F8F9FA]">
+              142
             </div>
             <div className="mt-3 font-sans text-sm font-semibold uppercase tracking-wider text-[#A6B0BF]">
               Bhubaneswar Projects Audited
@@ -102,8 +104,8 @@ export default function Act2PhilosophyOfRefusal({
           </div>
 
           <div className="rounded-2xl border border-[#D4AF37]/35 bg-[#0B101B]/80 p-8 sm:p-10 shadow-[0_0_30px_rgba(212,175,55,0.08)]">
-            <div className="font-serif text-6xl sm:text-7xl font-semibold text-[#D4AF37]">
-              {counters.rejected}
+            <div ref={rejectedRef} className="font-serif text-6xl sm:text-7xl font-semibold text-[#D4AF37]">
+              114
             </div>
             <div className="mt-3 font-sans text-sm font-semibold uppercase tracking-wider text-[#D4AF37]">
               Disqualified (80.2%)
@@ -114,8 +116,8 @@ export default function Act2PhilosophyOfRefusal({
           </div>
 
           <div className="rounded-2xl border border-[#10B981]/30 bg-[#0B101B]/60 p-8 sm:p-10">
-            <div className="font-serif text-6xl sm:text-7xl font-semibold text-[#10B981]">
-              {counters.approved}
+            <div ref={approvedRef} className="font-serif text-6xl sm:text-7xl font-semibold text-[#10B981]">
+              28
             </div>
             <div className="mt-3 font-sans text-sm font-semibold uppercase tracking-wider text-[#10B981]">
               Sanctuaries Approved

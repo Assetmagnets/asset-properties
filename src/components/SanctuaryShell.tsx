@@ -61,15 +61,20 @@ export default function SanctuaryShell({
   const [portalDoorsOpen, setPortalDoorsOpen] = useState<boolean>(
     pathname !== "/"
   );
+  const [showPortal, setShowPortal] = useState<boolean>(pathname === "/");
 
   useEffect(() => {
     if (pathname === "/") {
       const unlocked = sessionStorage.getItem("ap_portal_unlocked");
       if (unlocked === "true") {
         setPortalDoorsOpen(true);
+        setShowPortal(false);
+      } else {
+        setShowPortal(true);
       }
     } else {
       setPortalDoorsOpen(true);
+      setShowPortal(false);
     }
   }, [pathname]);
 
@@ -77,8 +82,10 @@ export default function SanctuaryShell({
     setPortalDoorsOpen(open);
     if (open) {
       sessionStorage.setItem("ap_portal_unlocked", "true");
+      setTimeout(() => setShowPortal(false), 1400);
     } else {
       sessionStorage.removeItem("ap_portal_unlocked");
+      setShowPortal(true);
     }
   };
 
@@ -101,11 +108,13 @@ export default function SanctuaryShell({
     <SmoothScrollProvider>
       <MagneticCursor />
 
-      {/* Full-Screen 3D Architectural Double-Door Entry Portal — Opens ONLY when user clicks "AP" */}
-      <SanctuaryDoorPortal
-        isOpen={portalDoorsOpen}
-        onOpenChange={handlePortalChange}
-      />
+      {/* Full-Screen 3D Architectural Double-Door Entry Portal — Loaded on-demand */}
+      {showPortal && (
+        <SanctuaryDoorPortal
+          isOpen={portalDoorsOpen}
+          onOpenChange={handlePortalChange}
+        />
+      )}
 
       <div className="min-h-screen bg-obsidian text-alabaster relative">
         <NavigationHeader
@@ -157,12 +166,14 @@ export default function SanctuaryShell({
           </a>
         </div>
 
-        <WhatsAppDossierModal
-          isOpen={dossierModalOpen}
-          onClose={() => setDossierModalOpen(false)}
-          property={selectedProperty}
-          allProperties={properties}
-        />
+        {dossierModalOpen && (
+          <WhatsAppDossierModal
+            isOpen={dossierModalOpen}
+            onClose={() => setDossierModalOpen(false)}
+            property={selectedProperty}
+            allProperties={properties}
+          />
+        )}
       </div>
     </SmoothScrollProvider>
   );

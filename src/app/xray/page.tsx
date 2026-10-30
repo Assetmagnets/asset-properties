@@ -1,50 +1,61 @@
-"use client";
-
 import React from "react";
-import dynamic from "next/dynamic";
-import { CURATED_PROPERTIES } from "@/data/curatedProperties";
-import SanctuaryShell from "@/components/SanctuaryShell";
-import SubpageHeroStage from "@/components/SubpageHeroStage";
-import Act4AssetScoreXRay from "@/components/Act4AssetScoreXRay";
+import type { Metadata } from "next";
+import XRayClient from "./XRayClient";
 
-const Mod6DecoyMatchmaker = dynamic(
-  () => import("@/components/Mod6DecoyMatchmaker"),
-  { ssr: true }
-);
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://assetproperties.in";
+
+export const metadata: Metadata = {
+  title: "100-Point Asset Score™ X-Ray — Forensic Real Estate Underwriting",
+  description:
+    "Explore the 100-Point Asset Score™ matrix for Bhubaneswar real estate: Legal Purity & Title (25pts), Structural Forensics (20pts), True RERA Carpet Efficiency (20pts), Corridor Growth (20pts), and Solar Vastu (15pts).",
+  alternates: {
+    canonical: `${SITE_URL}/xray`,
+  },
+  openGraph: {
+    title: "100-Point Asset Score™ X-Ray — Forensic Underwriting in Bhubaneswar",
+    description:
+      "Inspect 5 institutional pillars: Gharabari Title, True Loading Index, Structural & Seismic Grade, Spatial Quality, and ORERA Escrow Compliance before making any real estate commitment.",
+    url: `${SITE_URL}/xray`,
+    type: "website",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "100-Point Asset Score™ X-Ray — ASSET PROPERTIES Bhubaneswar",
+      },
+    ],
+  },
+  keywords: [
+    "100 point asset score bhubaneswar",
+    "real estate audit methodology odisha",
+    "leica laser carpet area verification",
+    "mivan construction luxury apartments patia",
+    "vastu audit heliodon simulation bhubaneswar",
+    "property due diligence matrix",
+  ],
+};
 
 export default function XRayPage() {
   return (
-    <SanctuaryShell properties={CURATED_PROPERTIES}>
-      {({ lightingMode, selectedProperty, setSelectedProperty, onRequestDossier }) => (
-        <div className="w-full">
-          <SubpageHeroStage
-            badge="CHAMBER 04 • UNDERWRITING MATRIX • 100-POINT AUDIT"
-            badgeDotColor="bg-[#D4AF37]"
-            titlePrefix="The 100-Point "
-            titleAccent="Forensic X-Ray™"
-            titleSuffix="."
-            description="We inspect 5 institutional pillars: Gharabari Title, True Loading Index, Structural & Seismic Grade, Spatial Quality, and ORERA Escrow Compliance before recommending any investment."
-            metrics={[
-              { value: "100", label: "Audit Benchmark", color: "text-[#D4AF37]" },
-              { value: "5", label: "Forensic Pillars", color: "text-[#10B981]" },
-              { value: "0%", label: "Broker Inflations", color: "text-[#F8F9FA]" },
-            ]}
-            scrollPrompt="Examine Scoring Radar & Decoys"
-            lightingMode={lightingMode}
-          />
-          <Act4AssetScoreXRay
-            properties={CURATED_PROPERTIES}
-            selectedProperty={selectedProperty}
-            onSelectProperty={(prop) => setSelectedProperty(prop)}
-            onRequestDossier={(prop) => onRequestDossier(prop)}
-            hideHeader={true}
-          />
-          <Mod6DecoyMatchmaker
-            selectedProperty={selectedProperty}
-            onRequestDossier={(prop) => onRequestDossier(prop)}
-          />
-        </div>
-      )}
-    </SanctuaryShell>
+    <>
+      <XRayClient />
+
+      {/* Semantic AEO & Featured Snippet Candidate for 100-Point Asset Score */}
+      <section className="sr-only" aria-label="100-Point Asset Score Underwriting Criteria">
+        <h2>What is the 100-Point Asset Score™ for Bhubaneswar Real Estate?</h2>
+        <p>
+          The 100-Point Asset Score™ is an institutional real estate audit benchmark engineered by Asset Properties to assess properties in Bhubaneswar, Odisha.
+          The evaluation evaluates five weighted forensic pillars:
+        </p>
+        <ol>
+          <li><strong>Legal Purity &amp; Statutory Clearances (25 Points):</strong> Validates ORERA project registration, BDA sanctioned master plan approvals, 30+ year unbroken Encumbrance Certificates (EC), and direct Gharabari conversion on Bhulekh Odisha.</li>
+          <li><strong>Structural Integrity &amp; Material Grade (20 Points):</strong> Audits Mivan aluminum formwork, seismic engineering, Saint-Gobain acoustic double glazing, and high-strength concrete cores.</li>
+          <li><strong>True RERA Carpet Area Efficiency (20 Points):</strong> Conducted using handheld Leica laser distometers to detect ghost loading, rewarding projects with 16% to 22% true loading over market averages of 33%+.</li>
+          <li><strong>Corridor Capital Growth &amp; Infrastructure (20 Points):</strong> Evaluates proximity to the Bhubaneswar-Cuttack Metro Phase-1, IT SEZ expansions, and 200ft CDP arterial roads.</li>
+          <li><strong>Solar Vastu &amp; Micro-Climate Harmony (15 Points):</strong> Simulates morning 7:00 AM East natural daylight penetration and natural cross-ventilation.</li>
+        </ol>
+      </section>
+    </>
   );
 }

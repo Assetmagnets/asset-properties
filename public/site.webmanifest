@@ -1,0 +1,16 @@
+{
+  "name": "ASSET PROPERTIES — Private Real Estate Advisory Sanctuary",
+  "short_name": "Asset Properties",
+  "description": "Institutional-grade real estate underwriting & curation in Bhubaneswar, Odisha (@asset_properties17).",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05070B",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
