@@ -7,7 +7,8 @@ import {
 import "./globals.css";
 import JsonLdSchemas from "@/components/JsonLdSchemas";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const SITE_URL = rawUrl.replace(/\/+$/, "");
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],

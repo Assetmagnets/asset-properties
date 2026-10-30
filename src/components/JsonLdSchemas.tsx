@@ -1,6 +1,7 @@
 import React from "react";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const SITE_URL = rawUrl.replace(/\/+$/, "");
 
 export default function JsonLdSchemas() {
   const organizationSchema = {

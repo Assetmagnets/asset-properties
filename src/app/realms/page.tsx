@@ -2,7 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 import RealmsClient from "./RealmsClient";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const SITE_URL = rawUrl.replace(/\/+$/, "");
 
 export const metadata: Metadata = {
   title: "Curated Real Estate Realms — Luxury Flats, Villas & Offices in Bhubaneswar",

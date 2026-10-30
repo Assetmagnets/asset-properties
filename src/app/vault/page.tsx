@@ -2,7 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 import VaultClient from "./VaultClient";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
+const SITE_URL = rawUrl.replace(/\/+$/, "");
 
 export const metadata: Metadata = {
   title: "The Private Vault — Off-Market & Pre-Launch Real Estate Mandates in Bhubaneswar",
