@@ -1,14 +1,18 @@
 "use client";
 
 import React from "react";
-import { CURATED_PROPERTIES } from "@/data/curatedProperties";
+import { CuratedProperty } from "@/types/property";
 import SanctuaryShell from "@/components/SanctuaryShell";
 import SubpageHeroStage from "@/components/SubpageHeroStage";
 import Act2PhilosophyOfRefusal from "@/components/Act2PhilosophyOfRefusal";
 
-export default function RefusalClient() {
+interface RefusalClientProps {
+  initialProperties: CuratedProperty[];
+}
+
+export default function RefusalClient({ initialProperties }: RefusalClientProps) {
   return (
-    <SanctuaryShell properties={CURATED_PROPERTIES}>
+    <SanctuaryShell properties={initialProperties}>
       {({ lightingMode }) => (
         <div className="w-full">
           <SubpageHeroStage
@@ -21,7 +25,7 @@ export default function RefusalClient() {
             metrics={[
               { value: "142", label: "Projects Audited", color: "text-[#F8F9FA]" },
               { value: "114", label: "Disqualified (80%)", color: "text-[#D4AF37]" },
-              { value: "28", label: "Approved Sanctuaries", color: "text-[#10B981]" },
+              { value: `${initialProperties.length}`, label: "Approved Sanctuaries", color: "text-[#10B981]" },
             ]}
             scrollPrompt="Inspect Forensic Rejection Dossiers"
             lightingMode={lightingMode}

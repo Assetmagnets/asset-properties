@@ -10,6 +10,8 @@ import {
   Lock,
   CheckCircle2,
   MapPin,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 
 interface WhatsAppDossierModalProps {
@@ -53,6 +55,18 @@ export default function WhatsAppDossierModal({
   const handleDispatch = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
+
+    if (!fullName.trim()) {
+      setErrorMsg("Please provide your full legal name for dynamic watermarking.");
+      return;
+    }
+
+    const cleanPhone = whatsappNumber.replace(/\D/g, "");
+    if (cleanPhone.length < 10) {
+      setErrorMsg("Please enter a valid 10-digit Indian WhatsApp mobile number.");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -60,8 +74,8 @@ export default function WhatsAppDossierModal({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fullName,
-          whatsappNumber,
+          fullName: fullName.trim(),
+          whatsappNumber: cleanPhone.slice(-10),
           buyerPersona,
           propertySlug: selectedSlug,
           utmSource: "whatsapp_dossier_modal_asset_properties17",
@@ -119,7 +133,7 @@ export default function WhatsAppDossierModal({
               </p>
               <p className="mt-2 text-xs text-[#A6B0BF] font-sans">
                 {dispatchResult.dpdpCompliance} • Security rate-limit:{" "}
-                {dispatchResult.remainingRequestsThisHour}/3 remaining this hour
+                {dispatchResult.remainingRequestsThisHour}/5 remaining this hour
               </p>
             </div>
 
@@ -147,7 +161,7 @@ export default function WhatsAppDossierModal({
           <form onSubmit={handleDispatch} className="mt-6 space-y-5">
             <div>
               <label className="font-sans text-xs font-semibold uppercase tracking-wider text-[#A6B0BF] block mb-2">
-                Select Approved Mandate
+                Select Approved Mandate *
               </label>
               <select
                 value={selectedSlug}
@@ -179,12 +193,12 @@ export default function WhatsAppDossierModal({
 
               <div>
                 <label className="font-sans text-xs font-semibold uppercase tracking-wider text-[#A6B0BF] block mb-2">
-                  WhatsApp Number (India) *
+                  WhatsApp Number (10 Digits) *
                 </label>
                 <input
                   type="tel"
                   required
-                  placeholder="10-Digit Mobile"
+                  placeholder="e.g. 9861048291"
                   value={whatsappNumber}
                   onChange={(e) => setWhatsappNumber(e.target.value)}
                   className="w-full rounded-xl border border-[#D4AF37]/30 bg-[#05070B] px-4 py-3 font-mono text-sm text-[#F8F9FA] placeholder-[#A6B0BF]/50 focus:border-[#D4AF37] focus:outline-none"
@@ -194,7 +208,7 @@ export default function WhatsAppDossierModal({
 
             <div>
               <label className="font-sans text-xs font-semibold uppercase tracking-wider text-[#A6B0BF] block mb-2">
-                Investor Profile
+                Investor Profile *
               </label>
               <div className="grid grid-cols-3 gap-2.5">
                 {[
@@ -226,19 +240,25 @@ export default function WhatsAppDossierModal({
             </div>
 
             {errorMsg && (
-              <div className="rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-xs font-sans text-red-300">
-                {errorMsg}
+              <div className="flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-xs font-sans text-red-300">
+                <AlertCircle className="h-4 w-4 shrink-0 text-red-400" />
+                <span>{errorMsg}</span>
               </div>
             )}
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-xl bg-[#D4AF37] py-4 font-sans text-xs sm:text-sm font-bold uppercase tracking-wider text-[#05070B] shadow-gold-glow hover:bg-[#e5c349] transition disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#D4AF37] py-4 font-sans text-xs sm:text-sm font-bold uppercase tracking-wider text-[#05070B] shadow-gold-glow hover:bg-[#e5c349] transition disabled:opacity-50"
             >
-              {isLoading
-                ? "Stamping Diagonal Watermark & Encrypting..."
-                : "Generate Signed Legal Dossier & Dispatch"}
+              {isLoading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Stamping Diagonal Watermark &amp; Encrypting...
+                </>
+              ) : (
+                "Generate Signed Legal Dossier & Dispatch"
+              )}
             </button>
 
             <div className="flex flex-wrap items-center justify-between gap-2 font-sans text-xs text-[#A6B0BF] pt-2 border-t border-white/5">
@@ -246,7 +266,7 @@ export default function WhatsAppDossierModal({
                 <ShieldCheck className="h-4 w-4" />
                 AES-256-GCM Encrypted (DPDP Act 2023 Compliant)
               </span>
-              <span>Rate Limit: 3 Dispatches / IP / Hour</span>
+              <span>Rate Limit: 5 Dispatches / IP / Hour</span>
             </div>
 
             <div className="rounded-xl border border-[#D4AF37]/20 bg-[#05070B] p-3 text-center text-xs font-mono text-[#CBD5E1] space-y-1.5">

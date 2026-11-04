@@ -2,7 +2,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
-import { CURATED_PROPERTIES } from "@/data/curatedProperties";
+import { CuratedProperty } from "@/types/property";
 import SanctuaryShell from "@/components/SanctuaryShell";
 import SubpageHeroStage from "@/components/SubpageHeroStage";
 import Act4AssetScoreXRay from "@/components/Act4AssetScoreXRay";
@@ -12,9 +12,13 @@ const Mod6DecoyMatchmaker = dynamic(
   { ssr: true }
 );
 
-export default function XRayClient() {
+interface XRayClientProps {
+  initialProperties: CuratedProperty[];
+}
+
+export default function XRayClient({ initialProperties }: XRayClientProps) {
   return (
-    <SanctuaryShell properties={CURATED_PROPERTIES}>
+    <SanctuaryShell properties={initialProperties}>
       {({ lightingMode, selectedProperty, setSelectedProperty, onRequestDossier }) => (
         <div className="w-full">
           <SubpageHeroStage
@@ -33,7 +37,7 @@ export default function XRayClient() {
             lightingMode={lightingMode}
           />
           <Act4AssetScoreXRay
-            properties={CURATED_PROPERTIES}
+            properties={initialProperties}
             selectedProperty={selectedProperty}
             onSelectProperty={(prop) => setSelectedProperty(prop)}
             onRequestDossier={(prop) => onRequestDossier(prop)}

@@ -18,12 +18,14 @@ import {
   Mail,
   MessageCircle,
   MapPin,
+  Sparkles,
 } from "lucide-react";
 
 interface NavigationHeaderProps {
   lightingMode: LightingMode;
   onToggleLighting: () => void;
   onOpenDossierModal: () => void;
+  onOpenConsultModal?: () => void;
   onReplayDoors?: () => void;
 }
 
@@ -64,17 +66,39 @@ const NAV_LINKS = [
     num: "06",
     desc: "Off-Market Mandates & Golden-Hour Access",
   },
+  {
+    href: "/blog",
+    label: "Blog",
+    num: "07",
+    desc: "Market Intelligence & Legal Underwriting Guides",
+  },
 ];
 
 export default function NavigationHeader({
   lightingMode,
   onToggleLighting,
   onOpenDossierModal,
+  onOpenConsultModal,
   onReplayDoors,
 }: NavigationHeaderProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const isDay = lightingMode === "SOLAR_DAYLIGHT";
+
+  // Check if admin is currently authenticated in session
+  useEffect(() => {
+    async function checkAdmin() {
+      try {
+        const res = await fetch("/api/v1/auth/me");
+        const data = await res.json();
+        setIsAdminLoggedIn(!!data.authenticated);
+      } catch {
+        setIsAdminLoggedIn(false);
+      }
+    }
+    checkAdmin();
+  }, [pathname]);
 
   // Auto-close mobile drawer on route change
   useEffect(() => {
@@ -82,7 +106,7 @@ export default function NavigationHeader({
   }, [pathname]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#D4AF37]/15 bg-[#05070B]/92 backdrop-blur-2xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#D4AF37]/15 bg-[#05070B]/92 backdrop-blur-md">
       <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Authoritative Advisory Monogram & Brand Lockup */}
         <Link
@@ -107,8 +131,8 @@ export default function NavigationHeader({
           </div>
         </Link>
 
-        {/* Center Navigation Links — Compactable & Responsive across lg/xl/2xl */}
-        <nav className="hidden lg:flex items-center justify-center gap-3.5 xl:gap-6 2xl:gap-8 whitespace-nowrap font-sans text-[11px] xl:text-xs uppercase tracking-[0.14em] xl:tracking-[0.16em] font-medium shrink-0 px-4">
+        {/* Center Navigation Links */}
+        <nav className="hidden lg:flex items-center justify-center gap-2.5 xl:gap-5 2xl:gap-7 whitespace-nowrap font-sans text-[11px] xl:text-xs uppercase tracking-[0.12em] xl:tracking-[0.15em] font-medium shrink-0 px-2 xl:px-4">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -137,88 +161,79 @@ export default function NavigationHeader({
 
         {/* Right Executive Action Controls */}
         <div className="flex items-center gap-2 sm:gap-2.5 xl:gap-3 whitespace-nowrap shrink-0">
-          {/* Lighting Mode Ambient Toggle (Desktop lg+ only; on small screens, cleanly placed inside the menubar) */}
+          {/* Lighting Mode Ambient Toggle */}
           <button
             type="button"
             onClick={onToggleLighting}
             data-cursor={isDay ? "DUSK" : "SOLAR"}
             className="hidden lg:flex items-center gap-1.5 rounded-full border border-[#D4AF37]/35 bg-[#0B101B]/80 px-2.5 sm:px-3 py-1.5 font-sans text-xs font-medium uppercase tracking-wider text-[#F8F9FA] hover:border-[#D4AF37] hover:bg-[#0B101B] transition shadow-sm shrink-0"
             title="Toggle Solar Daylight vs. Nocturnal Dusk"
-            aria-label="Toggle Solar Daylight vs. Nocturnal Dusk"
           >
             {isDay ? (
               <>
                 <Sun className="h-3.5 w-3.5 text-[#D4AF37]" />
-                <span className="hidden sm:inline 2xl:hidden text-[#D4AF37] font-semibold">
-                  Solar
-                </span>
-                <span className="hidden 2xl:inline text-[#D4AF37] font-semibold">
-                  7:00 AM Solar
-                </span>
+                <span className="hidden sm:inline text-[#D4AF37] font-semibold">Solar</span>
               </>
             ) : (
               <>
                 <Moon className="h-3.5 w-3.5 text-[#D4AF37]" />
-                <span className="hidden sm:inline 2xl:hidden text-stone-muted">
-                  Dusk
-                </span>
-                <span className="hidden 2xl:inline text-stone-muted">
-                  8:00 PM Dusk
-                </span>
+                <span className="hidden sm:inline text-stone-muted">Dusk</span>
               </>
             )}
           </button>
 
-          {/* Direct Concierge Phone Contact */}
-          <a
-            href="tel:+919777295707"
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#D4AF37]/30 bg-[#0B101B]/80 px-3 py-1.5 font-mono text-xs text-[#CBD5E1] hover:border-[#D4AF37] hover:text-[#D4AF37] transition shadow-sm shrink-0"
-            title="Direct Concierge: +91 9777295707"
-          >
-            <Phone className="h-3 w-3 text-[#D4AF37]" />
-            <span className="hidden xl:inline">+91 9777295707</span>
-            <span className="xl:hidden">Call</span>
-          </a>
+          {/* Consult Button (Opens Consultation Form) */}
+          {onOpenConsultModal && (
+            <button
+              type="button"
+              onClick={onOpenConsultModal}
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#D4AF37]/50 bg-[#0B101B] px-3.5 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#05070B] transition shadow-sm shrink-0"
+            >
+              <MessageCircle className="h-3.5 w-3.5" />
+              <span>Consult</span>
+            </button>
+          )}
 
-          {/* Primary CTA: Verified Dossier (Desktop lg+ only; on small screens, placed inside the menubar) */}
+          {/* Primary CTA: Verified Dossier */}
           <button
             type="button"
             onClick={onOpenDossierModal}
             data-cursor="DOSSIER"
-            className="hidden lg:inline-flex items-center rounded-full bg-[#D4AF37] px-3.5 xl:px-5 py-2 font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] transition active:scale-95 shrink-0"
+            className="hidden lg:inline-flex items-center rounded-full bg-[#D4AF37] px-3.5 xl:px-4 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition shrink-0"
           >
-            Verified Dossier
+            Dossier
           </button>
 
-          {/* Replay Sanctuary Doors (Compact icon on xl+ screens) */}
-          {onReplayDoors && (
-            <button
-              type="button"
-              onClick={onReplayDoors}
-              data-cursor="DOORS"
-              className="hidden xl:flex h-8.5 w-8.5 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-[#0B101B]/70 text-[#A6B0BF] hover:border-[#D4AF37] hover:text-[#D4AF37] transition shrink-0"
-              title="Re-engage Architectural Sanctuary Doors"
-            >
-              <DoorOpen className="h-4 w-4" />
-            </button>
-          )}
-
-          {/* Internal RBAC Vault (Discreet lock icon on xl+ screens) */}
+          {/* Dynamic Admin / Dashboard Profile Button */}
           <Link
-            href="/admin/vault"
-            data-cursor="ADMIN"
-            className="hidden xl:flex h-8.5 w-8.5 items-center justify-center rounded-full border border-[#D4AF37]/25 text-[#A6B0BF] hover:border-[#D4AF37] hover:text-[#D4AF37] hover:bg-[#0B101B] transition shrink-0"
-            title="Internal RBAC Governance Vault"
+            href={isAdminLoggedIn ? "/admin/vault" : "/admin/login"}
+            data-cursor={isAdminLoggedIn ? "VAULT" : "ADMIN"}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider transition shadow-sm shrink-0 ${
+              isAdminLoggedIn
+                ? "border border-emerald-500/50 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25"
+                : "border border-[#D4AF37]/40 bg-[#0B101B] text-[#F4F1EA] hover:border-[#D4AF37] hover:text-[#D4AF37]"
+            }`}
+            title={isAdminLoggedIn ? "Open Admin Dashboard (Active Session)" : "Administrator Login Portal"}
           >
-            <Lock className="h-3.5 w-3.5" />
+            {isAdminLoggedIn ? (
+              <>
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Dashboard</span>
+              </>
+            ) : (
+              <>
+                <Lock className="h-3.5 w-3.5 text-[#D4AF37]" />
+                <span>Admin</span>
+              </>
+            )}
           </Link>
 
-          {/* Menu Hamburger / Close Toggle — Prominent & highly visible on all small screens (< lg) */}
+          {/* Menu Hamburger / Close Toggle */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            className="flex lg:hidden items-center gap-2 rounded-full border border-[#D4AF37]/60 bg-[#0B101B]/95 px-3.5 py-1.5 text-[#F8F9FA] hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition shadow-[0_0_15px_rgba(212,175,55,0.2)] shrink-0"
+            className="flex lg:hidden items-center gap-2 rounded-full border border-[#D4AF37]/60 bg-[#0B101B]/95 px-3 py-1.5 text-[#F8F9FA] hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition shrink-0"
           >
             <span className="font-sans text-[11px] font-semibold uppercase tracking-wider text-[#D4AF37]">
               {mobileMenuOpen ? "CLOSE" : "MENU"}
@@ -232,7 +247,7 @@ export default function NavigationHeader({
         </div>
       </div>
 
-      {/* Modern Responsive Navigation Drawer (Active on screens < lg) */}
+      {/* Modern Responsive Navigation Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -243,36 +258,30 @@ export default function NavigationHeader({
             className="lg:hidden overflow-hidden border-t border-[#D4AF37]/20 bg-[#05070B]/98 backdrop-blur-3xl shadow-2xl"
           >
             <div className="px-5 sm:px-6 py-5 space-y-4 max-h-[85vh] overflow-y-auto">
-              {/* Right Side Controls cleanly arranged inside the menubar for small screens */}
-              <div className="flex items-center gap-2.5 pb-3 border-b border-[#D4AF37]/15">
+              {/* Quick Action Buttons */}
+              <div className="grid grid-cols-2 gap-2.5 pb-3 border-b border-[#D4AF37]/15">
+                {onOpenConsultModal && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenConsultModal();
+                    }}
+                    className="rounded-xl border border-[#D4AF37]/60 bg-[#0B101B] py-2.5 px-3 text-center font-sans text-xs font-semibold uppercase tracking-wider text-[#D4AF37] hover:bg-[#D4AF37]/15 transition"
+                  >
+                    💬 Book Consultation
+                  </button>
+                )}
+
                 <button
                   type="button"
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenDossierModal();
                   }}
-                  className="flex-1 rounded-xl bg-[#D4AF37] py-2.5 px-4 text-center font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow-[0_0_15px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition active:scale-[0.99]"
+                  className="rounded-xl bg-[#D4AF37] py-2.5 px-3 text-center font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow hover:bg-[#e5c349] transition"
                 >
-                  Request Verified Dossier
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onToggleLighting}
-                  className="flex items-center gap-1.5 rounded-xl border border-[#D4AF37]/35 bg-[#0B101B] px-3.5 py-2.5 font-sans text-xs font-medium uppercase tracking-wider text-[#F8F9FA] hover:border-[#D4AF37] transition shrink-0"
-                  title="Toggle Solar Daylight vs. Nocturnal Dusk"
-                >
-                  {isDay ? (
-                    <>
-                      <Sun className="h-3.5 w-3.5 text-[#D4AF37]" />
-                      <span className="text-[#D4AF37] font-semibold">Solar</span>
-                    </>
-                  ) : (
-                    <>
-                      <Moon className="h-3.5 w-3.5 text-[#D4AF37]" />
-                      <span className="text-stone-muted">Dusk</span>
-                    </>
-                  )}
+                  📄 Request Dossier
                 </button>
               </div>
 
@@ -280,9 +289,23 @@ export default function NavigationHeader({
                 <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#D4AF37]">
                   Chambers of Advisory
                 </span>
-                <span className="font-mono text-[10px] text-stone-muted">
-                  Bhubaneswar • Odisha
-                </span>
+                <Link
+                  href={isAdminLoggedIn ? "/admin/vault" : "/admin/login"}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="inline-flex items-center gap-1 font-mono text-[11px] text-[#D4AF37] hover:underline"
+                >
+                  {isAdminLoggedIn ? (
+                    <>
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      <span className="text-emerald-400">Admin Dashboard</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="h-3 w-3" />
+                      <span>Admin Login</span>
+                    </>
+                  )}
+                </Link>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -327,114 +350,19 @@ export default function NavigationHeader({
               </div>
 
               {/* Mobile Drawer Bottom Actions */}
-              <div className="pt-4 border-t border-[#D4AF37]/15 flex flex-col gap-3">
-                {/* Mobile Ambient Lighting Switcher */}
-                <div className="flex items-center justify-between rounded-xl border border-[#D4AF37]/20 bg-[#0B101B]/80 px-4 py-3">
-                  <div className="flex items-center gap-2.5">
-                    {isDay ? (
-                      <Sun className="h-4 w-4 text-[#D4AF37]" />
-                    ) : (
-                      <Moon className="h-4 w-4 text-[#D4AF37]" />
-                    )}
-                    <div className="flex flex-col">
-                      <span className="font-sans text-xs font-medium text-[#F8F9FA]">
-                        {isDay ? "Solar Daylight" : "Nocturnal Dusk"}
-                      </span>
-                      <span className="font-mono text-[10px] text-stone-muted">
-                        {isDay ? "7:00 AM Architecture View" : "8:00 PM Ambient Lighting"}
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={onToggleLighting}
-                    className="rounded-lg border border-[#D4AF37]/35 bg-[#D4AF37]/10 px-3 py-1.5 font-mono text-[10px] font-semibold text-[#D4AF37] hover:bg-[#D4AF37]/20 transition uppercase tracking-wider"
-                  >
-                    Switch to {isDay ? "Dusk" : "Solar"}
-                  </button>
-                </div>
-
-                {/* Mobile Direct Advisory Contact */}
-                <div className="flex flex-col gap-2 rounded-xl border border-[#D4AF37]/25 bg-[#0B101B]/90 p-3 text-xs font-mono">
-                  <div className="text-[10px] uppercase tracking-wider text-[#A6B0BF]">
-                    Direct Advisory Desk &amp; Concierge
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <a
-                      href="tel:+919777295707"
-                      className="inline-flex items-center gap-1.5 text-[#F8F9FA] hover:text-[#D4AF37]"
-                    >
-                      <Phone className="h-3.5 w-3.5 text-[#D4AF37]" />
-                      <span>+91 9777295707</span>
-                    </a>
-                    <a
-                      href="https://wa.me/919777295707?text=Hello%20Asset%20Magnets,%20I%20would%20like%20to%20consult%20regarding%20curated%20properties."
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[#10B981] font-sans font-semibold"
-                    >
-                      <MessageCircle className="h-3.5 w-3.5" />
-                      <span>WhatsApp</span>
-                    </a>
-                  </div>
-                  <a
-                    href="mailto:info@assetmagnets.com"
-                    className="inline-flex items-center gap-1.5 text-[#CBD5E1] hover:text-[#D4AF37] truncate"
-                  >
-                    <Mail className="h-3.5 w-3.5 text-[#D4AF37]" />
-                    <span>info@assetmagnets.com</span>
-                  </a>
-                  <a
-                    href="https://www.google.com/maps?cid=17158658638632800577&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-[#CBD5E1] hover:text-[#D4AF37] truncate"
-                  >
-                    <MapPin className="h-3.5 w-3.5 text-[#D4AF37]" />
-                    <span>Patia, Bhubaneswar (Google Maps ↗)</span>
-                  </a>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenDossierModal();
-                  }}
-                  className="w-full rounded-xl bg-[#D4AF37] py-3 text-center font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow-lg hover:bg-[#e5c349] transition active:scale-[0.99]"
+              <div className="pt-3 border-t border-[#D4AF37]/15 flex items-center justify-between text-xs font-mono">
+                <Link
+                  href="/admin/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="inline-flex items-center gap-1.5 text-stone-muted hover:text-[#D4AF37]"
                 >
-                  Request Verified Dossier via WhatsApp
-                </button>
+                  <Lock className="h-3.5 w-3.5 text-[#D4AF37]" />
+                  <span>Administrator Portal</span>
+                </Link>
 
-                <div className="flex items-center justify-between pt-1 text-xs">
-                  {onReplayDoors && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        onReplayDoors();
-                      }}
-                      className="inline-flex items-center gap-1.5 text-stone-muted hover:text-[#D4AF37] transition"
-                    >
-                      <DoorOpen className="h-3.5 w-3.5 text-[#D4AF37]" />
-                      Re-engage Doors
-                    </button>
-                  )}
-
-                  <Link
-                    href="/admin/vault"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="inline-flex items-center gap-1.5 text-stone-muted hover:text-[#D4AF37] transition"
-                  >
-                    <Lock className="h-3.5 w-3.5 text-[#D4AF37]" />
-                    Internal RBAC Vault
-                  </Link>
-
-                  <div className="inline-flex items-center gap-1.5 text-emerald-400 font-mono text-[11px]">
-                    <ShieldCheck className="h-3.5 w-3.5" />
-                    DPDP 2023 Verified
-                  </div>
-                </div>
+                <a href="tel:+919777295707" className="text-[#D4AF37]">
+                  +91 9777295707
+                </a>
               </div>
             </div>
           </motion.div>

@@ -13,6 +13,7 @@ import {
   Mail,
   MessageCircle,
   MapPin,
+  Lock,
 } from "lucide-react";
 
 export default function AdvisoryFooter() {
@@ -167,9 +168,11 @@ export default function AdvisoryFooter() {
           <Link href="/calculus" className="hover:text-[#D4AF37] transition">Odisha Financial Lab</Link>
           <span className="text-white/20">•</span>
           <Link href="/vault" className="hover:text-[#D4AF37] transition">Private Vault</Link>
+          <span className="text-white/20">•</span>
+          <Link href="/blog" className="hover:text-[#D4AF37] transition">Intelligence Blog</Link>
         </div>
 
-        {/* Statutory Government Links */}
+        {/* Statutory Government Links & Explicit Admin Portal Link */}
         <div className="mt-8 flex flex-wrap justify-center gap-8 font-sans text-xs uppercase tracking-wider font-medium text-[#A6B0BF]">
           <a
             href="https://rera.odisha.gov.in/"
@@ -198,9 +201,12 @@ export default function AdvisoryFooter() {
             <span>IGR Odisha Revenue</span>
             <span>↗</span>
           </a>
-          <Link href="/admin/vault" className="hover:text-[#D4AF37] transition flex items-center gap-1.5">
-            <span>Admin RBAC Vault</span>
-            <span>🔒</span>
+          <Link
+            href="/admin/login"
+            className="hover:text-[#D4AF37] text-[#D4AF37] font-semibold transition flex items-center gap-1.5 border border-[#D4AF37]/30 bg-[#0B101B] px-3 py-1 rounded-full"
+          >
+            <Lock size={12} className="text-[#D4AF37]" />
+            <span>Admin Portal (Login)</span>
           </Link>
         </div>
 
@@ -256,7 +262,7 @@ export default function AdvisoryFooter() {
         </div>
 
         <div className="mt-8 border-t border-white/5 pt-6 font-sans text-xs text-[#A6B0BF]/70">
-          DPDP Act 2023 AES-256 Encrypted &nbsp;•&nbsp; 15-Minute Dynamic Watermarked Dossier Engine &nbsp;•&nbsp; Zero Broker Spam Protocol
+          DPDP Act 2023 AES-256 Encrypted &nbsp;•&nbsp; Neon Serverless PostgreSQL &nbsp;•&nbsp; 15-Minute Dynamic Watermarked Dossier Engine &nbsp;•&nbsp; Zero Broker Spam Protocol
           <div className="mt-2 text-[#A6B0BF]/50">
             © {new Date().getFullYear()} Asset Properties Real Estate Advisory. Bhubaneswar, Odisha, India. All rights reserved. ORERA Advisory Compliance Standard.
           </div>

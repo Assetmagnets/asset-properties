@@ -1,14 +1,18 @@
 "use client";
 
 import React from "react";
-import { CURATED_PROPERTIES } from "@/data/curatedProperties";
+import { CuratedProperty } from "@/types/property";
 import SanctuaryShell from "@/components/SanctuaryShell";
 import SubpageHeroStage from "@/components/SubpageHeroStage";
 import Mod5OdishaFinancialLab from "@/components/Mod5OdishaFinancialLab";
 
-export default function CalculusClient() {
+interface CalculusClientProps {
+  initialProperties: CuratedProperty[];
+}
+
+export default function CalculusClient({ initialProperties }: CalculusClientProps) {
   return (
-    <SanctuaryShell properties={CURATED_PROPERTIES}>
+    <SanctuaryShell properties={initialProperties}>
       {({ lightingMode }) => (
         <div className="w-full">
           <SubpageHeroStage

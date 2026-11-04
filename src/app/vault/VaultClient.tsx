@@ -2,7 +2,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
-import { CURATED_PROPERTIES } from "@/data/curatedProperties";
+import { CuratedProperty } from "@/types/property";
 import SanctuaryShell from "@/components/SanctuaryShell";
 import SubpageHeroStage from "@/components/SubpageHeroStage";
 import Mod7PrivateVaultDossier from "@/components/Mod7PrivateVaultDossier";
@@ -12,11 +12,15 @@ const Mod8GoldenHourScheduler = dynamic(
   { ssr: true }
 );
 
-export default function VaultClient() {
-  const vaultProperties = CURATED_PROPERTIES.filter((p) => p.isOffMarketVault);
+interface VaultClientProps {
+  initialProperties: CuratedProperty[];
+}
+
+export default function VaultClient({ initialProperties }: VaultClientProps) {
+  const vaultProperties = initialProperties.filter((p) => p.isOffMarketVault);
 
   return (
-    <SanctuaryShell properties={CURATED_PROPERTIES}>
+    <SanctuaryShell properties={initialProperties}>
       {({ lightingMode, onRequestDossier }) => (
         <div className="w-full">
           <SubpageHeroStage
@@ -35,11 +39,11 @@ export default function VaultClient() {
             lightingMode={lightingMode}
           />
           <Mod7PrivateVaultDossier
-            vaultProperties={vaultProperties}
+            vaultProperties={vaultProperties.length > 0 ? vaultProperties : initialProperties.slice(0, 3)}
             onRequestDossier={(prop) => onRequestDossier(prop)}
             hideHeader={true}
           />
-          <Mod8GoldenHourScheduler properties={CURATED_PROPERTIES} />
+          <Mod8GoldenHourScheduler properties={initialProperties} />
         </div>
       )}
     </SanctuaryShell>

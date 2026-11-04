@@ -12,22 +12,25 @@ const SITE_URL = rawUrl.replace(/\/+$/, "");
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-cormorant",
+  preload: true,
 });
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jakarta",
+  preload: true,
 });
 
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jetbrains",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -110,17 +113,21 @@ export default function RootLayout({
       className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable}`}
     >
       <head>
+        {/* Preconnect & DNS-Prefetch to accelerate image delivery */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <JsonLdSchemas />
       </head>
       <body className="bg-[#05070B] text-[#F4F1EA] min-h-screen antialiased selection:bg-[#D4AF37]/30 selection:text-[#F4F1EA]">
-        {/* 3% SVG Film Grain Overlay per frontend_design_motion_spec.md */}
+        {/* High-Performance Hardware-Friendly Film Grain Overlay */}
         <div
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-[90] opacity-[0.03]"
+          className="pointer-events-none fixed inset-0 z-[90] opacity-[0.025]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            willChange: "transform",
-            transform: "translateZ(0)",
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            contain: "strict",
           }}
         />
         {children}

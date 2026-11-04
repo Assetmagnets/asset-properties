@@ -1,21 +1,24 @@
 import React from "react";
 import type { Metadata } from "next";
 import CalculusClient from "./CalculusClient";
+import { getDynamicProperties } from "@/lib/db-properties";
+
+export const revalidate = 0; // Dynamic from Neon DB
 
 const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 const SITE_URL = rawUrl.replace(/\/+$/, "");
 
 export const metadata: Metadata = {
-  title: "Odisha Real Estate Financial Lab — Stamp Duty & True Carpet Calculus",
+  title: "Odisha Financial & Loss Lab — Stamp Duty, True Carpet & Rental Yield Calculus",
   description:
-    "Interactive financial calculators for Bhubaneswar real estate: Calculate Odisha stamp duty (Male 7% vs Female 6%), 2% IGR registration, true RERA carpet price, and commercial rent-to-wealth conversion.",
+    "Interactive financial calculators for Bhubaneswar luxury property: Female 6% vs. Male 7% Stamp Duty savings, 12-month cost of waiting, and commercial rent-to-wealth analysis.",
   alternates: {
     canonical: `${SITE_URL}/calculus`,
   },
   openGraph: {
-    title: "Odisha Real Estate Financial Lab — Stamp Duty, True-Cost & Rent-to-Wealth Calculus",
+    title: "Odisha Financial & Loss Lab — ASSET PROPERTIES Bhubaneswar",
     description:
-      "De-anonymize the true price per square foot of RERA carpet area, calculate Odisha stamp duty (Male 7% vs Female 6%), and expose hidden loading inflation before signing any agreement.",
+      "Calculate true costs: 2% IGR registration fees, female stamp duty exemptions, and true carpet price vs. builder-quoted super built-up rates.",
     url: `${SITE_URL}/calculus`,
     type: "website",
     images: [
@@ -23,40 +26,32 @@ export const metadata: Metadata = {
         url: "/og-image.svg",
         width: 1200,
         height: 630,
-        alt: "Odisha Real Estate Financial Lab — ASSET PROPERTIES Bhubaneswar",
+        alt: "Odisha Financial Lab — ASSET PROPERTIES Bhubaneswar",
       },
     ],
   },
   keywords: [
-    "odisha stamp duty calculator male female",
-    "igr odisha registration fee calculator",
-    "bhubaneswar property registration cost",
-    "rera carpet area vs super built up price",
-    "commercial office rent to wealth conversion",
-    "patia real estate price per square foot",
+    "odisha stamp duty calculator 2026",
+    "female stamp duty exemption odisha",
+    "bhubaneswar property registration fees",
+    "super built up loading formula",
+    "real estate rental yield patia",
   ],
 };
 
-export default function CalculusPage() {
+export default async function CalculusPage() {
+  const properties = await getDynamicProperties();
+
   return (
     <>
-      <CalculusClient />
+      <CalculusClient initialProperties={properties} />
 
-      {/* Semantic AEO & Featured Snippet Candidate for Odisha Stamp Duty */}
-      <section className="sr-only" aria-label="Odisha Real Estate Stamp Duty and Registration Guide">
-        <h2>What are the Stamp Duty and Registration Charges in Odisha?</h2>
+      {/* Semantic AEO & Search Engine Indexable Summary Block */}
+      <section className="sr-only" aria-label="Odisha Real Estate Financial Calculus">
+        <h2>Odisha Statutory Tax &amp; Carpet Area Financial Mathematics</h2>
         <p>
-          Property registration in Odisha is governed by the Inspector General of Registration (IGR Odisha) and the Indian Stamp Act:
-        </p>
-        <ul>
-          <li><strong>Stamp Duty for Male Buyers:</strong> 7% of the total property consideration value or benchmark valuation, whichever is higher.</li>
-          <li><strong>Stamp Duty for Female Buyers:</strong> 6% of the consideration value, providing a 1% statutory concession to promote female property ownership.</li>
-          <li><strong>Registration Fee:</strong> 2% of the property value, applicable across all transactions via IGR Odisha sub-registrar offices.</li>
-          <li><strong>GST on Property:</strong> 5% on under-construction residential flats without Input Tax Credit (ITC); 0% GST on completed units with Occupancy Certificate (OC) issued.</li>
-        </ul>
-        <h3>How to Calculate True Carpet Area Cost in Bhubaneswar</h3>
-        <p>
-          To find the true effective price per square foot in Bhubaneswar, divide the all-inclusive project cost by the RERA-approved net usable carpet area rather than the builder&apos;s advertised super built-up area (SBUA). Typical projects with 35% loading inflate the advertised rate by up to 53% in real terms.
+          Asset Properties provides precision financial models reflecting Odisha government IGR registration schedules,
+          female owner concessions, and true carpet efficiency calculations.
         </p>
       </section>
     </>

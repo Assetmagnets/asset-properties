@@ -14,15 +14,15 @@ export default function SanctuaryDoorPortal({
 }: SanctuaryDoorPortalProps) {
   const [unlatching, setUnlatching] = useState(false);
 
-  // Automatically unlatch and open the sanctuary portal doors without waiting for user click
+  // Smooth unlatching when portal is displayed
   useEffect(() => {
     if (!isOpen && !unlatching) {
       const autoTimer = setTimeout(() => {
         setUnlatching(true);
         setTimeout(() => {
           onOpenChange(true);
-        }, 900);
-      }, 500);
+        }, 700);
+      }, 300);
 
       return () => clearTimeout(autoTimer);
     }
@@ -34,7 +34,7 @@ export default function SanctuaryDoorPortal({
     setUnlatching(true);
     setTimeout(() => {
       onOpenChange(true);
-    }, 900);
+    }, 700);
   };
 
   return (
@@ -45,7 +45,7 @@ export default function SanctuaryDoorPortal({
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            transition: { duration: 0.65, delay: 0.55, ease: "easeInOut" },
+            transition: { duration: 0.5, ease: "easeInOut" },
           }}
           style={{ perspective: "2000px" }}
           onClick={() => handleClickAP()}
@@ -58,7 +58,7 @@ export default function SanctuaryDoorPortal({
               opacity: unlatching ? 1 : 0.2,
               scaleX: unlatching ? 1.6 : 0.015,
             }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.38),transparent_65%)]"
           />
 
@@ -72,7 +72,7 @@ export default function SanctuaryDoorPortal({
             }
             exit={{ x: "-106%", rotateY: 38 }}
             transition={{
-              duration: 1.35,
+              duration: 0.9,
               ease: [0.76, 0, 0.24, 1],
             }}
             style={{ transformOrigin: "left center" }}
@@ -106,7 +106,7 @@ export default function SanctuaryDoorPortal({
             }
             exit={{ x: "106%", rotateY: -38 }}
             transition={{
-              duration: 1.35,
+              duration: 0.9,
               ease: [0.76, 0, 0.24, 1],
             }}
             style={{ transformOrigin: "right center" }}
@@ -130,7 +130,7 @@ export default function SanctuaryDoorPortal({
             </div>
           </motion.div>
 
-          {/* CENTER BRONZE-GOLD INTERACTIVE "AP" LOCK SEAL — OPENS ONLY WHEN USER CLICKS "AP" */}
+          {/* CENTER BRONZE-GOLD INTERACTIVE "AP" LOCK SEAL */}
           <motion.button
             type="button"
             aria-label="Click AP to Open Sanctuary Doors"
@@ -144,7 +144,7 @@ export default function SanctuaryDoorPortal({
                 ? { scale: 0.78, rotate: 90, opacity: 0 }
                 : { scale: 1, rotate: 0, opacity: 1 }
             }
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="group absolute z-30 flex h-32 w-32 cursor-pointer flex-col items-center justify-center rounded-full border border-[#D4AF37] bg-[#05070B] shadow-[0_0_70px_rgba(212,175,55,0.5)] focus:outline-none"
           >
             {/* Pulsing Outer Halo Ring */}
@@ -165,7 +165,8 @@ export default function SanctuaryDoorPortal({
 }
 
 /**
- * Reusable Scroll-Triggered or Click-Triggered Double-Door Section / Card Reveal
+ * High-Performance Architectural Card Reveal Wrapper
+ * Avoids creating dozens of expensive 3D perspective layers & shadows when defaultOpen is true
  */
 export function ArchitecturalDoorReveal({
   children,
@@ -184,6 +185,11 @@ export function ArchitecturalDoorReveal({
 }) {
   const [doorsOpen, setDoorsOpen] = useState(defaultOpen);
 
+  // Lightweight pass-through when cards start opened (default behavior)
+  if (defaultOpen) {
+    return <div className={`relative ${className}`}>{children}</div>;
+  }
+
   return (
     <motion.div
       onViewportEnter={() => {
@@ -200,7 +206,7 @@ export function ArchitecturalDoorReveal({
           scale: doorsOpen ? 1 : 1.04,
           opacity: 1,
         }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
       </motion.div>
@@ -213,11 +219,11 @@ export function ArchitecturalDoorReveal({
             ? { x: "-105%", rotateY: 25, opacity: 0 }
             : { x: "0%", rotateY: 0, opacity: 1 }
         }
-        transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
         style={{ transformOrigin: "left center" }}
         onClick={() => setDoorsOpen(true)}
         className={`absolute inset-y-0 left-0 z-20 flex w-1/2 cursor-pointer items-center justify-end border-r border-[#D4AF37]/35 bg-[#05070B] pr-6 shadow-[15px_0_40px_rgba(0,0,0,0.9)] ${
-          doorsOpen ? "pointer-events-none" : "pointer-events-auto"
+          doorsOpen ? "pointer-events-none hidden" : "pointer-events-auto"
         }`}
       >
         <div className="pointer-events-none absolute inset-4 border border-[#D4AF37]/10" />
@@ -234,11 +240,11 @@ export function ArchitecturalDoorReveal({
             ? { x: "105%", rotateY: -25, opacity: 0 }
             : { x: "0%", rotateY: 0, opacity: 1 }
         }
-        transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
         style={{ transformOrigin: "right center" }}
         onClick={() => setDoorsOpen(true)}
         className={`absolute inset-y-0 right-0 z-20 flex w-1/2 cursor-pointer items-center justify-start border-l border-[#D4AF37]/35 bg-[#05070B] pl-6 shadow-[-15px_0_40px_rgba(0,0,0,0.9)] ${
-          doorsOpen ? "pointer-events-none" : "pointer-events-auto"
+          doorsOpen ? "pointer-events-none hidden" : "pointer-events-auto"
         }`}
       >
         <div className="pointer-events-none absolute inset-4 border border-[#D4AF37]/10" />

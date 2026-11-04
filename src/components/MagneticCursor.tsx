@@ -16,28 +16,50 @@ export default function MagneticCursor() {
   const y = useSpring(-100, springConfig);
 
   useEffect(() => {
+    // Skip completely on touch screens, tablets, or coarse pointers
     if (
       typeof window !== "undefined" &&
-      ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      ("ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia("(pointer: coarse)").matches)
     ) {
       setIsTouchDevice(true);
       return;
     }
 
+    let rafId: number | null = null;
+    let lastClientX = -100;
+    let lastClientY = -100;
+    let lastTarget: HTMLElement | null = null;
+
+    const updateCursor = () => {
+      x.set(lastClientX);
+      y.set(lastClientY);
+
+      if (lastTarget) {
+        const interactiveEl = lastTarget.closest?.("[data-cursor]") as HTMLElement | null;
+        const nextLabel = interactiveEl ? interactiveEl.getAttribute("data-cursor") : null;
+        if (labelRef.current !== nextLabel) {
+          labelRef.current = nextLabel;
+          setCursorLabel(nextLabel);
+        }
+      }
+      rafId = null;
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
+      lastClientX = e.clientX;
+      lastClientY = e.clientY;
+      lastTarget = e.target as HTMLElement | null;
+
       if (!isVisibleRef.current) {
         isVisibleRef.current = true;
         setIsVisible(true);
       }
 
-      const target = e.target as HTMLElement | null;
-      const interactiveEl = target?.closest("[data-cursor]") as HTMLElement | null;
-      const nextLabel = interactiveEl ? interactiveEl.getAttribute("data-cursor") : null;
-      if (labelRef.current !== nextLabel) {
-        labelRef.current = nextLabel;
-        setCursorLabel(nextLabel);
+      // Batch mousemove handling into screen animation frame
+      if (!rafId) {
+        rafId = requestAnimationFrame(updateCursor);
       }
     };
 
@@ -61,6 +83,7 @@ export default function MagneticCursor() {
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", handleClearLabel);
       window.removeEventListener("click", handleClearLabel, { capture: true });

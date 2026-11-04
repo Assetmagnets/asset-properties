@@ -1,12 +1,14 @@
 import { MetadataRoute } from "next";
+import { getDynamicBlogPosts } from "@/lib/db-blog";
 
 const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 const SITE_URL = rawUrl.replace(/\/+$/, "");
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date().toISOString();
+  const blogPosts = await getDynamicBlogPosts();
 
-  const coreRoutes = [
+  const coreRoutes: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}`,
       lastModified: currentDate,
@@ -43,7 +45,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.85,
     },
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: currentDate,
+      changeFrequency: "daily" as const,
+      priority: 0.8,
+    },
   ];
 
-  return coreRoutes;
+  const blogPostRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: post.updatedAt ? new Date(post.updatedAt).toISOString() : currentDate,
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
+
+  return [...coreRoutes, ...blogPostRoutes];
 }

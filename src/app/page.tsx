@@ -1,8 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
-import { CURATED_PROPERTIES } from "@/data/curatedProperties";
-import { getScoreOverrides } from "@/lib/prisma";
+import { getDynamicProperties } from "@/lib/db-properties";
 import SanctuaryOrchestrator from "@/components/SanctuaryOrchestrator";
+
+export const revalidate = 0; // Dynamic server-rendered on demand from Neon DB
 
 const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 const SITE_URL = rawUrl.replace(/\/+$/, "");
@@ -10,14 +11,14 @@ const SITE_URL = rawUrl.replace(/\/+$/, "");
 export const metadata: Metadata = {
   title: "ASSET PROPERTIES (@asset_properties17) — Private Real Estate Advisory Sanctuary | Bhubaneswar",
   description:
-    "Institutional-grade real estate underwriting in Bhubaneswar (Patia, Infocity, Pahala, Saheed Nagar, Kalinga Nagar, Trisulia). 142 Projects Audited • 114 Rejected • 28 Approved with 100-Point Asset Score™ & Bhulekh Gharabari Verification.",
+    "Institutional-grade real estate underwriting in Bhubaneswar (Patia, Infocity, Pahala, Saheed Nagar, Kalinga Nagar, Trisulia). 142 Projects Audited • 114 Rejected • Approved with 100-Point Asset Score™ & Bhulekh Gharabari Verification.",
   alternates: {
     canonical: `${SITE_URL}`,
   },
   openGraph: {
     title: "ASSET PROPERTIES (@asset_properties17) — Bhubaneswar Private Real Estate Advisory",
     description:
-      "Auditing, rejecting, and curating ultra-luxury flats, landed duplex villas, and Grade-A commercial spaces across Bhubaneswar. 142 Audited • 114 Rejected • 28 Approved.",
+      "Auditing, rejecting, and curating ultra-luxury flats, landed duplex villas, and Grade-A commercial spaces across Bhubaneswar. 142 Audited • 114 Rejected.",
     url: `${SITE_URL}`,
     type: "website",
     images: [
@@ -32,16 +33,11 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const overrides = getScoreOverrides();
-
-  const hydratedProperties = CURATED_PROPERTIES.map((prop) => ({
-    ...prop,
-    assetScoreTotal: overrides[prop.id] ?? prop.assetScoreTotal,
-  }));
+  const dynamicProperties = await getDynamicProperties();
 
   return (
     <>
-      <SanctuaryOrchestrator initialProperties={hydratedProperties} />
+      <SanctuaryOrchestrator initialProperties={dynamicProperties} />
 
       {/* Semantic Server-Rendered Ground Truth for Search Bots & AI Crawlers */}
       <section className="sr-only" aria-label="Asset Properties Institutional Overview">

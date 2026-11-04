@@ -173,3 +173,85 @@ export async function checkRateLimit(
     resetInMinutes: 60,
   };
 }
+
+
+// 5. Admin Secure Password Hashing & 2FA Session Engine
+export function hashPassword(password: string): string {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const derivedKey = crypto.scryptSync(password, salt, 64);
+  return `${salt}:${derivedKey.toString("hex")}`;
+}
+
+export function verifyPassword(password: string, combinedHash: string): boolean {
+  try {
+    const [salt, key] = combinedHash.split(":");
+    if (!salt || !key) return false;
+    const derivedKey = crypto.scryptSync(password, salt, 64);
+    const keyBuffer = Buffer.from(key, "hex");
+    return crypto.timingSafeEqual(derivedKey, keyBuffer);
+  } catch {
+    return false;
+  }
+}
+
+export interface AdminSessionPayload {
+  adminId: string;
+  email: string;
+  role: string;
+  name: string;
+  exp: number;
+}
+
+export function createAdminSessionToken(
+  admin: {
+    id: string;
+    email: string;
+    role: string;
+    name: string;
+  },
+  durationHours = 24 * 7
+): string {
+  const payload: AdminSessionPayload = {
+    adminId: admin.id,
+    email: admin.email,
+    role: admin.role,
+    name: admin.name,
+    exp: Date.now() + durationHours * 3600 * 1000,
+  };
+  const payloadBase64 = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  const signature = crypto
+    .createHmac("sha256", SIGNING_SECRET)
+    .update(payloadBase64)
+    .digest("base64url");
+  return `${payloadBase64}.${signature}`;
+}
+
+export function verifyAdminSessionToken(token: string): {
+  valid: boolean;
+  expired?: boolean;
+  payload?: AdminSessionPayload;
+} {
+  try {
+    const [payloadBase64, signature] = token.split(".");
+    if (!payloadBase64 || !signature) return { valid: false };
+
+    const expectedSig = crypto
+      .createHmac("sha256", SIGNING_SECRET)
+      .update(payloadBase64)
+      .digest("base64url");
+
+    if (signature !== expectedSig) return { valid: false };
+
+    const payload = JSON.parse(
+      Buffer.from(payloadBase64, "base64url").toString("utf8")
+    ) as AdminSessionPayload;
+
+    if (Date.now() > payload.exp) {
+      return { valid: false, expired: true };
+    }
+
+    return { valid: true, payload };
+  } catch {
+    return { valid: false };
+  }
+}

@@ -1,21 +1,24 @@
 import React from "react";
 import type { Metadata } from "next";
 import VaultClient from "./VaultClient";
+import { getDynamicProperties } from "@/lib/db-properties";
+
+export const revalidate = 0; // Dynamic from Neon DB
 
 const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 const SITE_URL = rawUrl.replace(/\/+$/, "");
 
 export const metadata: Metadata = {
-  title: "The Private Vault — Off-Market & Pre-Launch Real Estate Mandates in Bhubaneswar",
+  title: "The Private Vault — Off-Market Estates & Golden-Hour Tours | Bhubaneswar",
   description:
-    "Confidential institutional access to undisclosed landed estates, family office penthouses, and pre-launch allocations across Saheed Nagar, Nayapalli, and Kalinga Nagar. Request encrypted dossiers and schedule VIP site inspections.",
+    "Confidential institutional real estate underwriting for off-market luxury penthouses, landed estates, and pre-launch Grade-A commercial spaces in Bhubaneswar.",
   alternates: {
     canonical: `${SITE_URL}/vault`,
   },
   openGraph: {
-    title: "The Private Vault — Confidential Off-Market Mandates in Bhubaneswar",
+    title: "The Private Vault & Golden-Hour Chauffeur Tour — ASSET PROPERTIES",
     description:
-      "Restricted institutional access to undisclosed landed estates, legacy generational plots, and pre-ORERA private investor allocations across Saheed Nagar, Patia, and Trisulia.",
+      "Undisclosed private mandates, dynamically watermarked legal dossiers, and 4:30 PM sunset sunlight verification tours across Bhubaneswar.",
     url: `${SITE_URL}/vault`,
     type: "website",
     images: [
@@ -28,28 +31,27 @@ export const metadata: Metadata = {
     ],
   },
   keywords: [
-    "off market real estate bhubaneswar",
-    "confidential luxury property deals odisha",
-    "pre launch property allocation patia",
-    "family office real estate investments bhubaneswar",
-    "vip property site inspection concierge",
-    "ekamra kanan park view penthouses",
+    "off market property bhubaneswar",
+    "private real estate mandates patia",
+    "golden hour property tour bhubaneswar",
+    "luxury penthouse saheed nagar",
+    "confidential real estate advisory odisha",
   ],
 };
 
-export default function VaultPage() {
+export default async function VaultPage() {
+  const properties = await getDynamicProperties();
+
   return (
     <>
-      <VaultClient />
+      <VaultClient initialProperties={properties} />
 
-      {/* Semantic AEO & Off-Market Advisory Guide */}
-      <section className="sr-only" aria-label="Confidential Off-Market Real Estate Advisory">
-        <h2>What are Off-Market Real Estate Mandates in Bhubaneswar?</h2>
+      {/* Semantic AEO & Search Engine Indexable Summary Block */}
+      <section className="sr-only" aria-label="Bhubaneswar Private Vault Overview">
+        <h2>Private Real Estate Vault &amp; Chauffeur Golden-Hour Inspections</h2>
         <p>
-          Off-market real estate mandates refer to high-value residential penthouses, pre-launch institutional builder allocations, and generational landed plots in Bhubaneswar that are not publicly advertised on broker portals or hoardings to protect seller privacy and price integrity.
-        </p>
-        <p>
-          Asset Properties provides accredited High Net Worth Individuals (HNIs), doctors, and NRI investors with encrypted WhatsApp legal dossiers, uncut 4K drone surveys, and private 4:30 PM Golden-Hour on-site advisory visits accompanied by technical and Vastu documentation kits.
+          Asset Properties maintains strict non-disclosure mandates on confidential landed estates, legacy plots,
+          and pre-launch commercial assets in Bhubaneswar.
         </p>
       </section>
     </>

@@ -12,16 +12,16 @@ import { CURATED_PROPERTIES } from "@/data/curatedProperties";
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Anti-Scraper Rate Limiting (Max 3 Dossier Requests per IP per hour)
+    // 1. Anti-Scraper Rate Limiting (Max 5 Dossier Requests per IP per hour for seamless client UX)
     const forwardedFor = request.headers.get("x-forwarded-for");
     const clientIp = forwardedFor ? forwardedFor.split(",")[0].trim() : "127.0.0.1";
 
-    const rateStatus = await checkRateLimit(`dossier:${clientIp}`, 3, 60 * 60 * 1000);
+    const rateStatus = await checkRateLimit(`dossier:${clientIp}`, 5, 60 * 60 * 1000);
     if (!rateStatus.allowed) {
       return NextResponse.json(
         {
           error: "RATE_LIMIT_EXCEEDED",
-          message: `Anti-Scraper Safeguard Active: Maximum 3 legal dossier dispatches allowed per hour. Please retry in ${rateStatus.resetInMinutes} minutes or contact our Senior Advisor directly.`,
+          message: `Anti-Scraper Safeguard Active: Maximum 5 legal dossier dispatches allowed per hour. Please retry in ${rateStatus.resetInMinutes} minutes or contact our Senior Advisor directly.`,
         },
         { status: 429 }
       );
@@ -65,29 +65,42 @@ export async function POST(request: NextRequest) {
       signedToken
     )}`;
 
-    // 5. Persist Lead (Attempts Neon PostgreSQL via Prisma, gracefully syncs with memory vault)
+    // 5. Persist Lead to Neon PostgreSQL
+    let savedLeadId = `lead-${Date.now()}`;
     try {
-      if (
-        process.env.DATABASE_URL &&
-        !process.env.DATABASE_URL.includes("password@ep-bhubaneswar")
-      ) {
-        await prisma.advisoryLead.create({
-          data: {
-            fullName,
-            whatsappNumber: encryptedPhone,
-            buyerPersona,
-            coDecisionMakers: ["Self (Dossier Gate)"],
-            utmSource,
-            status: "DOSSIER_DISPATCHED",
-          },
-        });
+      // Find property in database if present
+      let dbPropId: string | null = null;
+      const dbProp = await prisma.property.findFirst({
+        where: {
+          OR: [{ id: targetProperty.id }, { slug: targetProperty.slug }],
+        },
+      });
+      if (dbProp) {
+        dbPropId = dbProp.id;
       }
-    } catch {
-      // Fallback to in-memory encrypted HNI store when local/demo DB is offline
+
+      const dbLead = await prisma.advisoryLead.create({
+        data: {
+          fullName,
+          whatsappNumber: encryptedPhone,
+          whatsappNumberMasked: maskedPhone,
+          buyerPersona,
+          coDecisionMakers: ["WhatsApp Legal Dossier Request"],
+          preferredTourSlot: "Pending Dossier Review",
+          interestedPropertyId: dbPropId,
+          interestedPropertyTitle: targetProperty.title,
+          utmSource: utmSource || "instagram_asset_properties17",
+          status: "DOSSIER_DISPATCHED",
+          leadType: "DOSSIER",
+        },
+      });
+      savedLeadId = dbLead.id;
+    } catch (err) {
+      console.warn("Neon DB lead insertion warning:", err);
     }
 
     const savedLead = addLeadToStore({
-      id: `lead-${Date.now()}`,
+      id: savedLeadId,
       fullName,
       whatsappNumberMasked: maskedPhone,
       whatsappNumberEncrypted: encryptedPhone,

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { CuratedProperty } from "@/types/property";
-import { CheckCircle2, MapPin } from "lucide-react";
+import { CheckCircle2, MapPin, AlertCircle, Calendar, Sparkles } from "lucide-react";
 
 interface Mod8GoldenHourSchedulerProps {
   properties: CuratedProperty[];
@@ -25,6 +25,19 @@ export default function Mod8GoldenHourScheduler({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
+
+    // Dynamic field validation
+    if (!fullName.trim()) {
+      setErrorMsg("Please enter your full name.");
+      return;
+    }
+
+    const cleanPhone = whatsappNumber.replace(/\D/g, "");
+    if (cleanPhone.length < 10) {
+      setErrorMsg("Please enter a valid 10-digit Indian WhatsApp mobile number.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -32,8 +45,8 @@ export default function Mod8GoldenHourScheduler({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fullName,
-          whatsappNumber,
+          fullName: fullName.trim(),
+          whatsappNumber: cleanPhone.slice(-10),
           buyerPersona: "Private Client",
           coDecisionMakers: [coDecisionMaker],
           preferredTourSlot: selectedSlot,
@@ -43,15 +56,22 @@ export default function Mod8GoldenHourScheduler({
       });
       const data = await res.json();
       if (!res.ok) {
-        setErrorMsg(data.message || "Invalid mobile number.");
+        setErrorMsg(data.message || "Invalid mobile number or booking parameters.");
       } else {
-        setConfirmed(data.maskedContact);
+        setConfirmed(data.maskedContact || "+91-98XXX-XXXXX");
       }
     } catch {
-      setErrorMsg("Unable to connect.");
+      setErrorMsg("Unable to connect to the Advisory Booking Engine. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleReset = () => {
+    setConfirmed(null);
+    setFullName("");
+    setWhatsappNumber("");
+    setErrorMsg(null);
   };
 
   return (
@@ -79,8 +99,17 @@ export default function Mod8GoldenHourScheduler({
             <p className="mt-2 font-sans text-sm sm:text-base text-[#CBD5E1]">
               A confidential confirmation dossier has been dispatched to <span className="text-[#D4AF37] font-semibold">{confirmed}</span> for the <span className="text-[#10B981] font-semibold">{selectedSlot}</span>.
             </p>
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-5 py-2 font-mono text-xs text-[#10B981]">
-              Executive Chauffeur &amp; Due Diligence Kit Prepared
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-5 py-2 font-mono text-xs text-[#10B981]">
+                Executive Chauffeur &amp; Due Diligence Kit Prepared
+              </div>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="rounded-full border border-[#D4AF37]/40 px-5 py-2 font-sans text-xs uppercase tracking-wider font-semibold text-[#D4AF37] hover:bg-[#D4AF37]/15 transition"
+              >
+                Schedule Another Tour
+              </button>
             </div>
           </div>
         ) : (
@@ -88,10 +117,17 @@ export default function Mod8GoldenHourScheduler({
             onSubmit={handleSubmit}
             className="mt-14 space-y-6 rounded-2xl border border-[#D4AF37]/30 bg-[#0B101B]/80 p-8 sm:p-12 text-left shadow-2xl"
           >
+            {errorMsg && (
+              <div className="flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-xs font-sans text-red-300">
+                <AlertCircle className="h-4 w-4 shrink-0 text-red-400" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
+
             {/* Slot Selector Pills */}
             <div>
               <label className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#A6B0BF] mb-3 text-center sm:text-left">
-                Select Advisory Tour Experience
+                Select Advisory Tour Experience *
               </label>
               <div className="flex flex-wrap justify-center sm:justify-start gap-3">
                 {[
@@ -133,13 +169,13 @@ export default function Mod8GoldenHourScheduler({
 
               <div>
                 <label className="block font-sans text-xs font-semibold uppercase tracking-wider text-[#A6B0BF] mb-2">
-                  WhatsApp Contact *
+                  WhatsApp Contact (10 Digits) *
                 </label>
                 <input
                   suppressHydrationWarning
                   type="tel"
                   required
-                  placeholder="10-Digit Mobile"
+                  placeholder="e.g. 9861048291"
                   value={whatsappNumber}
                   onChange={(e) => setWhatsappNumber(e.target.value)}
                   className="w-full rounded-xl border border-[#D4AF37]/25 bg-[#05070B] px-4 py-3.5 font-mono text-sm text-[#F8F9FA] placeholder-[#A6B0BF]/50 focus:border-[#D4AF37] focus:outline-none"
@@ -197,7 +233,7 @@ export default function Mod8GoldenHourScheduler({
                   disabled={isSubmitting}
                   className="rounded-full bg-[#D4AF37] px-8 py-3.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-gold-glow hover:bg-[#e5c349] transition disabled:opacity-50"
                 >
-                  {isSubmitting ? "Reserving..." : "Reserve Private Escort"}
+                  {isSubmitting ? "Reserving in Neon Database..." : "Reserve Private Escort"}
                 </button>
               </div>
             </div>
