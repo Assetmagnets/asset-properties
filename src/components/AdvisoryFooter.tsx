@@ -28,7 +28,7 @@ export default function AdvisoryFooter() {
           INFOCITY &nbsp;•&nbsp; KALINGA NAGAR
         </div>
         <p className="mt-4 font-sans text-xs sm:text-sm text-[#A6B0BF] max-w-2xl mx-auto leading-relaxed">
-          Institutional-grade real estate consulting, forensic title underwriting, and private wealth advisory for high-net-worth acquisitions across Bhubaneswar, Odisha.
+          Trusted real estate consulting, title verification, and private property advisory for luxury apartments, villas, and commercial spaces across Bhubaneswar, Odisha.
         </p>
 
         {/* Brand Network & Social Media Presence */}
@@ -150,26 +150,26 @@ export default function AdvisoryFooter() {
             className="inline-flex items-center gap-1.5 text-[#CBD5E1] hover:text-[#D4AF37] transition"
           >
             <MapPin size={13} className="text-[#D4AF37]" />
-            <span>Bhubaneswar HQ (Google Maps)</span>
+            <span>Bhubaneswar Office (Google Maps)</span>
             <ArrowUpRight size={10} />
           </a>
         </div>
 
-        {/* Advisory Chambers Navigation Links */}
+        {/* Simple & Clear Navigation Links */}
         <div className="mt-8 flex flex-wrap justify-center gap-6 font-sans text-xs uppercase tracking-wider font-semibold text-[#CBD5E1]">
-          <Link href="/" className="hover:text-[#D4AF37] transition">Sanctuary</Link>
+          <Link href="/" className="hover:text-[#D4AF37] transition">Home</Link>
           <span className="text-white/20">•</span>
-          <Link href="/refusal" className="hover:text-[#D4AF37] transition">Philosophy of Refusal</Link>
+          <Link href="/properties" className="hover:text-[#D4AF37] transition">Properties</Link>
           <span className="text-white/20">•</span>
-          <Link href="/realms" className="hover:text-[#D4AF37] transition">Curated Realms</Link>
+          <Link href="/why-us" className="hover:text-[#D4AF37] transition">Why Us</Link>
           <span className="text-white/20">•</span>
-          <Link href="/xray" className="hover:text-[#D4AF37] transition">100-Point X-Ray™</Link>
+          <Link href="/verification" className="hover:text-[#D4AF37] transition">Verification</Link>
           <span className="text-white/20">•</span>
-          <Link href="/calculus" className="hover:text-[#D4AF37] transition">Odisha Financial Lab</Link>
+          <Link href="/calculator" className="hover:text-[#D4AF37] transition">Calculator</Link>
           <span className="text-white/20">•</span>
-          <Link href="/vault" className="hover:text-[#D4AF37] transition">Private Vault</Link>
+          <Link href="/exclusive" className="hover:text-[#D4AF37] transition">Exclusive</Link>
           <span className="text-white/20">•</span>
-          <Link href="/blog" className="hover:text-[#D4AF37] transition">Intelligence Blog</Link>
+          <Link href="/articles" className="hover:text-[#D4AF37] transition">Articles</Link>
         </div>
 
         {/* Statutory Government Links & Explicit Admin Portal Link */}
@@ -248,7 +248,7 @@ export default function AdvisoryFooter() {
                 Email:{" "}
                 <a
                   href="mailto:info@assetmagnets.com"
-                  className="font-mono text-[#D4AF37] hover:underline transition"
+                  className="text-[#CBD5E1] hover:text-[#D4AF37] transition"
                 >
                   info@assetmagnets.com
                 </a>
@@ -256,16 +256,15 @@ export default function AdvisoryFooter() {
             </div>
           </div>
           <div>
-            <div className="font-semibold uppercase tracking-wider text-[#D4AF37]">Underwriting Schedule</div>
-            <div className="mt-1 text-[#CBD5E1]">Private Site Inspections: 4:30 PM Golden-Hour Slots by Appointment</div>
+            <div className="font-semibold uppercase tracking-wider text-[#D4AF37]">Client Confidentiality</div>
+            <div className="mt-1 text-[#CBD5E1]">
+              DPDP Act 2023 Compliant. We never sell your phone number to third-party brokers.
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/5 pt-6 font-sans text-xs text-[#A6B0BF]/70">
-          DPDP Act 2023 AES-256 Encrypted &nbsp;•&nbsp; Neon Serverless PostgreSQL &nbsp;•&nbsp; 15-Minute Dynamic Watermarked Dossier Engine &nbsp;•&nbsp; Zero Broker Spam Protocol
-          <div className="mt-2 text-[#A6B0BF]/50">
-            © {new Date().getFullYear()} Asset Properties Real Estate Advisory. Bhubaneswar, Odisha, India. All rights reserved. ORERA Advisory Compliance Standard.
-          </div>
+        <div className="mt-12 text-[11px] font-mono text-[#949BA6] border-t border-white/5 pt-6">
+          © {new Date().getFullYear()} ASSET PROPERTIES • Private Real Estate Advisory for Bhubaneswar, Odisha.
         </div>
       </div>
     </footer>

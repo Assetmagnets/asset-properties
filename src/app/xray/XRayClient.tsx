@@ -19,33 +19,33 @@ interface XRayClientProps {
 export default function XRayClient({ initialProperties }: XRayClientProps) {
   return (
     <SanctuaryShell properties={initialProperties}>
-      {({ lightingMode, selectedProperty, setSelectedProperty, onRequestDossier }) => (
+      {({ lightingMode, selectedProperty, setSelectedProperty, onRequestConsult }) => (
         <div className="w-full">
           <SubpageHeroStage
-            badge="CHAMBER 04 • UNDERWRITING MATRIX • 100-POINT AUDIT"
+            badge="100-POINT INSPECTION & VERIFICATION"
             badgeDotColor="bg-[#D4AF37]"
-            titlePrefix="The 100-Point "
-            titleAccent="Forensic X-Ray™"
+            titlePrefix="Property "
+            titleAccent="Verification Audit"
             titleSuffix="."
-            description="We inspect 5 institutional pillars: Gharabari Title, True Loading Index, Structural & Seismic Grade, Spatial Quality, and ORERA Escrow Compliance before recommending any investment."
+            description="Every property undergoes a rigorous 5-point inspection: 30-year Bhulekh ownership history, true laser carpet area, building safety, sunlight orientation, and ORERA compliance."
             metrics={[
-              { value: "100", label: "Audit Benchmark", color: "text-[#D4AF37]" },
-              { value: "5", label: "Forensic Pillars", color: "text-[#10B981]" },
-              { value: "0%", label: "Broker Inflations", color: "text-[#F8F9FA]" },
+              { value: "100", label: "Quality Score", color: "text-[#D4AF37]" },
+              { value: "5", label: "Core Inspections", color: "text-[#10B981]" },
+              { value: "0%", label: "Hidden Surprises", color: "text-[#F8F9FA]" },
             ]}
-            scrollPrompt="Examine Scoring Radar & Decoys"
+            scrollPrompt="Examine Property Inspection Scores Below"
             lightingMode={lightingMode}
           />
           <Act4AssetScoreXRay
             properties={initialProperties}
             selectedProperty={selectedProperty}
             onSelectProperty={(prop) => setSelectedProperty(prop)}
-            onRequestDossier={(prop) => onRequestDossier(prop)}
+            onRequestConsult={onRequestConsult}
             hideHeader={true}
           />
           <Mod6DecoyMatchmaker
             selectedProperty={selectedProperty}
-            onRequestDossier={(prop) => onRequestDossier(prop)}
+            onRequestConsult={onRequestConsult}
           />
         </div>
       )}

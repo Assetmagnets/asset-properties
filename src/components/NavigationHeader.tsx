@@ -8,23 +8,16 @@ import { LightingMode } from "@/types/property";
 import {
   Sun,
   Moon,
-  Lock,
-  DoorOpen,
+  MessageCircle,
   Menu,
   X,
   ArrowUpRight,
-  ShieldCheck,
-  Phone,
-  Mail,
-  MessageCircle,
-  MapPin,
-  Sparkles,
+  Lock,
 } from "lucide-react";
 
 interface NavigationHeaderProps {
   lightingMode: LightingMode;
   onToggleLighting: () => void;
-  onOpenDossierModal: () => void;
   onOpenConsultModal?: () => void;
   onReplayDoors?: () => void;
 }
@@ -32,52 +25,51 @@ interface NavigationHeaderProps {
 const NAV_LINKS = [
   {
     href: "/",
-    label: "Sanctuary",
+    label: "Home",
     num: "01",
-    desc: "The Threshold & Chambers of Underwriting",
+    desc: "Luxury Real Estate Advisory • Bhubaneswar",
   },
   {
-    href: "/refusal",
-    label: "Refusal",
+    href: "/properties",
+    label: "Properties",
     num: "02",
-    desc: "Forensic Audit & 80.2% Disqualification Rate",
+    desc: "Curated Luxury Flats, Villas & Commercial Offices",
   },
   {
-    href: "/realms",
-    label: "Realms",
+    href: "/why-us",
+    label: "Why Us",
     num: "03",
-    desc: "Curated Portfolio & Verified Sanctuaries",
+    desc: "Our Strict Quality & Legal Vetting Standards",
   },
   {
-    href: "/xray",
-    label: "X-Ray",
+    href: "/verification",
+    label: "Verification",
     num: "04",
-    desc: "100-Point Asset Score™ Due Diligence",
+    desc: "100-Point Legal, Title & Carpet Area Inspection",
   },
   {
-    href: "/calculus",
-    label: "Calculus",
+    href: "/calculator",
+    label: "Calculator",
     num: "05",
-    desc: "Statutory Math & Odisha Stamp Duty Lab",
+    desc: "Odisha Stamp Duty & Investment Calculator",
   },
   {
-    href: "/vault",
-    label: "Vault",
+    href: "/exclusive",
+    label: "Exclusive",
     num: "06",
-    desc: "Off-Market Mandates & Golden-Hour Access",
+    desc: "Off-Market Luxury Plots & Pre-Launch Estates",
   },
   {
-    href: "/blog",
-    label: "Blog",
+    href: "/articles",
+    label: "Articles",
     num: "07",
-    desc: "Market Intelligence & Legal Underwriting Guides",
+    desc: "Bhubaneswar Market Insights & Buying Guides",
   },
 ];
 
 export default function NavigationHeader({
   lightingMode,
   onToggleLighting,
-  onOpenDossierModal,
   onOpenConsultModal,
   onReplayDoors,
 }: NavigationHeaderProps) {
@@ -108,11 +100,11 @@ export default function NavigationHeader({
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#D4AF37]/15 bg-[#05070B]/92 backdrop-blur-md">
       <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10">
-        {/* Authoritative Advisory Monogram & Brand Lockup */}
+        {/* Brand Lockup */}
         <Link
           href="/"
           className="group flex items-center gap-2.5 sm:gap-3 whitespace-nowrap shrink-0"
-          data-cursor="SANCTUARY"
+          data-cursor="HOME"
         >
           {/* Architectural Gold 'AP' Seal Emblem */}
           <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/50 bg-gradient-to-br from-[#0B101B] to-[#05070B] shadow-[0_0_15px_rgba(212,175,55,0.2)] group-hover:border-[#D4AF37] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all">
@@ -126,13 +118,13 @@ export default function NavigationHeader({
               ASSET PROPERTIES
             </span>
             <span className="font-sans text-[8.5px] sm:text-[9.5px] font-semibold uppercase tracking-[0.2em] text-[#D4AF37]">
-              Private Advisory • Bhubaneswar
+              Real Estate Advisory • Bhubaneswar
             </span>
           </div>
         </Link>
 
-        {/* Center Navigation Links */}
-        <nav className="hidden lg:flex items-center justify-center gap-2.5 xl:gap-5 2xl:gap-7 whitespace-nowrap font-sans text-[11px] xl:text-xs uppercase tracking-[0.12em] xl:tracking-[0.15em] font-medium shrink-0 px-2 xl:px-4">
+        {/* Center Simple Navigation Links */}
+        <nav className="hidden lg:flex items-center justify-center gap-3 xl:gap-5 2xl:gap-7 whitespace-nowrap font-sans text-[11px] xl:text-xs uppercase tracking-[0.12em] xl:tracking-[0.15em] font-medium shrink-0 px-2 xl:px-4">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -165,14 +157,14 @@ export default function NavigationHeader({
           <button
             type="button"
             onClick={onToggleLighting}
-            data-cursor={isDay ? "DUSK" : "SOLAR"}
+            data-cursor={isDay ? "DUSK" : "DAY"}
             className="hidden lg:flex items-center gap-1.5 rounded-full border border-[#D4AF37]/35 bg-[#0B101B]/80 px-2.5 sm:px-3 py-1.5 font-sans text-xs font-medium uppercase tracking-wider text-[#F8F9FA] hover:border-[#D4AF37] hover:bg-[#0B101B] transition shadow-sm shrink-0"
-            title="Toggle Solar Daylight vs. Nocturnal Dusk"
+            title="Toggle Day View vs. Evening Dusk View"
           >
             {isDay ? (
               <>
                 <Sun className="h-3.5 w-3.5 text-[#D4AF37]" />
-                <span className="hidden sm:inline text-[#D4AF37] font-semibold">Solar</span>
+                <span className="hidden sm:inline text-[#D4AF37] font-semibold">Day</span>
               </>
             ) : (
               <>
@@ -182,38 +174,29 @@ export default function NavigationHeader({
             )}
           </button>
 
-          {/* Consult Button (Opens Consultation Form) */}
+          {/* Primary CTA: Consult */}
           {onOpenConsultModal && (
             <button
               type="button"
               onClick={onOpenConsultModal}
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#D4AF37]/50 bg-[#0B101B] px-3.5 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#05070B] transition shadow-sm shrink-0"
+              data-cursor="CONSULT"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#D4AF37] px-3.5 sm:px-4 py-1.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition shrink-0"
             >
               <MessageCircle className="h-3.5 w-3.5" />
               <span>Consult</span>
             </button>
           )}
 
-          {/* Primary CTA: Verified Dossier */}
-          <button
-            type="button"
-            onClick={onOpenDossierModal}
-            data-cursor="DOSSIER"
-            className="hidden lg:inline-flex items-center rounded-full bg-[#D4AF37] px-3.5 xl:px-4 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition shrink-0"
-          >
-            Dossier
-          </button>
-
-          {/* Dynamic Admin / Dashboard Profile Button */}
+          {/* Admin / Dashboard Button */}
           <Link
             href={isAdminLoggedIn ? "/admin/vault" : "/admin/login"}
-            data-cursor={isAdminLoggedIn ? "VAULT" : "ADMIN"}
+            data-cursor={isAdminLoggedIn ? "DASHBOARD" : "ADMIN"}
             className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider transition shadow-sm shrink-0 ${
               isAdminLoggedIn
                 ? "border border-emerald-500/50 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25"
                 : "border border-[#D4AF37]/40 bg-[#0B101B] text-[#F4F1EA] hover:border-[#D4AF37] hover:text-[#D4AF37]"
             }`}
-            title={isAdminLoggedIn ? "Open Admin Dashboard (Active Session)" : "Administrator Login Portal"}
+            title={isAdminLoggedIn ? "Open Admin Dashboard" : "Admin Login Portal"}
           >
             {isAdminLoggedIn ? (
               <>
@@ -228,7 +211,7 @@ export default function NavigationHeader({
             )}
           </Link>
 
-          {/* Menu Hamburger / Close Toggle */}
+          {/* Mobile Menu Toggle */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -247,7 +230,7 @@ export default function NavigationHeader({
         </div>
       </div>
 
-      {/* Modern Responsive Navigation Drawer */}
+      {/* Responsive Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -258,36 +241,25 @@ export default function NavigationHeader({
             className="lg:hidden overflow-hidden border-t border-[#D4AF37]/20 bg-[#05070B]/98 backdrop-blur-3xl shadow-2xl"
           >
             <div className="px-5 sm:px-6 py-5 space-y-4 max-h-[85vh] overflow-y-auto">
-              {/* Quick Action Buttons */}
-              <div className="grid grid-cols-2 gap-2.5 pb-3 border-b border-[#D4AF37]/15">
-                {onOpenConsultModal && (
+              {/* Quick Action Button */}
+              {onOpenConsultModal && (
+                <div className="pb-3 border-b border-[#D4AF37]/15">
                   <button
                     type="button"
                     onClick={() => {
                       setMobileMenuOpen(false);
                       onOpenConsultModal();
                     }}
-                    className="rounded-xl border border-[#D4AF37]/60 bg-[#0B101B] py-2.5 px-3 text-center font-sans text-xs font-semibold uppercase tracking-wider text-[#D4AF37] hover:bg-[#D4AF37]/15 transition"
+                    className="w-full rounded-xl bg-[#D4AF37] py-2.5 px-3 text-center font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow hover:bg-[#e5c349] transition"
                   >
-                    💬 Book Consultation
+                    💬 Book Private Consultation
                   </button>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenDossierModal();
-                  }}
-                  className="rounded-xl bg-[#D4AF37] py-2.5 px-3 text-center font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow hover:bg-[#e5c349] transition"
-                >
-                  📄 Request Dossier
-                </button>
-              </div>
+                </div>
+              )}
 
               <div className="flex items-center justify-between pb-1">
                 <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#D4AF37]">
-                  Chambers of Advisory
+                  Navigation
                 </span>
                 <Link
                   href={isAdminLoggedIn ? "/admin/vault" : "/admin/login"}
@@ -357,7 +329,7 @@ export default function NavigationHeader({
                   className="inline-flex items-center gap-1.5 text-stone-muted hover:text-[#D4AF37]"
                 >
                   <Lock className="h-3.5 w-3.5 text-[#D4AF37]" />
-                  <span>Administrator Portal</span>
+                  <span>Admin Portal</span>
                 </Link>
 
                 <a href="tel:+919777295707" className="text-[#D4AF37]">

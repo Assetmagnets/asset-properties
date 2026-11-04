@@ -20,6 +20,45 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/realms",
+        destination: "/properties",
+        permanent: true,
+      },
+      {
+        source: "/refusal",
+        destination: "/why-us",
+        permanent: true,
+      },
+      {
+        source: "/xray",
+        destination: "/verification",
+        permanent: true,
+      },
+      {
+        source: "/calculus",
+        destination: "/calculator",
+        permanent: true,
+      },
+      {
+        source: "/vault",
+        destination: "/exclusive",
+        permanent: true,
+      },
+      {
+        source: "/blog",
+        destination: "/articles",
+        permanent: true,
+      },
+      {
+        source: "/blog/:slug",
+        destination: "/articles/:slug",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

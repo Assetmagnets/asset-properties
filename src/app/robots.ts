@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
           "Google-Extended",
           "Applebot-Extended",
         ],
-        allow: ["/", "/realms", "/refusal", "/xray", "/calculus", "/vault", "/llms.txt", "/llms-full.txt"],
+        allow: ["/", "/properties", "/why-us", "/verification", "/calculator", "/exclusive", "/articles", "/llms.txt", "/llms-full.txt"],
         disallow: ["/admin/", "/api/"],
       },
       {

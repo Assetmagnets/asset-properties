@@ -5,18 +5,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { LightingMode } from "@/types/property";
-import { ArrowDown, ArrowUpRight, DoorOpen, Sun, Moon } from "lucide-react";
+import { ArrowDown, ArrowUpRight, DoorOpen, Sun, Moon, MessageCircle } from "lucide-react";
 
 interface Act1HeroThresholdProps {
   lightingMode: LightingMode;
   onToggleLighting: () => void;
-  onOpenDossierModal: () => void;
+  onOpenConsultModal?: () => void;
 }
 
 export default function Act1HeroThreshold({
   lightingMode,
   onToggleLighting,
-  onOpenDossierModal,
+  onOpenConsultModal,
 }: Act1HeroThresholdProps) {
   const isDay = lightingMode === "SOLAR_DAYLIGHT";
   const [innerDoorsOpen, setInnerDoorsOpen] = useState(true);
@@ -139,7 +139,7 @@ export default function Act1HeroThreshold({
               The <span className="italic font-normal text-[#D4AF37]">Orientation</span> of Light.
             </h2>
             <p className="mt-3 font-sans text-sm sm:text-base text-stone-muted max-w-xl mx-auto">
-              Simulate heliodon sun trajectories, inspect Patia &amp; Saheed Nagar sanctuaries, and explore verified legal dossiers.
+              Simulate heliodon sun trajectories, inspect Patia &amp; Saheed Nagar sanctuaries, and explore verified property audits.
             </p>
           </div>
 
@@ -226,22 +226,25 @@ export default function Act1HeroThreshold({
               </button>
 
               <Link
-                href="/realms"
-                data-cursor="REALMS"
+                href="/properties"
+                data-cursor="PROPERTIES"
                 className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-[#05070B]/90 px-5 py-2.5 font-sans text-xs font-medium uppercase tracking-wider text-[#F8F9FA] backdrop-blur-md hover:border-[#D4AF37] hover:text-[#D4AF37] transition"
               >
-                Explore 3 Realms
+                Explore Properties
                 <ArrowUpRight className="h-4 w-4 text-[#D4AF37]" />
               </Link>
 
-              <button
-                type="button"
-                onClick={onOpenDossierModal}
-                data-cursor="DOSSIER"
-                className="rounded-full bg-[#D4AF37] px-6 py-2.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-[#e5c349] transition"
-              >
-                Verified Legal Dossier
-              </button>
+              {onOpenConsultModal && (
+                <button
+                  type="button"
+                  onClick={onOpenConsultModal}
+                  data-cursor="CONSULT"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#D4AF37] px-6 py-2.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-[#e5c349] transition"
+                >
+                  <MessageCircle className="h-3.5 w-3.5" />
+                  <span>Book Private Consultation</span>
+                </button>
+              )}
             </div>
           </div>
 

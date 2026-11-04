@@ -16,18 +16,18 @@ export default function RefusalClient({ initialProperties }: RefusalClientProps)
       {({ lightingMode }) => (
         <div className="w-full">
           <SubpageHeroStage
-            badge="CHAMBER 02 • FORENSIC ELIMINATION • BHUBANESWAR"
+            badge="WHY CHOOSE US • UNCOMPROMISED STANDARDS"
             badgeDotColor="bg-red-400"
-            titlePrefix="Curated by "
-            titleAccent="Elimination"
-            titleSuffix="."
-            description="Institutional advisory begins with what we reject. In a market clouded by unverified land titles, phantom super built-up loading, and non-ORERA marketing, our refusal rate is our greatest client asset."
+            titlePrefix="Why "
+            titleAccent="Asset Properties"
+            titleSuffix="?"
+            description="Unlike traditional brokers who sell any project for a commission, we reject 80% of properties in Bhubaneswar. If a project has disputed land titles, inflated carpet area, or drainage risks, we reject it."
             metrics={[
               { value: "142", label: "Projects Audited", color: "text-[#F8F9FA]" },
               { value: "114", label: "Disqualified (80%)", color: "text-[#D4AF37]" },
-              { value: `${initialProperties.length}`, label: "Approved Sanctuaries", color: "text-[#10B981]" },
+              { value: `${initialProperties.length}`, label: "Verified & Approved", color: "text-[#10B981]" },
             ]}
-            scrollPrompt="Inspect Forensic Rejection Dossiers"
+            scrollPrompt="See Why We Disqualify Bad Projects Below"
             lightingMode={lightingMode}
           />
           <Act2PhilosophyOfRefusal hideHeader={true} />

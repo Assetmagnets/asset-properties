@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { CuratedProperty, LightingMode } from "@/types/property";
 import NavigationHeader from "@/components/NavigationHeader";
 import AdvisoryFooter from "@/components/AdvisoryFooter";
-import { Phone, MessageCircle, Sparkles } from "lucide-react";
+import { MessageCircle, Sparkles } from "lucide-react";
 
 // SmoothScrollProvider: Lenis smooth-scroll
 const SmoothScrollProvider = dynamic(
@@ -16,12 +16,6 @@ const SmoothScrollProvider = dynamic(
 // MagneticCursor: desktop custom cursor
 const MagneticCursor = dynamic(
   () => import("@/components/MagneticCursor"),
-  { ssr: false }
-);
-
-// WhatsAppDossierModal
-const WhatsAppDossierModal = dynamic(
-  () => import("@/components/WhatsAppDossierModal"),
   { ssr: false }
 );
 
@@ -44,7 +38,6 @@ interface SanctuaryShellProps {
     onToggleLighting: () => void;
     selectedProperty: CuratedProperty;
     setSelectedProperty: (prop: CuratedProperty) => void;
-    onRequestDossier: (prop?: CuratedProperty) => void;
     onRequestConsult: () => void;
   }) => React.ReactNode;
 }
@@ -53,55 +46,61 @@ export default function SanctuaryShell({
   properties,
   children,
 }: SanctuaryShellProps) {
-  const [lightingMode, setLightingMode] = useState<LightingMode>("NOCTURNAL_DUSK");
-  const [selectedProperty, setSelectedProperty] = useState<CuratedProperty>(properties[0]);
-  const [dossierModalOpen, setDossierModalOpen] = useState(false);
+  const [lightingMode, setLightingMode] = useState<LightingMode>("SOLAR_DAYLIGHT");
+  const [selectedProperty, setSelectedProperty] = useState<CuratedProperty>(
+    properties[0] || ({} as CuratedProperty)
+  );
   const [consultModalOpen, setConsultModalOpen] = useState(false);
+  const [hasEnteredPortal, setHasEnteredPortal] = useState(true);
 
-  const [portalDoorsOpen, setPortalDoorsOpen] = useState<boolean>(true);
-  const [showPortal, setShowPortal] = useState<boolean>(false);
-
-  const handlePortalChange = (open: boolean) => {
-    setPortalDoorsOpen(open);
-    if (open) {
-      setTimeout(() => setShowPortal(false), 900);
-    } else {
-      setShowPortal(true);
-    }
-  };
-
+  // Synchronize initial property when properties array loads
   useEffect(() => {
-    document.documentElement.setAttribute("data-lighting", lightingMode);
-  }, [lightingMode]);
+    if (properties.length > 0 && !selectedProperty.id) {
+      setSelectedProperty(properties[0]);
+    }
+  }, [properties, selectedProperty.id]);
+
+  // Read stored entrance state
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("sanctuary_entered_portal");
+      if (stored === "true") {
+        setHasEnteredPortal(true);
+      }
+    } catch {
+      setHasEnteredPortal(true);
+    }
+  }, []);
 
   const handleToggleLighting = () => {
     setLightingMode((prev) =>
-      prev === "NOCTURNAL_DUSK" ? "SOLAR_DAYLIGHT" : "NOCTURNAL_DUSK"
+      prev === "SOLAR_DAYLIGHT" ? "NOCTURNAL_DUSK" : "SOLAR_DAYLIGHT"
     );
   };
 
-  const handleRequestDossier = (prop?: CuratedProperty) => {
-    if (prop) setSelectedProperty(prop);
-    setDossierModalOpen(true);
+  const handlePortalChange = (entered: boolean) => {
+    setHasEnteredPortal(entered);
+    try {
+      sessionStorage.setItem("sanctuary_entered_portal", entered ? "true" : "false");
+    } catch {
+      // ignore in incognito/strict mode
+    }
   };
 
   return (
     <SmoothScrollProvider>
       <MagneticCursor />
 
-      {/* Full-Screen 3D Architectural Double-Door Entry Portal */}
-      {showPortal && (
-        <SanctuaryDoorPortal
-          isOpen={portalDoorsOpen}
-          onOpenChange={handlePortalChange}
-        />
-      )}
+      {/* Entrance Architectural Portal */}
+      <SanctuaryDoorPortal
+        isOpen={hasEnteredPortal}
+        onOpenChange={handlePortalChange}
+      />
 
       <div className="min-h-screen bg-obsidian text-alabaster relative">
         <NavigationHeader
           lightingMode={lightingMode}
           onToggleLighting={handleToggleLighting}
-          onOpenDossierModal={() => setDossierModalOpen(true)}
           onOpenConsultModal={() => setConsultModalOpen(true)}
           onReplayDoors={() => handlePortalChange(false)}
         />
@@ -112,7 +111,6 @@ export default function SanctuaryShell({
             onToggleLighting: handleToggleLighting,
             selectedProperty,
             setSelectedProperty,
-            onRequestDossier: handleRequestDossier,
             onRequestConsult: () => setConsultModalOpen(true),
           })}
         </main>
@@ -149,16 +147,6 @@ export default function SanctuaryShell({
             </span>
           </a>
         </div>
-
-        {/* Dynamic WhatsApp Dossier Modal */}
-        {dossierModalOpen && (
-          <WhatsAppDossierModal
-            isOpen={dossierModalOpen}
-            onClose={() => setDossierModalOpen(false)}
-            property={selectedProperty}
-            allProperties={properties}
-          />
-        )}
 
         {/* Dynamic Consultation Modal */}
         {consultModalOpen && (

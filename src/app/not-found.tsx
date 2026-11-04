@@ -15,10 +15,10 @@ export default function NotFound() {
             Error 404 • Mandate Unreachable
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl font-medium text-[#F8F9FA]">
-            Sanctuary Not Found
+            Page Not Found
           </h1>
           <p className="font-sans text-sm text-[#A6B0BF] leading-relaxed">
-            The requested intelligence dossier, property realm, or underwriting document does not exist or has been archived into the off-market vault.
+            The requested property, verification report, or article does not exist or has moved.
           </p>
         </div>
 
@@ -28,14 +28,14 @@ export default function NotFound() {
             className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-5 py-2.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] shadow-[0_0_15px_rgba(212,175,55,0.3)] hover:bg-[#e5c349] transition"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            <span>Return to Sanctuary</span>
+            <span>Return to Home</span>
           </Link>
 
           <Link
-            href="/blog"
+            href="/articles"
             className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#0B101B] px-5 py-2.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#F8F9FA] hover:border-[#D4AF37] hover:text-[#D4AF37] transition"
           >
-            <span>Explore Blog</span>
+            <span>Explore Articles</span>
           </Link>
         </div>
       </div>

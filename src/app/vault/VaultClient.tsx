@@ -21,26 +21,26 @@ export default function VaultClient({ initialProperties }: VaultClientProps) {
 
   return (
     <SanctuaryShell properties={initialProperties}>
-      {({ lightingMode, onRequestDossier }) => (
+      {({ lightingMode, onRequestConsult }) => (
         <div className="w-full">
           <SubpageHeroStage
-            badge="CHAMBER 06 • OFF-MARKET SANCTUARY • PRIVATE MANDATES"
+            badge="OFF-MARKET & EXCLUSIVE ALLOCATIONS"
             badgeDotColor="bg-[#D4AF37]"
-            titlePrefix="The Private "
-            titleAccent="Vault"
+            titlePrefix="Exclusive "
+            titleAccent="Off-Market Properties"
             titleSuffix="."
-            description="Restricted institutional access to undisclosed landed estates, legacy generational plots, and pre-ORERA private investor allocations across Saheed Nagar, Patia, and Trisulia."
+            description="Private access to unlisted luxury penthouses, private villas, and pre-launch developer allotments across Saheed Nagar, Patia, and Trisulia not advertised on public portals."
             metrics={[
-              { value: "Off-Market", label: "Curated Portfolios", color: "text-[#D4AF37]" },
-              { value: "AES-256", label: "Encrypted Dossiers", color: "text-[#10B981]" },
-              { value: "Strict", label: "Private Mandate", color: "text-[#F8F9FA]" },
+              { value: "Off-Market", label: "Private Inventory", color: "text-[#D4AF37]" },
+              { value: "Direct", label: "Developer Allotments", color: "text-[#10B981]" },
+              { value: "Verified", label: "Clear Title", color: "text-[#F8F9FA]" },
             ]}
-            scrollPrompt="Enter Confidential Vault & Schedule Briefing"
+            scrollPrompt="View Exclusive Properties & Book Tour"
             lightingMode={lightingMode}
           />
           <Mod7PrivateVaultDossier
             vaultProperties={vaultProperties.length > 0 ? vaultProperties : initialProperties.slice(0, 3)}
-            onRequestDossier={(prop) => onRequestDossier(prop)}
+            onRequestConsult={onRequestConsult}
             hideHeader={true}
           />
           <Mod8GoldenHourScheduler properties={initialProperties} />

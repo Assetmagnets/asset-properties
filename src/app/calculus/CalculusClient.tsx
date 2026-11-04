@@ -16,18 +16,18 @@ export default function CalculusClient({ initialProperties }: CalculusClientProp
       {({ lightingMode }) => (
         <div className="w-full">
           <SubpageHeroStage
-            badge="CHAMBER 05 • ODISHA FINANCIAL LAB • INVESTMENT CALCULUS"
+            badge="ODISHA REAL ESTATE FINANCIAL CALCULATOR"
             badgeDotColor="bg-[#D4AF37]"
-            titlePrefix="The True-Cost "
-            titleAccent="Calculus"
+            titlePrefix="Property & "
+            titleAccent="Stamp Duty Calculator"
             titleSuffix="."
-            description="De-anonymize the true price per square foot of RERA carpet area, calculate Odisha stamp duty & IGR registration fees, and expose hidden loading inflation before signing any agreement."
+            description="Calculate exact registration fees (Female 6% vs. Male 7% Stamp Duty savings in Odisha), real carpet rate vs. super built-up loading, and monthly EMI payments with zero hidden markups."
             metrics={[
-              { value: "IGR", label: "Odisha Benchmark", color: "text-[#D4AF37]" },
-              { value: "100%", label: "True Carpet Math", color: "text-[#10B981]" },
-              { value: "Zero", label: "Hidden Markups", color: "text-[#F8F9FA]" },
+              { value: "6% vs 7%", label: "Odisha Stamp Duty", color: "text-[#D4AF37]" },
+              { value: "100%", label: "Real Carpet Math", color: "text-[#10B981]" },
+              { value: "Zero", label: "Hidden Costs", color: "text-[#F8F9FA]" },
             ]}
-            scrollPrompt="Simulate Investment Mathematics"
+            scrollPrompt="Use the Financial Calculator Below"
             lightingMode={lightingMode}
           />
           <Mod5OdishaFinancialLab hideHeader={true} />

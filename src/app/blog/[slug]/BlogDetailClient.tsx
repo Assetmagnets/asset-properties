@@ -50,7 +50,7 @@ export default function BlogDetailClient({
 
   return (
     <SanctuaryShell properties={properties}>
-      {({ lightingMode, onRequestDossier }) => (
+      {({ lightingMode, onRequestConsult }) => (
         <article className="relative min-h-screen w-full bg-[#05070B] text-[#F8F9FA] pt-24 pb-28">
           {/* Top Breadcrumb Navigation & Back Link */}
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-6">
@@ -203,7 +203,7 @@ export default function BlogDetailClient({
                     </p>
                     <button
                       type="button"
-                      onClick={() => onRequestDossier()}
+                      onClick={() => onRequestConsult()}
                       className="w-full rounded-xl bg-[#D4AF37] py-2.5 font-sans text-xs font-semibold uppercase tracking-wider text-[#05070B] hover:bg-[#e5c349] transition"
                     >
                       Request Free Title Audit

@@ -16,37 +16,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
-      url: `${SITE_URL}/realms`,
+      url: `${SITE_URL}/properties`,
       lastModified: currentDate,
       changeFrequency: "weekly" as const,
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/refusal`,
+      url: `${SITE_URL}/why-us`,
       lastModified: currentDate,
       changeFrequency: "weekly" as const,
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/xray`,
+      url: `${SITE_URL}/verification`,
       lastModified: currentDate,
       changeFrequency: "weekly" as const,
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/calculus`,
+      url: `${SITE_URL}/calculator`,
       lastModified: currentDate,
       changeFrequency: "monthly" as const,
       priority: 0.85,
     },
     {
-      url: `${SITE_URL}/vault`,
+      url: `${SITE_URL}/exclusive`,
       lastModified: currentDate,
       changeFrequency: "weekly" as const,
       priority: 0.85,
     },
     {
-      url: `${SITE_URL}/blog`,
+      url: `${SITE_URL}/articles`,
       lastModified: currentDate,
       changeFrequency: "daily" as const,
       priority: 0.8,
@@ -54,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const blogPostRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${SITE_URL}/blog/${post.slug}`,
+    url: `${SITE_URL}/articles/${post.slug}`,
     lastModified: post.updatedAt ? new Date(post.updatedAt).toISOString() : currentDate,
     changeFrequency: "monthly" as const,
     priority: 0.75,

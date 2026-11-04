@@ -9,14 +9,14 @@ import {
   LightingMode,
 } from "@/types/property";
 import { ArchitecturalDoorReveal } from "@/components/SanctuaryDoorPortal";
-import { ArrowUpRight, Layers } from "lucide-react";
+import { ArrowUpRight, Layers, MessageCircle } from "lucide-react";
 
 interface Act3PersonaRealmSwitcherProps {
   properties: CuratedProperty[];
   lightingMode: LightingMode;
   selectedProperty: CuratedProperty;
   onSelectPropertyForAudit: (property: CuratedProperty) => void;
-  onRequestDossier: (property: CuratedProperty) => void;
+  onRequestConsult?: () => void;
   hideHeader?: boolean;
 }
 
@@ -32,7 +32,7 @@ export default function Act3PersonaRealmSwitcher({
   lightingMode,
   selectedProperty,
   onSelectPropertyForAudit,
-  onRequestDossier,
+  onRequestConsult,
   hideHeader = false,
 }: Act3PersonaRealmSwitcherProps) {
   const [activeRealm, setActiveRealm] = useState<AssetCategory | "ALL">("ALL");
@@ -46,57 +46,53 @@ export default function Act3PersonaRealmSwitcher({
 
   return (
     <section
-      id="act-realms"
+      id="act-persona-switcher"
       className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-24 sm:py-36"}`}
     >
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
-        {/* Authoritative Advisory Header */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         {!hideHeader && (
           <div className="text-center">
             <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
-              CURATED PORTFOLIO • 3 REALMS
+              CURATED INVENTORY • VERIFIED SANCTUARIES
             </div>
             <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
-              Select your <span className="italic font-normal text-[#D4AF37]">Sanctuary</span>.
+              Three Curated <span className="italic font-normal text-[#D4AF37]">Realms</span>.
             </h2>
             <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
-              Filtered across 28 approved mandates in Bhubaneswar. Every property carries full ORERA registration, 30-year Bhulekh title clearance, and Leica laser-verified carpet areas.
+              Every property carries direct Gharabari mutation title, verified ORERA registration, and Leica laser-measured carpet area.
             </p>
           </div>
         )}
 
-        {/* High-Legibility Realm Pills */}
-        <div className={`${hideHeader ? "mt-4" : "mt-10"} flex flex-wrap justify-center gap-3`}>
-          {REALMS.map((realm) => {
-            const active = activeRealm === realm.id;
-            return (
-              <button
-                key={realm.id}
-                type="button"
-                onClick={() => setActiveRealm(realm.id)}
-                data-cursor="OPEN REALM"
-                className={`rounded-full px-6 py-2.5 font-sans text-xs sm:text-sm font-medium tracking-wider uppercase transition-all ${
-                  active
-                    ? "bg-[#D4AF37] text-[#05070B] font-bold shadow-[0_0_20px_rgba(212,175,55,0.3)]"
-                    : "border border-[#D4AF37]/25 bg-[#0B101B]/50 text-[#A6B0BF] hover:border-[#D4AF37] hover:text-[#F8F9FA]"
-                }`}
-              >
-                {realm.label}
-              </button>
-            );
-          })}
+        {/* Typology Switcher Tabs */}
+        <div className={`${hideHeader ? "mt-4" : "mt-14"} flex flex-wrap items-center justify-center gap-2.5 sm:gap-4`}>
+          {REALMS.map((realm) => (
+            <button
+              key={realm.id}
+              type="button"
+              onClick={() => setActiveRealm(realm.id)}
+              className={`rounded-full px-5 py-2.5 font-sans text-xs uppercase tracking-wider font-semibold transition-all ${
+                activeRealm === realm.id
+                  ? "bg-[#D4AF37] text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)]"
+                  : "border border-[#D4AF37]/25 bg-[#0B101B]/80 text-[#A6B0BF] hover:border-[#D4AF37] hover:text-[#F8F9FA]"
+              }`}
+            >
+              {realm.label}
+            </button>
+          ))}
         </div>
 
-        {/* Spacious Gallery Grid with 3D Architectural Door Opening on Scroll */}
-        <div className="mt-20 grid grid-cols-1 gap-16 lg:grid-cols-2">
+        {/* 2-Column Responsive Property Grid */}
+        <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-2">
           <AnimatePresence mode="popLayout">
             {filteredProperties.map((property) => {
               const isSelected = selectedProperty.id === property.id;
+
               return (
                 <motion.article
                   key={property.id}
-                  layout="position"
-                  initial={{ opacity: 0, y: 30 }}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.4 }}
@@ -140,33 +136,23 @@ export default function Act3PersonaRealmSwitcher({
                         </div>
                       </div>
 
-                      {/* Bottom Title Inside Frame */}
+                      {/* Bottom Title Overlay */}
                       <div className="absolute bottom-5 left-5 right-5">
-                        <div className="font-sans text-xs font-semibold uppercase tracking-wider text-[#D4AF37]">
+                        <div className="font-mono text-xs uppercase tracking-wider text-[#D4AF37]">
                           {property.corridorDisplayName}
                         </div>
-                        <h3 className="mt-1 font-serif text-3xl sm:text-4xl font-medium text-[#F8F9FA]">
+                        <h3 className="mt-1 font-serif text-2xl sm:text-3xl font-medium text-[#F8F9FA]">
                           {property.title}
                         </h3>
-                        <div className="mt-1 text-xs text-[#CBD5E1] font-sans">
-                          {property.configuration}
-                        </div>
+                        <p className="mt-1 text-xs text-[#CBD5E1] line-clamp-1">
+                          {property.subtitle}
+                        </p>
                       </div>
                     </div>
                   </ArchitecturalDoorReveal>
 
-                  {/* Trust Details: Kissam Status & Micro-Location */}
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-b border-[#D4AF37]/15 pb-4 text-xs font-sans">
-                    <span className="inline-flex items-center gap-1.5 text-[#10B981] font-medium">
-                      ✓ {property.kissamStatus}
-                    </span>
-                    <span className="text-[#A6B0BF]">
-                      Possession: <span className="text-[#F8F9FA]">{property.possessionTimeline}</span>
-                    </span>
-                  </div>
-
-                  {/* 4-Metric Grid with Clear Legibility */}
-                  <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4 border-b border-[#D4AF37]/15 pb-5">
+                  {/* 4-Metric Architectural Specifications Grid */}
+                  <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/5 pt-5 sm:grid-cols-4">
                     <div>
                       <div className="font-sans text-xs uppercase tracking-wider text-[#A6B0BF]">
                         Base Valuation
@@ -213,24 +199,27 @@ export default function Act3PersonaRealmSwitcher({
                   {/* Action Buttons Below Portrait */}
                   <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pt-2">
                     <a
-                      href={`/xray?slug=${property.slug}`}
+                      href={`/verification?slug=${property.slug}`}
                       onClick={() => onSelectPropertyForAudit(property)}
-                      data-cursor="X-RAY"
+                      data-cursor="INSPECT"
                       className="inline-flex items-center gap-1.5 rounded-full border border-[#D4AF37]/35 bg-[#05070B] px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wider text-[#F8F9FA] hover:border-[#D4AF37] hover:text-[#D4AF37] transition"
                     >
                       <Layers className="h-3.5 w-3.5 text-[#D4AF37]" />
-                      100-Point Audit X-Ray
+                      100-Point Inspection
                     </a>
 
-                    <button
-                      type="button"
-                      onClick={() => onRequestDossier(property)}
-                      data-cursor="DOSSIER"
-                      className="inline-flex items-center gap-1.5 rounded-full bg-[#D4AF37] px-5 py-2 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_15px_rgba(212,175,55,0.2)] hover:bg-[#e5c349] transition"
-                    >
-                      Request Legal Dossier
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </button>
+                    {onRequestConsult && (
+                      <button
+                        type="button"
+                        onClick={onRequestConsult}
+                        data-cursor="CONSULT"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-[#D4AF37] px-5 py-2 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_15px_rgba(212,175,55,0.2)] hover:bg-[#e5c349] transition"
+                      >
+                        <MessageCircle className="h-3.5 w-3.5" />
+                        <span>Schedule Advisory Briefing</span>
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </button>
+                    )}
                   </div>
                 </motion.article>
               );
@@ -338,40 +327,45 @@ export default function Act3PersonaRealmSwitcher({
                 corridors: [
                   { name: "Patia / Infocity", time: "3 mins" },
                   { name: "Trisulia Metro", time: "16 mins" },
-                  { name: "Saheed Nagar", time: "18 mins" },
-                  { name: "Pahala / NH-16", time: "24 mins" },
+                  { name: "Saheed Nagar", time: "22 mins" },
+                  { name: "Pahala / NH-16", time: "18 mins" },
                 ],
               },
               {
-                hub: "AIIMS & SUM Super-Specialty",
+                hub: "AIIMS Medical Enclave",
                 icon: "🏥",
                 corridors: [
-                  { name: "Kalinga Nagar", time: "4 mins" },
-                  { name: "Saheed Nagar", time: "18 mins" },
-                  { name: "Patia / Infocity", time: "26 mins" },
-                  { name: "Pahala / NH-16", time: "25 mins" },
+                  { name: "Kalinga Nagar / AIIMS", time: "4 mins" },
+                  { name: "Sundarpada", time: "14 mins" },
+                  { name: "Saheed Nagar", time: "24 mins" },
+                  { name: "Patia / Infocity", time: "32 mins" },
                 ],
               },
               {
-                hub: "Metro Phase-1 Stations",
+                hub: "Bhubaneswar Railway Station",
                 icon: "🚆",
                 corridors: [
-                  { name: "Trisulia Depot", time: "2 mins" },
-                  { name: "Patia Station", time: "5 mins" },
-                  { name: "Jayadev Vihar Hub", time: "6 mins" },
-                  { name: "Vani Vihar Station", time: "4 mins" },
+                  { name: "Saheed Nagar", time: "8 mins" },
+                  { name: "Pahala / NH-16", time: "16 mins" },
+                  { name: "Patia / Infocity", time: "25 mins" },
+                  { name: "Trisulia Metro", time: "30 mins" },
                 ],
               },
-            ].map((col) => (
-              <div key={col.hub} className="rounded-2xl border border-[#D4AF37]/20 bg-[#0B101B]/80 p-6">
+            ].map((hub) => (
+              <div
+                key={hub.hub}
+                className="rounded-2xl border border-[#D4AF37]/20 bg-[#0B101B]/70 p-6 shadow-xl"
+              >
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">{col.icon}</span>
-                  <h4 className="font-serif text-base font-semibold text-[#F8F9FA]">{col.hub}</h4>
+                  <span className="text-xl">{hub.icon}</span>
+                  <h4 className="font-serif text-base font-semibold text-[#F8F9FA]">
+                    {hub.hub}
+                  </h4>
                 </div>
-                <div className="mt-5 space-y-3 font-sans text-xs">
-                  {col.corridors.map((c) => (
-                    <div key={c.name} className="flex justify-between border-b border-white/5 pb-2">
-                      <span className="text-[#A6B0BF]">{c.name}</span>
+                <div className="mt-4 space-y-2 border-t border-white/5 pt-4 text-xs font-sans">
+                  {hub.corridors.map((c) => (
+                    <div key={c.name} className="flex justify-between text-[#CBD5E1]">
+                      <span>{c.name}</span>
                       <span className="font-mono font-semibold text-[#D4AF37]">{c.time}</span>
                     </div>
                   ))}

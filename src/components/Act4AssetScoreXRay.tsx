@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { CuratedProperty } from "@/types/property";
 import { ArchitecturalDoorReveal } from "@/components/SanctuaryDoorPortal";
+import { MessageCircle, ArrowUpRight } from "lucide-react";
 
 interface Act4AssetScoreXRayProps {
   properties: CuratedProperty[];
   selectedProperty: CuratedProperty;
   onSelectProperty: (property: CuratedProperty) => void;
-  onRequestDossier: (property: CuratedProperty) => void;
+  onRequestConsult?: () => void;
   hideHeader?: boolean;
 }
 
@@ -17,66 +18,80 @@ export default function Act4AssetScoreXRay({
   properties,
   selectedProperty,
   onSelectProperty,
-  onRequestDossier,
+  onRequestConsult,
   hideHeader = false,
 }: Act4AssetScoreXRayProps) {
-  const [activeLayerIndex, setActiveLayerIndex] = useState<number>(0);
+  const [activeLayerIndex, setActiveLayerIndex] = useState(0);
 
   const scoreMetrics = [
     { label: "ORERA & BDA Purity", score: selectedProperty.scoreLegalPurity, max: 25 },
-    { label: "Bhulekh Gharabari Title", score: selectedProperty.scoreMaterialGrade, max: 20 },
-    { label: "RERA Carpet Efficiency", score: selectedProperty.scoreCarpetEfficiency, max: 20 },
-    { label: "Corridor Appreciation", score: selectedProperty.scoreCorridorGrowth, max: 20 },
-    { label: "East Solar Vastu", score: selectedProperty.scoreVastuLight, max: 15 },
+    { label: "30-Yr Bhulekh Mutation", score: selectedProperty.scoreMaterialGrade, max: 20 },
+    { label: "Carpet Area Efficiency", score: selectedProperty.scoreCarpetEfficiency, max: 20 },
+    { label: "Corridor CAGR Vector", score: selectedProperty.scoreCorridorGrowth, max: 20 },
+    { label: "Vastu & Natural Lighting", score: selectedProperty.scoreVastuLight, max: 15 },
   ];
 
-  const activeLayer =
-    selectedProperty.xrayLayers[activeLayerIndex] ||
-    selectedProperty.xrayLayers[0];
+  const forensicLayers = [
+    {
+      layerNumber: 1,
+      title: "Statutory ORERA & BDA Sanction Purity",
+      metricValue: selectedProperty.oreraNumber,
+      metricLabel: "ORERA Registered & Escrow Ringfenced",
+      verificationCode: "RERA-VERIFIED-100%",
+      auditFinding:
+        "100% of construction milestones and developer receivables are ring-fenced under Odisha RERA statutory escrow accounts. BDA sanction orders verified against master zonal plans.",
+    },
+    {
+      layerNumber: 2,
+      title: "Bhulekh 30-Year Chain of Title & Kissam Conversion",
+      metricValue: selectedProperty.kissamStatus,
+      metricLabel: "Kissam Classification",
+      verificationCode: "BHULEKH-GHARABARI-CLEAR",
+      auditFinding:
+        selectedProperty.bhulekhKhataPlot +
+        " has been verified through a continuous 30-year Non-Encumbrance Certificate (EC) search at the District Sub-Registrar Office, Bhubaneswar. Zero ancestral partition disputes.",
+    },
+    {
+      layerNumber: 3,
+      title: "Laser Carpet Area Audit & Loading Truth",
+      metricValue: `${selectedProperty.loadingPercentage}% True Loading`,
+      metricLabel: `RERA Carpet: ${selectedProperty.reraCarpetSqFt.toLocaleString()} sq.ft. (SBU: ${selectedProperty.superBuiltUpSqFt.toLocaleString()} sq.ft.)`,
+      verificationCode: "LEICA-DISTO-AUDITED",
+      auditFinding:
+        "Unlike standard market projects in Patia where developers inflate super built-up loading by 35%+, this sanctuary provides maximum usable living space verified via Leica laser measurement.",
+    },
+    {
+      layerNumber: 4,
+      title: "Vastu Helios & Micro-Climate Solar Path",
+      metricValue: "East-Facing Foyer / Cross-Air Ventilation",
+      metricLabel: "Peak 4:30 PM Solar Heat Index Tested",
+      verificationCode: "HELIOS-VASTU-OPTIMIZED",
+      auditFinding:
+        "Engineered with natural cross-ventilation catching the Bay of Bengal evening breeze. Balconies and master suites angled to eliminate harsh west heat glare during peak summer months.",
+    },
+  ];
+
+  const activeLayer = forensicLayers[activeLayerIndex];
 
   return (
     <section
-      id="act-xray"
+      id="act-asset-score"
       className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-24 sm:py-36"}`}
     >
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
-        {/* Authoritative Advisory Header */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         {!hideHeader && (
           <div className="text-center">
             <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
-              DUE DILIGENCE AUDIT • 100-POINT TELEMETRY
+              FORENSIC DUE DILIGENCE • 5 PILLARS
             </div>
             <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
-              {selectedProperty.title}
+              The 100-Point <span className="italic font-normal text-[#D4AF37]">Asset Score™</span>.
             </h2>
             <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
-              The 100-Point Asset Score™ underwrites every property across statutory legality, Bhulekh land mutation, Leica laser carpet accuracy, corridor appreciation, and Vastu orientation.
+              We audit properties like institutional private equity funds. Every metric is backed by physical documents and digital telemetry.
             </p>
           </div>
         )}
-
-        {/* High-Legibility Property Selector Pills */}
-        <div className="text-center">
-          <div className={`${hideHeader ? "mt-2" : "mt-10"} flex flex-wrap justify-center gap-2.5`}>
-            {properties.slice(0, 5).map((prop) => (
-              <button
-                key={prop.id}
-                type="button"
-                onClick={() => {
-                  onSelectProperty(prop);
-                  setActiveLayerIndex(0);
-                }}
-                className={`rounded-full px-5 py-2.5 font-sans text-xs uppercase tracking-wider font-medium transition-all ${
-                  selectedProperty.id === prop.id
-                    ? "bg-[#D4AF37] font-bold text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.3)]"
-                    : "border border-[#D4AF37]/25 bg-[#0B101B]/50 text-[#A6B0BF] hover:border-[#D4AF37] hover:text-[#F8F9FA]"
-                }`}
-              >
-                {prop.title.replace("VAULT // ", "")}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* Spacious 2-Column Audit Wrapped in Architectural Door Reveal */}
         <ArchitecturalDoorReveal
@@ -199,15 +214,19 @@ export default function Act4AssetScoreXRay({
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                <button
-                  type="button"
-                  onClick={() => onRequestDossier(selectedProperty)}
-                  className="rounded-full bg-[#D4AF37] px-8 py-3.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:bg-[#e5c349] transition"
-                >
-                  Unlock 30-Year Verified Legal Dossier
-                </button>
-              </div>
+              {onRequestConsult && (
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <button
+                    type="button"
+                    onClick={onRequestConsult}
+                    className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-8 py-3.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:bg-[#e5c349] transition"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Book Private Consultation on this Property</span>
+                    <ArrowUpRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </ArchitecturalDoorReveal>
@@ -251,11 +270,8 @@ export default function Act4AssetScoreXRay({
                       }`}
                     >
                       <td className="py-4 px-5">
-                        <div className="font-serif text-sm font-semibold text-[#F8F9FA] flex items-center gap-2">
-                          {isCur && <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />}
-                          {prop.title.replace("VAULT // ", "")}
-                        </div>
-                        <div className="text-[11px] text-[#A6B0BF] mt-0.5">{prop.corridorDisplayName.split("–")[0]}</div>
+                        <div className="font-serif text-sm font-semibold text-[#F8F9FA]">{prop.title}</div>
+                        <div className="text-[11px] text-[#D4AF37] font-mono mt-0.5">{prop.corridorDisplayName.split("–")[0]}</div>
                       </td>
                       <td className="py-4 px-5 font-mono text-[#F8F9FA]">{prop.scoreLegalPurity} / 25</td>
                       <td className="py-4 px-5 font-mono text-[#F8F9FA]">{prop.scoreMaterialGrade} / 20</td>
@@ -263,7 +279,7 @@ export default function Act4AssetScoreXRay({
                       <td className="py-4 px-5 font-mono text-[#F8F9FA]">{prop.scoreCorridorGrowth} / 20</td>
                       <td className="py-4 px-5 font-mono text-[#F8F9FA]">{prop.scoreVastuLight} / 15</td>
                       <td className="py-4 px-5 text-right">
-                        <span className="inline-flex items-center rounded-full border border-[#D4AF37]/50 bg-[#05070B] px-3.5 py-1 font-mono text-xs font-bold text-[#D4AF37]">
+                        <span className="inline-flex items-center rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 px-3 py-1 font-mono text-xs font-bold text-[#D4AF37]">
                           {prop.assetScoreTotal}/100
                         </span>
                       </td>
@@ -272,55 +288,6 @@ export default function Act4AssetScoreXRay({
                 })}
               </tbody>
             </table>
-          </div>
-        </div>
-
-        {/* 15-POINT PHYSICAL & LEGAL FORENSIC PROTOCOL CHECKLIST */}
-        <div className="mt-28">
-          <div className="text-center">
-            <div className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-[#D4AF37]">
-              PHYSICAL ON-SITE AUDIT INSTRUMENTS
-            </div>
-            <h3 className="mt-3 font-serif text-3xl sm:text-4xl font-medium text-[#F8F9FA]">
-              The 15-Point <span className="italic font-normal text-[#D4AF37]">Forensic Checklist</span>.
-            </h3>
-            <p className="mt-2 font-sans text-xs sm:text-sm text-[#CBD5E1] max-w-xl mx-auto">
-              Every mandate underwritten by Asset Properties undergoes physical inspection using calibrated laboratory and surveying instruments.
-            </p>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { id: "01", name: "Leica Disto D2 Laser", test: "RERA carpet boundary audit to ±1mm accuracy", cat: "SPATIAL" },
-              { id: "02", name: "Schmidt Rebound Hammer", test: "In-situ compressive strength test of M40 shear walls", cat: "STRUCTURAL" },
-              { id: "03", name: "Tramex Moisture Encounter", test: "Sub-slab waterproofing & basement retaining wall telemetry", cat: "HYDROLOGY" },
-              { id: "04", name: "Tahasil Register-IX Search", test: "30-year Hal RoR mutation mutation volume audit", cat: "LEGAL" },
-              { id: "05", name: "District Sub-Registrar Book-I", test: "Encumbrance Certificate (EC) deed verification", cat: "LEGAL" },
-              { id: "06", name: "BDA Sanction Sectional Match", test: "Floor height, FAR calculation & staircase width check", cat: "STATUTORY" },
-              { id: "07", name: "Fani 2019 Surge Contour", test: "High-water elevation relative to MSL contour map", cat: "HYDROLOGY" },
-              { id: "08", name: "Odisha Fire Recommendation", test: "6-meter peripheral fire tender turning radius verification", cat: "SAFETY" },
-              { id: "09", name: "Saint-Gobain Low-E Telemetry", test: "Solar heat gain coefficient (SHGC) glass audit", cat: "THERMAL" },
-              { id: "10", name: "Acoustic Decibel Sound Meter", test: "Ambient noise baseline under 42 dBA in master suites", cat: "ACOUSTIC" },
-              { id: "11", name: "Heliodon Solar Path Analysis", test: "7:00 AM East solar penetration and cross-ventilation", cat: "VASTU" },
-              { id: "12", name: "STP / WTP Tertiary Grade", test: "MBBR automated sewage & drinking water RO testing", cat: "UTILITIES" },
-              { id: "13", name: "ORERA Escrow Statement", test: "Quarterly CA certificate of 70% bank withdrawals", cat: "STATUTORY" },
-              { id: "14", name: "Undivided Land Share Audit", test: "Registered sale deed UDS ratio vs total plot area", cat: "LEGAL" },
-              { id: "15", name: "Soil Borings & N-Value", test: "Standard Penetration Test (SPT) into hard laterite", cat: "GEOTECHNICAL" },
-            ].map((check) => (
-              <div key={check.id} className="rounded-xl border border-[#D4AF37]/20 bg-[#0B101B]/70 p-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-[#D4AF37]">#{check.id}</span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-[#A6B0BF]">
-                    {check.cat}
-                  </span>
-                </div>
-                <div className="mt-2 font-serif text-sm font-semibold text-[#F8F9FA]">{check.name}</div>
-                <p className="mt-1 text-xs text-[#CBD5E1] leading-relaxed">{check.test}</p>
-                <div className="mt-3 text-[11px] font-mono text-[#10B981] flex items-center gap-1">
-                  <span>✓</span> Protocol Certified
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

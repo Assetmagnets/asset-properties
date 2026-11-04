@@ -17,22 +17,22 @@ export default function RealmsClient({ initialProperties }: RealmsClientProps) {
         lightingMode,
         selectedProperty,
         setSelectedProperty,
-        onRequestDossier,
+        onRequestConsult,
       }) => (
         <div className="w-full">
           <SubpageHeroStage
-            badge="CHAMBER 03 • CURATED PORTFOLIO • 3 ADVISORY REALMS"
+            badge="CURATED PROPERTIES • BHUBANESWAR"
             badgeDotColor="bg-[#D4AF37]"
-            titlePrefix="Select your "
-            titleAccent="Sanctuary"
+            titlePrefix="Verified "
+            titleAccent="Properties"
             titleSuffix="."
-            description="Filtered across approved mandates in Bhubaneswar. Every property carries full ORERA registration, 30-year Bhulekh title clearance, and Leica laser-verified carpet areas."
+            description="Explore legally vetted luxury apartments, villas, and commercial spaces across Patia, Pahala, Saheed Nagar, and Infocity. Each property is 100% Gharabari title verified and ORERA registered."
             metrics={[
-              { value: `${initialProperties.length}`, label: "Curated Mandates", color: "text-[#10B981]" },
-              { value: "3", label: "Core Typologies", color: "text-[#D4AF37]" },
-              { value: "100%", label: "Gharabari Cleared", color: "text-[#F8F9FA]" },
+              { value: `${initialProperties.length}`, label: "Verified Properties", color: "text-[#10B981]" },
+              { value: "3", label: "Categories", color: "text-[#D4AF37]" },
+              { value: "100%", label: "Clear Land Title", color: "text-[#F8F9FA]" },
             ]}
-            scrollPrompt="Explore Curated Sanctuaries"
+            scrollPrompt="Browse Properties Below"
             lightingMode={lightingMode}
           />
           <Act3PersonaRealmSwitcher
@@ -40,7 +40,7 @@ export default function RealmsClient({ initialProperties }: RealmsClientProps) {
             lightingMode={lightingMode}
             selectedProperty={selectedProperty}
             onSelectPropertyForAudit={(prop) => setSelectedProperty(prop)}
-            onRequestDossier={(prop) => onRequestDossier(prop)}
+            onRequestConsult={onRequestConsult}
             hideHeader={true}
           />
         </div>
