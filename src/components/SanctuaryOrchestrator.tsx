@@ -85,13 +85,13 @@ export default function SanctuaryOrchestrator({
           />
 
           {/* 5 CHAMBERS / ADVISORY SECTIONS */}
-          <section className="relative z-20 bg-[#05070B] py-24 sm:py-36 border-t border-[#D4AF37]/15">
-            <div className="mx-auto max-w-6xl px-6 sm:px-12">
+          <section className="relative z-20 bg-[#05070B] py-14 sm:py-24 lg:py-32 border-t border-[#D4AF37]/15">
+            <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
               <div className="text-center">
                 <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
                   ADVISORY FRAMEWORK • 5 CORE SERVICES
                 </div>
-                <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+                <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
                   Our Advisory <span className="italic font-normal text-[#D4AF37]">Services</span>.
                 </h2>
                 <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -143,13 +143,13 @@ export default function SanctuaryOrchestrator({
           </section>
 
           {/* REAL ESTATE CORRIDOR GROWTH TELEMETRY (BHUBANESWAR) */}
-          <section className="relative z-20 bg-[#080C14] py-24 sm:py-36 border-t border-[#D4AF37]/15">
-            <div className="mx-auto max-w-6xl px-6 sm:px-12">
+          <section className="relative z-20 bg-[#080C14] py-14 sm:py-24 lg:py-32 border-t border-[#D4AF37]/15">
+            <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
               <div className="text-center">
                 <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
                   CAPITAL APPRECIATION TELEMETRY • BHUBANESWAR 2026–2030
                 </div>
-                <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+                <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
                   Corridor Growth <span className="italic font-normal text-[#D4AF37]">Benchmarks</span>.
                 </h2>
                 <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -207,14 +207,14 @@ export default function SanctuaryOrchestrator({
           </section>
 
           {/* 3 CORE REALMS TEASER */}
-          <section className="relative z-20 bg-[#05070B] py-24 sm:py-36 border-t border-[#D4AF37]/15">
-            <div className="mx-auto max-w-6xl px-6 sm:px-12">
+          <section className="relative z-20 bg-[#05070B] py-14 sm:py-24 lg:py-32 border-t border-[#D4AF37]/15">
+            <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
                 <div>
                   <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
                     CURATED TYPOLOGIES
                   </div>
-                  <h2 className="mt-3 font-serif text-4xl sm:text-5xl font-medium text-[#F8F9FA]">
+                  <h2 className="mt-3 font-serif text-2xl sm:text-4xl lg:text-5xl font-medium text-[#F8F9FA]">
                     Featured <span className="italic font-normal text-[#D4AF37]">Properties</span>.
                   </h2>
                 </div>
@@ -295,14 +295,14 @@ export default function SanctuaryOrchestrator({
           </section>
 
           {/* THE 100-POINT ASScore SUMMARY TEASER */}
-          <section className="relative z-20 bg-[#080C14] py-24 sm:py-36 border-t border-[#D4AF37]/15">
-            <div className="mx-auto max-w-6xl px-6 sm:px-12">
+          <section className="relative z-20 bg-[#080C14] py-14 sm:py-24 lg:py-32 border-t border-[#D4AF37]/15">
+            <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
               <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
                 <div className="lg:col-span-6">
                   <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
                     100-POINT QUALITY INSPECTION
                   </div>
-                  <h2 className="mt-4 font-serif text-4xl sm:text-5xl font-medium text-[#F8F9FA]">
+                  <h2 className="mt-4 font-serif text-2xl sm:text-4xl lg:text-5xl font-medium text-[#F8F9FA]">
                     The 100-Point <span className="italic font-normal text-[#D4AF37]">Inspection Audit</span>.
                   </h2>
                   <p className="mt-4 font-sans text-base leading-relaxed text-[#CBD5E1]">
@@ -330,7 +330,7 @@ export default function SanctuaryOrchestrator({
                   <div className="mt-8">
                     <Link
                       href="/verification"
-                      className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-8 py-3.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition"
+                      className="inline-flex items-center gap-2 rounded-full bg-[#D4AF37] px-5 sm:px-8 py-3 sm:py-3.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition"
                     >
                       <Layers className="h-4 w-4" />
                       <span>Launch 100-Point Verification Audit</span>
@@ -339,7 +339,7 @@ export default function SanctuaryOrchestrator({
                 </div>
 
                 <div className="lg:col-span-6">
-                  <div className="rounded-2xl border border-[#D4AF37]/30 bg-[#05070B] p-8 shadow-2xl">
+                  <div className="rounded-2xl border border-[#D4AF37]/30 bg-[#05070B] p-4 sm:p-8 shadow-2xl">
                     <div className="flex items-center justify-between border-b border-[#D4AF37]/20 pb-4">
                       <span className="font-mono text-xs uppercase tracking-wider text-[#A6B0BF]">
                         Sample Benchmark Analysis
@@ -384,8 +384,8 @@ export default function SanctuaryOrchestrator({
           </section>
 
           {/* FORENSIC ADVISORY COMPARISON TABLE */}
-          <section className="relative z-20 bg-[#05070B] py-24 sm:py-36 border-t border-[#D4AF37]/15">
-            <div className="mx-auto max-w-5xl px-6 sm:px-12">
+          <section className="relative z-20 bg-[#05070B] py-14 sm:py-24 lg:py-32 border-t border-[#D4AF37]/15">
+            <div className="mx-auto max-w-5xl px-4 sm:px-8 lg:px-12">
               <div className="text-center">
                 <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
                   TRANSPARENCY CHARTER • DIRECT CONTRAST
@@ -461,7 +461,7 @@ export default function SanctuaryOrchestrator({
 
           {/* THE 5-POINT ADVISORY GUARANTEE */}
           <section className="relative z-20 bg-[#05070B] py-20 border-t border-[#D4AF37]/15">
-            <div className="mx-auto max-w-6xl px-6 sm:px-12 text-center">
+            <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12 text-center">
               <div className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
                 THE ADVISORY CHARTER
               </div>
@@ -490,3 +490,4 @@ export default function SanctuaryOrchestrator({
     </SanctuaryShell>
   );
 }
+

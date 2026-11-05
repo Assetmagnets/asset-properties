@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Cormorant_Garamond,
   Plus_Jakarta_Sans,
@@ -9,6 +9,14 @@ import JsonLdSchemas from "@/components/JsonLdSchemas";
 
 const rawUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://properties.assetmagnets.com";
 const SITE_URL = rawUrl.replace(/\/+$/, "");
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#05070B",
+};
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],

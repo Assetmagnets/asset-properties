@@ -117,8 +117,8 @@ export default function ConsultationModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-[#05070B]/85 p-4 backdrop-blur-xl">
-      <div className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl border border-[#D4AF37]/35 bg-[#0B101B] p-6 sm:p-9 shadow-[0_20px_70px_rgba(0,0,0,0.85)]">
+    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-[#05070B]/85 p-2 sm:p-4 backdrop-blur-xl">
+      <div className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto overscroll-contain rounded-3xl border border-[#D4AF37]/35 bg-[#0B101B] p-4 sm:p-7 md:p-9 shadow-[0_20px_70px_rgba(0,0,0,0.85)]">
         {/* Close Button */}
         <button
           type="button"

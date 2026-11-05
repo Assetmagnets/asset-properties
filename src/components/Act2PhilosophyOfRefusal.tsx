@@ -71,16 +71,16 @@ export default function Act2PhilosophyOfRefusal({
     <section
       id="act-refusal"
       ref={sectionRef}
-      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-24 sm:py-36"}`}
+      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-14 sm:py-24 lg:py-32"}`}
     >
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
         {/* Authoritative Eyebrow + Headline (shown on Home, hidden when page has SubpageHeroStage) */}
         {!hideHeader && (
           <div className="text-center">
             <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
               FORENSIC ELIMINATION • 80.2% DISQUALIFICATION
             </div>
-            <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+            <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
               Curated by <span className="italic font-normal text-[#D4AF37]">Elimination</span>.
             </h2>
             <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -91,8 +91,8 @@ export default function Act2PhilosophyOfRefusal({
 
         {/* 3 Monumental Numbers with Crisp Authority */}
         <div className={`${hideHeader ? "mt-4" : "mt-20"} grid grid-cols-1 gap-10 text-center sm:grid-cols-3`}>
-          <div className="rounded-2xl border border-[#D4AF37]/20 bg-[#0B101B]/60 p-8 sm:p-10">
-            <div ref={auditedRef} className="font-serif text-6xl sm:text-7xl font-medium text-[#F8F9FA]">
+          <div className="rounded-2xl border border-[#D4AF37]/20 bg-[#0B101B]/60 p-5 sm:p-8">
+            <div ref={auditedRef} className="font-serif text-4xl sm:text-6xl lg:text-7xl font-medium text-[#F8F9FA]">
               142
             </div>
             <div className="mt-3 font-sans text-sm font-semibold uppercase tracking-wider text-[#A6B0BF]">
@@ -103,8 +103,8 @@ export default function Act2PhilosophyOfRefusal({
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[#D4AF37]/35 bg-[#0B101B]/80 p-8 sm:p-10 shadow-[0_0_30px_rgba(212,175,55,0.08)]">
-            <div ref={rejectedRef} className="font-serif text-6xl sm:text-7xl font-semibold text-[#D4AF37]">
+          <div className="rounded-2xl border border-[#D4AF37]/35 bg-[#0B101B]/80 p-5 sm:p-8 shadow-[0_0_30px_rgba(212,175,55,0.08)]">
+            <div ref={rejectedRef} className="font-serif text-4xl sm:text-6xl lg:text-7xl font-semibold text-[#D4AF37]">
               114
             </div>
             <div className="mt-3 font-sans text-sm font-semibold uppercase tracking-wider text-[#D4AF37]">
@@ -115,8 +115,8 @@ export default function Act2PhilosophyOfRefusal({
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[#10B981]/30 bg-[#0B101B]/60 p-8 sm:p-10">
-            <div ref={approvedRef} className="font-serif text-6xl sm:text-7xl font-semibold text-[#10B981]">
+          <div className="rounded-2xl border border-[#10B981]/30 bg-[#0B101B]/60 p-5 sm:p-8">
+            <div ref={approvedRef} className="font-serif text-4xl sm:text-6xl lg:text-7xl font-semibold text-[#10B981]">
               28
             </div>
             <div className="mt-3 font-sans text-sm font-semibold uppercase tracking-wider text-[#10B981]">
@@ -155,7 +155,7 @@ export default function Act2PhilosophyOfRefusal({
           <ArchitecturalDoorReveal
             doorLabelLeft="FORENSIC"
             doorLabelRight="REJECTION"
-            className="mt-10 rounded-2xl border border-[#D4AF37]/25 bg-[#0B101B]/80 p-8 sm:p-14 text-left shadow-xl"
+            className="mt-10 rounded-2xl border border-[#D4AF37]/25 bg-[#0B101B]/80 p-5 sm:p-10 lg:p-14 text-left shadow-xl"
           >
             {/* Metadata Bar */}
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#D4AF37]/15 pb-4">
@@ -337,3 +337,4 @@ export default function Act2PhilosophyOfRefusal({
     </section>
   );
 }
+

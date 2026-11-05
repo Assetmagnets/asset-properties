@@ -122,7 +122,7 @@ export default function SanctuaryShell({
           <button
             type="button"
             onClick={() => setConsultModalOpen(true)}
-            className="flex items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0B101B]/95 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#D4AF37] shadow-[0_4px_25px_rgba(0,0,0,0.85)] hover:bg-[#D4AF37] hover:text-[#05070B] transition-all hover:scale-105"
+            className="flex items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#0B101B]/95 px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#D4AF37] shadow-[0_4px_25px_rgba(0,0,0,0.85)] hover:bg-[#D4AF37] hover:text-[#05070B] transition-all hover:scale-105"
             title="Book Private Consultation"
           >
             <Sparkles className="h-3.5 w-3.5" />
@@ -133,7 +133,7 @@ export default function SanctuaryShell({
             href="https://wa.me/919777295707?text=Hello%20Asset%20Magnets,%20I%20would%20like%20to%20consult%20regarding%20curated%20properties."
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 rounded-full border border-[#10B981]/50 bg-[#0B101B]/95 pl-3.5 pr-4 py-2.5 shadow-[0_4px_25px_rgba(16,185,129,0.2)] hover:border-[#10B981] hover:bg-[#10B981]/15 transition-all hover:scale-105"
+            className="group flex items-center gap-2 rounded-full border border-[#10B981]/50 bg-[#0B101B]/95 pl-2.5 sm:pl-3.5 pr-3 sm:pr-4 py-2 sm:py-2.5 shadow-[0_4px_25px_rgba(16,185,129,0.2)] hover:border-[#10B981] hover:bg-[#10B981]/15 transition-all hover:scale-105"
             title="WhatsApp Advisory Concierge: +91 9777295707"
             aria-label="WhatsApp +91 9777295707"
           >
@@ -159,3 +159,4 @@ export default function SanctuaryShell({
     </SmoothScrollProvider>
   );
 }
+

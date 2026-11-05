@@ -24,7 +24,7 @@ export default function Act1HeroThreshold({
   return (
     <section id="act-threshold" className="relative w-full">
       {/* LAYER 1: STATELY ADVISORY HERO STAGE WITH TRUST-BUILDING ARCHITECTURAL BACKGROUND */}
-      <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-4 sm:px-8 pt-28 pb-16 text-center overflow-hidden">
+      <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-4 sm:px-8 pt-24 sm:pt-28 pb-14 sm:pb-16 text-center overflow-hidden">
         {/* Full-Bleed Architectural Sanctuary Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <motion.div
@@ -70,7 +70,7 @@ export default function Act1HeroThreshold({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/35 bg-[#0B101B]/80 px-4 py-1.5 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.12)]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/35 bg-[#0B101B]/90 px-3.5 py-1.5 font-sans text-[9px] xs:text-[10px] sm:text-xs font-semibold uppercase tracking-[0.08em] sm:tracking-[0.18em] text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.12)] text-center max-w-[92vw] leading-tight"
           >
             <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
             Private Advisory • Institutional Real Estate Underwriting • Bhubaneswar
@@ -80,7 +80,7 @@ export default function Act1HeroThreshold({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: 0.2 }}
-            className="mt-8 font-serif text-5xl font-medium leading-[1.08] tracking-tight text-[#F8F9FA] sm:text-7xl lg:text-[88px]"
+            className="mt-8 font-serif text-3xl sm:text-6xl md:text-7xl lg:text-[88px] font-medium leading-[1.12] sm:leading-[1.08] tracking-tight text-[#F8F9FA]"
           >
             We refuse <span className="italic font-normal text-[#D4AF37]">80%</span> of what
             is built.
@@ -297,3 +297,4 @@ export default function Act1HeroThreshold({
   </section>
 );
 }
+

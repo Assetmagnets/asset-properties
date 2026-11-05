@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { LightingMode } from "@/types/property";
 import {
@@ -74,6 +74,7 @@ export default function NavigationHeader({
   onReplayDoors,
 }: NavigationHeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const isDay = lightingMode === "SOLAR_DAYLIGHT";
@@ -92,14 +93,25 @@ export default function NavigationHeader({
     checkAdmin();
   }, [pathname]);
 
-  // Auto-close mobile drawer on route change
+  // Auto-close mobile drawer on route change and lock body scroll while drawer is open
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (mobileMenuOpen) {
+      const prevBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevBodyOverflow;
+      };
+    }
+  }, [mobileMenuOpen]);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#D4AF37]/15 bg-[#05070B]/92 backdrop-blur-md">
-      <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="mx-auto flex h-16 sm:h-20 w-full max-w-[1600px] items-center justify-between px-3 sm:px-6 lg:px-8 xl:px-10 gap-2">
         {/* Brand Lockup */}
         <Link
           href="/"
@@ -107,17 +119,17 @@ export default function NavigationHeader({
           data-cursor="HOME"
         >
           {/* Architectural Gold 'AP' Seal Emblem */}
-          <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/50 bg-gradient-to-br from-[#0B101B] to-[#05070B] shadow-[0_0_15px_rgba(212,175,55,0.2)] group-hover:border-[#D4AF37] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all">
+          <div className="flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/50 bg-gradient-to-br from-[#0B101B] to-[#05070B] shadow-[0_0_15px_rgba(212,175,55,0.2)] group-hover:border-[#D4AF37] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all">
             <span className="font-serif text-xs sm:text-sm font-semibold tracking-wider text-[#D4AF37]">
               AP
             </span>
           </div>
 
           <div className="flex flex-col">
-            <span className="font-serif text-base sm:text-lg xl:text-xl font-medium tracking-[0.14em] text-[#F8F9FA] group-hover:text-white transition-colors">
+            <span className="font-serif text-sm sm:text-lg xl:text-xl font-medium tracking-[0.08em] sm:tracking-[0.14em] text-[#F8F9FA] group-hover:text-white transition-colors">
               ASSET PROPERTIES
             </span>
-            <span className="font-sans text-[8.5px] sm:text-[9.5px] font-semibold uppercase tracking-[0.2em] text-[#D4AF37]">
+            <span className="font-sans text-[7.5px] sm:text-[9.5px] font-semibold uppercase tracking-[0.1em] sm:tracking-[0.2em] text-[#D4AF37]">
               Real Estate Advisory • Bhubaneswar
             </span>
           </div>
@@ -180,7 +192,7 @@ export default function NavigationHeader({
               type="button"
               onClick={onOpenConsultModal}
               data-cursor="CONSULT"
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#D4AF37] px-3.5 sm:px-4 py-1.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition shrink-0"
+              className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-[#D4AF37] px-3.5 sm:px-4 py-1.5 font-sans text-xs font-bold uppercase tracking-wider text-[#05070B] shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:bg-[#e5c349] transition shrink-0"
             >
               <MessageCircle className="h-3.5 w-3.5" />
               <span>Consult</span>
@@ -191,7 +203,7 @@ export default function NavigationHeader({
           <Link
             href={isAdminLoggedIn ? "/admin/vault" : "/admin/login"}
             data-cursor={isAdminLoggedIn ? "DASHBOARD" : "ADMIN"}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider transition shadow-sm shrink-0 ${
+            className={`hidden sm:inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-sans text-xs font-semibold uppercase tracking-wider transition shadow-sm shrink-0 ${
               isAdminLoggedIn
                 ? "border border-emerald-500/50 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25"
                 : "border border-[#D4AF37]/40 bg-[#0B101B] text-[#F4F1EA] hover:border-[#D4AF37] hover:text-[#D4AF37]"
@@ -216,7 +228,7 @@ export default function NavigationHeader({
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            className="flex lg:hidden items-center gap-2 rounded-full border border-[#D4AF37]/60 bg-[#0B101B]/95 px-3 py-1.5 text-[#F8F9FA] hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition shrink-0"
+            className="flex lg:hidden items-center gap-1.5 rounded-full border border-[#D4AF37]/60 bg-[#0B101B]/95 px-3 py-1.5 text-[#F8F9FA] hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 transition shrink-0"
           >
             <span className="font-sans text-[11px] font-semibold uppercase tracking-wider text-[#D4AF37]">
               {mobileMenuOpen ? "CLOSE" : "MENU"}
@@ -237,10 +249,10 @@ export default function NavigationHeader({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden overflow-hidden border-t border-[#D4AF37]/20 bg-[#05070B]/98 backdrop-blur-3xl shadow-2xl"
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden w-full overflow-hidden border-t border-[#D4AF37]/20 bg-[#05070B]/98 backdrop-blur-3xl shadow-2xl"
           >
-            <div className="px-5 sm:px-6 py-5 space-y-4 max-h-[85vh] overflow-y-auto">
+            <div className="px-5 sm:px-6 py-5 space-y-4 max-h-[calc(100vh-4.5rem)] overflow-y-auto overscroll-contain pb-12">
               {/* Quick Action Button */}
               {onOpenConsultModal && (
                 <div className="pb-3 border-b border-[#D4AF37]/15">
@@ -261,10 +273,16 @@ export default function NavigationHeader({
                 <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#D4AF37]">
                   Navigation
                 </span>
-                <Link
-                  href={isAdminLoggedIn ? "/admin/vault" : "/admin/login"}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex items-center gap-1 font-mono text-[11px] text-[#D4AF37] hover:underline"
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (typeof document !== "undefined") {
+                      document.body.style.overflow = "";
+                    }
+                    router.push(isAdminLoggedIn ? "/admin/vault" : "/admin/login");
+                  }}
+                  className="inline-flex items-center gap-1.5 font-mono text-xs text-[#D4AF37] hover:underline cursor-pointer py-1 px-2.5 rounded-lg bg-[#D4AF37]/10 border border-[#D4AF37]/30 transition"
                 >
                   {isAdminLoggedIn ? (
                     <>
@@ -277,10 +295,10 @@ export default function NavigationHeader({
                       <span>Admin Login</span>
                     </>
                   )}
-                </Link>
+                </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {NAV_LINKS.map((link) => {
                   const isActive = pathname === link.href;
                   return (
@@ -323,14 +341,20 @@ export default function NavigationHeader({
 
               {/* Mobile Drawer Bottom Actions */}
               <div className="pt-3 border-t border-[#D4AF37]/15 flex items-center justify-between text-xs font-mono">
-                <Link
-                  href="/admin/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex items-center gap-1.5 text-stone-muted hover:text-[#D4AF37]"
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (typeof document !== "undefined") {
+                      document.body.style.overflow = "";
+                    }
+                    router.push(isAdminLoggedIn ? "/admin/vault" : "/admin/login");
+                  }}
+                  className="inline-flex items-center gap-1.5 text-stone-muted hover:text-[#D4AF37] cursor-pointer"
                 >
                   <Lock className="h-3.5 w-3.5 text-[#D4AF37]" />
-                  <span>Admin Portal</span>
-                </Link>
+                  <span>{isAdminLoggedIn ? "Dashboard" : "Admin Portal"}</span>
+                </button>
 
                 <a href="tel:+919777295707" className="text-[#D4AF37]">
                   +91 9777295707
@@ -343,3 +367,4 @@ export default function NavigationHeader({
     </header>
   );
 }
+

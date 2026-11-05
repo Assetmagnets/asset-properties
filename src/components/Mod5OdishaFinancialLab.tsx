@@ -44,15 +44,15 @@ export default function Mod5OdishaFinancialLab({
   return (
     <section
       id="mod-financial-lab"
-      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-24 sm:py-36"}`}
+      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-14 sm:py-24 lg:py-32"}`}
     >
-      <div className="mx-auto max-w-5xl px-6 sm:px-12 text-center">
+      <div className="mx-auto max-w-5xl px-4 sm:px-8 lg:px-12 text-center">
         {!hideHeader && (
           <>
             <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
               STATUTORY PRECISION • ODISHA REVENUE LAWS
             </div>
-            <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+            <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
               True <span className="italic font-normal text-[#D4AF37]">Acquisition Math</span>.
             </h2>
             <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -84,12 +84,12 @@ export default function Mod5OdishaFinancialLab({
         </div>
 
         {/* Interactive Calculation Terminal */}
-        <div className="mt-16 rounded-2xl border border-[#D4AF37]/25 bg-[#0B101B]/80 p-8 sm:p-14 shadow-2xl">
+        <div className="mt-16 rounded-2xl border border-[#D4AF37]/25 bg-[#0B101B]/80 p-5 sm:p-8 lg:p-14 shadow-2xl">
           <div className="mx-auto max-w-xl">
             <div className="font-sans text-xs font-semibold uppercase tracking-wider text-[#A6B0BF]">
               BASE MANDATE VALUE
             </div>
-            <div className="mt-2 font-serif text-5xl sm:text-6xl font-bold text-[#F8F9FA]">
+            <div className="mt-2 font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-[#F8F9FA]">
               ₹{propertyValueCr.toFixed(2)} Cr
             </div>
             <input
@@ -156,7 +156,7 @@ export default function Mod5OdishaFinancialLab({
                     <div className="font-sans text-xs uppercase tracking-wider text-[#A6B0BF]">
                       True Landed Outlay
                     </div>
-                    <div className="mt-2 font-serif text-3xl sm:text-4xl font-bold text-[#D4AF37]">
+                    <div className="mt-2 font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#D4AF37]">
                       {formatInrCroreLakh(calc.landedInr)}
                     </div>
                     <div className="mt-1 text-xs text-[#A6B0BF] font-sans">
@@ -180,7 +180,7 @@ export default function Mod5OdishaFinancialLab({
                     <div className="font-sans text-xs uppercase tracking-wider text-[#10B981]">
                       Female Duty Savings
                     </div>
-                    <div className="mt-2 font-serif text-3xl sm:text-4xl font-bold text-[#10B981]">
+                    <div className="mt-2 font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#10B981]">
                       {registryGender === "FEMALE_6_PCT"
                         ? formatInrCroreLakh(calc.femaleSavedInr)
                         : "₹0 (Eligible: Register in Spouse/Mother Name)"}
@@ -204,7 +204,7 @@ export default function Mod5OdishaFinancialLab({
                 <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-wider text-red-400">
                   12-MONTH DELAY PENALTY IN PATIA–INFOCITY CORRIDOR (+12.8% ANNUAL GROWTH)
                 </div>
-                <div className="mt-3 font-serif text-5xl sm:text-6xl font-bold text-red-400">
+                <div className="mt-3 font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-red-400">
                   + {formatInrCroreLakh(calc.waitingPenaltyInr)}
                 </div>
                 <p className="mt-4 font-sans text-sm text-[#CBD5E1] max-w-2xl mx-auto leading-relaxed">
@@ -218,7 +218,7 @@ export default function Mod5OdishaFinancialLab({
                 <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#10B981]">
                   5-YEAR GRADE-A COMMERCIAL ASSET PROJECTION (INFOCITY IT CORRIDOR)
                 </div>
-                <div className="mt-3 font-serif text-5xl sm:text-6xl font-bold text-[#10B981]">
+                <div className="mt-3 font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-[#10B981]">
                   {formatInrCroreLakh(calc.commercial5YrInr)}
                 </div>
                 <p className="mt-4 font-sans text-sm text-[#CBD5E1] max-w-2xl mx-auto leading-relaxed">

@@ -76,7 +76,7 @@ export default function SanctuaryDoorPortal({
               ease: [0.76, 0, 0.24, 1],
             }}
             style={{ transformOrigin: "left center" }}
-            className="relative z-20 flex h-full w-1/2 flex-col justify-between border-r border-[#D4AF37]/40 bg-[#05070B] p-10 sm:p-16 shadow-[30px_0_80px_rgba(0,0,0,0.95)]"
+            className="relative z-20 flex h-full w-1/2 flex-col justify-between border-r border-[#D4AF37]/40 bg-[#05070B] p-4 sm:p-10 md:p-16 shadow-[30px_0_80px_rgba(0,0,0,0.95)]"
           >
             {/* Subtle Inner Brass Frame Line */}
             <div className="pointer-events-none absolute inset-6 sm:inset-12 border border-[#D4AF37]/15" />
@@ -110,7 +110,7 @@ export default function SanctuaryDoorPortal({
               ease: [0.76, 0, 0.24, 1],
             }}
             style={{ transformOrigin: "right center" }}
-            className="relative z-20 flex h-full w-1/2 flex-col justify-between border-l border-[#D4AF37]/40 bg-[#05070B] p-10 sm:p-16 text-right shadow-[-30px_0_80px_rgba(0,0,0,0.95)]"
+            className="relative z-20 flex h-full w-1/2 flex-col justify-between border-l border-[#D4AF37]/40 bg-[#05070B] p-4 sm:p-10 md:p-16 text-right shadow-[-30px_0_80px_rgba(0,0,0,0.95)]"
           >
             {/* Subtle Inner Brass Frame Line */}
             <div className="pointer-events-none absolute inset-6 sm:inset-12 border border-[#D4AF37]/15" />
@@ -255,3 +255,4 @@ export function ArchitecturalDoorReveal({
     </motion.div>
   );
 }
+

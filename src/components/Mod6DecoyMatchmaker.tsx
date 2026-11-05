@@ -48,13 +48,13 @@ export default function Mod6DecoyMatchmaker({
   const decoy = DECOY_EXAMPLES[activeDecoyIndex] || DECOY_EXAMPLES[0];
 
   return (
-    <section id="mod-decoy-matchmaker" className="relative bg-[#05070B] py-24 sm:py-36 border-t border-[#D4AF37]/15">
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
+    <section id="mod-decoy-matchmaker" className="relative bg-[#05070B] py-14 sm:py-24 lg:py-32 border-t border-[#D4AF37]/15">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
         <div className="text-center">
           <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
             DECISION CALCULUS • FORENSIC CONTRAST
           </div>
-          <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+          <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
             Decoy <span className="italic font-normal text-[#D4AF37]">Matchmaker</span>.
           </h2>
           <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -83,7 +83,7 @@ export default function Mod6DecoyMatchmaker({
         {/* Side-by-Side Architectural Contrast Card Grid */}
         <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Market Decoy Listing (Typical Broker Pitch) */}
-          <div className="rounded-2xl border border-red-500/30 bg-[#0B101B]/60 p-8 sm:p-10 shadow-xl relative">
+          <div className="rounded-2xl border border-red-500/30 bg-[#0B101B]/60 p-5 sm:p-8 lg:p-10 shadow-xl relative">
             <div className="inline-flex items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3.5 py-1 font-mono text-xs font-semibold text-red-400">
               ✕ TYPICAL MARKET ADVERTISEMENT
             </div>
@@ -98,7 +98,7 @@ export default function Mod6DecoyMatchmaker({
               <div className="font-sans text-xs uppercase tracking-wider text-[#A6B0BF]">
                 Claimed Super Built-Up Loading
               </div>
-              <div className="mt-1 font-serif text-5xl font-semibold text-red-400">
+              <div className="mt-1 font-serif text-3xl sm:text-5xl font-semibold text-red-400">
                 {decoy.marketAnchorLoadingPercentage}%
               </div>
               <p className="text-xs text-red-300 font-sans mt-1">
@@ -128,7 +128,7 @@ export default function Mod6DecoyMatchmaker({
           </div>
 
           {/* Approved Sanctuary (Asset Properties Gold Pick) */}
-          <div className="rounded-2xl border-2 border-[#D4AF37] bg-[#0B101B] p-8 sm:p-10 shadow-[0_0_35px_rgba(212,175,55,0.15)] relative">
+          <div className="rounded-2xl border-2 border-[#D4AF37] bg-[#0B101B] p-5 sm:p-8 lg:p-10 shadow-[0_0_35px_rgba(212,175,55,0.15)] relative">
             <div className="inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/40 bg-[#10B981]/10 px-3.5 py-1 font-mono text-xs font-semibold text-[#10B981]">
               ✓ ASSET PROPERTIES APPROVED
             </div>
@@ -143,7 +143,7 @@ export default function Mod6DecoyMatchmaker({
               <div className="font-sans text-xs uppercase tracking-wider text-[#A6B0BF]">
                 True RERA Carpet Loading
               </div>
-              <div className="mt-1 font-serif text-5xl font-semibold text-[#10B981]">
+              <div className="mt-1 font-serif text-3xl sm:text-5xl font-semibold text-[#10B981]">
                 {selectedProperty.loadingPercentage}%
               </div>
               <p className="text-xs text-[#10B981] font-sans mt-1">

@@ -18,9 +18,9 @@ import {
 
 export default function AdvisoryFooter() {
   return (
-    <footer className="border-t border-[#D4AF37]/20 bg-[#05070B] py-20 text-center">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="font-serif text-2xl sm:text-3xl font-medium tracking-[0.2em] text-[#F8F9FA]">
+    <footer className="border-t border-[#D4AF37]/20 bg-[#05070B] py-12 sm:py-20 text-center">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="font-serif text-lg sm:text-2xl md:text-3xl font-medium tracking-[0.14em] sm:tracking-[0.2em] text-[#F8F9FA]">
           ASSET PROPERTIES ADVISORY
         </div>
         <div className="mt-3 font-sans text-xs font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
@@ -156,7 +156,7 @@ export default function AdvisoryFooter() {
         </div>
 
         {/* Simple & Clear Navigation Links */}
-        <div className="mt-8 flex flex-wrap justify-center gap-6 font-sans text-xs uppercase tracking-wider font-semibold text-[#CBD5E1]">
+        <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-6 font-sans text-[11px] sm:text-xs uppercase tracking-wider font-semibold text-[#CBD5E1]">
           <Link href="/" className="hover:text-[#D4AF37] transition">Home</Link>
           <span className="text-white/20">•</span>
           <Link href="/properties" className="hover:text-[#D4AF37] transition">Properties</Link>

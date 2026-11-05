@@ -26,15 +26,15 @@ export default function Mod7PrivateVaultDossier({
   return (
     <section
       id="mod-private-vault"
-      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-24 sm:py-36"}`}
+      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-14 sm:py-24 lg:py-32"}`}
     >
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
         {!hideHeader && (
           <div className="text-center">
             <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
               OFF-MARKET MANDATES • CONFIDENTIAL ALLOCATIONS
             </div>
-            <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+            <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
               The Private <span className="italic font-normal text-[#D4AF37]">Vault</span>.
             </h2>
             <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -52,7 +52,7 @@ export default function Mod7PrivateVaultDossier({
               <div
                 key={vaultProp.id}
                 style={{ perspective: "1800px" }}
-                className="relative h-[440px] w-full overflow-hidden rounded-2xl border border-[#D4AF37]/35 bg-[#05070B] shadow-[0_30px_90px_rgba(0,0,0,0.9)]"
+                className="relative h-[360px] sm:h-[440px] w-full overflow-hidden rounded-2xl border border-[#D4AF37]/35 bg-[#05070B] shadow-[0_30px_90px_rgba(0,0,0,0.9)]"
               >
                 {/* Revealed Off-Market Interior Behind the Doors */}
                 <Image
@@ -89,7 +89,7 @@ export default function Mod7PrivateVaultDossier({
                     </h3>
 
                     <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[#D4AF37]/25 pt-5">
-                      <div className="font-serif text-2xl font-bold text-[#D4AF37]">
+                      <div className="font-serif text-lg sm:text-2xl font-bold text-[#D4AF37]">
                         {vaultProp.priceDisplay.split("(")[0]}
                       </div>
                       {onRequestConsult && (
@@ -119,7 +119,7 @@ export default function Mod7PrivateVaultDossier({
                   style={{ transformOrigin: "left center" }}
                   onClick={() => toggleVaultDoor(vaultProp.id)}
                   data-cursor={isOpen ? undefined : "UNSEAL"}
-                  className={`absolute inset-y-0 left-0 z-20 flex w-1/2 cursor-pointer flex-col justify-between border-r border-[#D4AF37]/40 bg-[#080C14] p-8 shadow-[20px_0_50px_rgba(0,0,0,0.95)] ${
+                  className={`absolute inset-y-0 left-0 z-20 flex w-1/2 cursor-pointer flex-col justify-between border-r border-[#D4AF37]/40 bg-[#080C14] p-4 sm:p-8 shadow-[20px_0_50px_rgba(0,0,0,0.95)] ${
                     isOpen ? "pointer-events-none" : ""
                   }`}
                 >
@@ -129,7 +129,7 @@ export default function Mod7PrivateVaultDossier({
                     <div className="font-sans text-xs font-semibold uppercase tracking-wider text-[#A6B0BF]">
                       CONFIDENTIAL
                     </div>
-                    <div className="mt-1 font-serif text-2xl font-medium text-[#F8F9FA]">
+                    <div className="mt-1 font-serif text-lg sm:text-2xl font-medium text-[#F8F9FA]">
                       {vaultProp.title.replace("VAULT // ", "").split(" ")[1]}
                     </div>
                   </div>
@@ -151,7 +151,7 @@ export default function Mod7PrivateVaultDossier({
                   style={{ transformOrigin: "right center" }}
                   onClick={() => toggleVaultDoor(vaultProp.id)}
                   data-cursor={isOpen ? undefined : "UNSEAL"}
-                  className={`absolute inset-y-0 right-0 z-20 flex w-1/2 cursor-pointer flex-col justify-between border-l border-[#D4AF37]/40 bg-[#080C14] p-8 text-right shadow-[-20px_0_50px_rgba(0,0,0,0.95)] ${
+                  className={`absolute inset-y-0 right-0 z-20 flex w-1/2 cursor-pointer flex-col justify-between border-l border-[#D4AF37]/40 bg-[#080C14] p-4 sm:p-8 text-right shadow-[-20px_0_50px_rgba(0,0,0,0.95)] ${
                     isOpen ? "pointer-events-none" : ""
                   }`}
                 >
@@ -161,7 +161,7 @@ export default function Mod7PrivateVaultDossier({
                     <div className="font-sans text-xs font-bold uppercase tracking-wider text-[#D4AF37]">
                       SCORE {vaultProp.assetScoreTotal}/100
                     </div>
-                    <div className="mt-1 font-serif text-2xl font-bold text-[#D4AF37]">
+                    <div className="mt-1 font-serif text-lg sm:text-2xl font-bold text-[#D4AF37]">
                       {vaultProp.priceDisplay.split("(")[0]}
                     </div>
                   </div>

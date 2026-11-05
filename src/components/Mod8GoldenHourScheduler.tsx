@@ -79,11 +79,11 @@ export default function Mod8GoldenHourScheduler({
       id="mod-golden-hour"
       className="relative py-16 sm:py-24"
     >
-      <div className="mx-auto max-w-4xl px-6 sm:px-12 text-center">
+      <div className="mx-auto max-w-4xl px-4 sm:px-8 lg:px-12 text-center">
         <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
           PRIVATE CHAUFFEUR &amp; DUAL-LAYER GROUND AUDIT
         </div>
-        <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+        <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
           The <span className="italic font-normal text-[#D4AF37]">4:30 PM</span> Golden Hour.
         </h2>
         <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -115,7 +115,7 @@ export default function Mod8GoldenHourScheduler({
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="mt-14 space-y-6 rounded-2xl border border-[#D4AF37]/30 bg-[#0B101B]/80 p-8 sm:p-12 text-left shadow-2xl"
+            className="mt-14 space-y-6 rounded-2xl border border-[#D4AF37]/30 bg-[#0B101B]/80 p-5 sm:p-8 lg:p-12 text-left shadow-2xl"
           >
             {errorMsg && (
               <div className="flex items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-xs font-sans text-red-300">

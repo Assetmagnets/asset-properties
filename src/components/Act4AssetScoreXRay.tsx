@@ -76,7 +76,7 @@ export default function Act4AssetScoreXRay({
   return (
     <section
       id="act-asset-score"
-      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-24 sm:py-36"}`}
+      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-14 sm:py-24 lg:py-32"}`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
         {!hideHeader && (
@@ -84,7 +84,7 @@ export default function Act4AssetScoreXRay({
             <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
               FORENSIC DUE DILIGENCE • 5 PILLARS
             </div>
-            <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+            <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
               The 100-Point <span className="italic font-normal text-[#D4AF37]">Asset Score™</span>.
             </h2>
             <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
@@ -112,7 +112,7 @@ export default function Act4AssetScoreXRay({
               </div>
 
               <div className="mt-4 flex items-baseline gap-2">
-                <span className="font-serif text-6xl sm:text-7xl font-bold text-[#D4AF37]">
+                <span className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-[#D4AF37]">
                   {selectedProperty.assetScoreTotal}
                 </span>
                 <span className="text-2xl font-serif text-[#A6B0BF]">/ 100</span>
@@ -156,7 +156,7 @@ export default function Act4AssetScoreXRay({
 
             {/* Right: 4-Layer Forensic Audit Telemetry */}
             <div className="lg:col-span-7 lg:pl-8 lg:border-l lg:border-[#D4AF37]/20">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-2">
                 {[
                   { layerNum: 1, shortTitle: "1. Legal Title" },
                   { layerNum: 2, shortTitle: "2. Bhulekh Land" },

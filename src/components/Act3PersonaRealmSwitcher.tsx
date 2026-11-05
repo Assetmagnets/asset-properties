@@ -47,15 +47,15 @@ export default function Act3PersonaRealmSwitcher({
   return (
     <section
       id="act-persona-switcher"
-      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-24 sm:py-36"}`}
+      className={`relative ${hideHeader ? "py-12 sm:py-16" : "py-14 sm:py-24 lg:py-32"}`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         {!hideHeader && (
           <div className="text-center">
             <div className="font-sans text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-[#D4AF37]">
               CURATED INVENTORY • VERIFIED SANCTUARIES
             </div>
-            <h2 className="mt-4 font-serif text-4xl sm:text-6xl font-medium text-[#F8F9FA]">
+            <h2 className="mt-4 font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#F8F9FA]">
               Three Curated <span className="italic font-normal text-[#D4AF37]">Realms</span>.
             </h2>
             <p className="mt-4 font-sans text-base sm:text-lg text-[#CBD5E1] max-w-2xl mx-auto">
